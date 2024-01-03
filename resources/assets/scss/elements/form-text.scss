@@ -1,0 +1,11 @@
+.form-text {
+	font-size: .75rem;
+    line-height: 1;
+    display: block;
+	margin:0;
+}
+
+.input-group ~ .form-text,
+.form-control ~ .form-text {
+	margin-top: $spacer*0.25;
+}

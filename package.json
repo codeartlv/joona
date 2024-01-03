@@ -1,0 +1,36 @@
+{
+	"name": "joona",
+	"version": "1.0.0",
+	"description": "A backend template",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build"
+	},
+	"author": {
+		"name": "Deniss Kozlovs",
+		"email": "deniss@codeart.lv",
+		"url": "https://www.codeart.lv/"
+	},
+	"license": "ISC",
+	"dependencies": {
+		"@popperjs/core": "^2.11.8",
+		"air-datepicker": "^3.4.0",
+		"axios": "^1.6.1",
+		"devbridge-autocomplete": "1.4.11",
+		"bootstrap": "^5.3",
+		"jquery": "3.7.1",
+		"lang.js": "^1.1.14",
+		"material-symbols": "^0.14",
+		"moment": "^2.30",
+		"perfect-scrollbar": "^1.5",
+		"sortablejs": "1.15"
+	},
+	"devDependencies": {
+		"rollup-plugin-copy": "^3.5.0",
+		"sass": "^1.69.5",
+		"vite": "^5.0.10",
+		"vite-plugin-nunjucks": "^0.2.0"
+	}
+}

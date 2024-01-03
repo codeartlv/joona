@@ -1,0 +1,41 @@
+.quick-stats {
+	display: flex;
+	margin:0;
+	padding: 0;
+	list-style: none;
+	font-size: .875rem;
+
+	li {
+		position: relative;
+
+		dl {
+			font-size: 0.875em;
+			margin: 0;
+
+			dt {
+				margin: 0;
+				line-height: 1;
+				color: var(--bs-gray-700);
+				margin-bottom: 0.2rem;
+				display: flex;
+				align-items: center;
+
+				i {
+					font-size: 0.733rem;
+					margin-left: 0.2rem;
+				}
+			}
+
+			dd {
+				margin: 0;
+				line-height: 1;
+				color: var(--bs-gray-600);
+			}
+		}
+	}
+
+	li + li {
+		margin-left: $spacer;
+		padding-left: $spacer;
+	}
+}

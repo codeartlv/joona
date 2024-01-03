@@ -1,0 +1,91 @@
+* {
+	min-width: 0;
+}
+
+html {
+	/*
+	font-size: max(8px, 0.833333vw);
+
+	@include media-breakpoint-down(xl) {
+		font-size: max(10px, 0.95vw);
+	}
+
+	@include media-breakpoint-down(lg) {
+		font-size: max(12px, 1.5vw);
+	}
+
+	@include media-breakpoint-down(md) {
+		font-size: max(14px, 2.7vw);
+	}
+
+	@include media-breakpoint-down(sm) {
+		font-size: max(16px, 4.33vw);
+	}
+	*/
+
+	font-size: 16px;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100svh;
+	font-size: 1rem;
+}
+
+main {
+	flex: 1 1 auto;
+	position: relative;
+	z-index: 1;
+}
+
+a {
+	text-decoration: none;
+}
+
+b, strong {
+	font-weight: $font-weight-bold;
+}
+
+p {
+	margin-bottom: $spacer;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+ul {
+	margin:0;
+	padding:0;
+	list-style: none;
+}
+
+fieldset {
+	border: solid 1px var(--bs-gray-300);
+	padding: $spacer;
+	padding-top: $spacer * 0.5;
+	border-radius: 0;
+}
+
+legend {
+	width: inherit;
+	padding: $spacer * 0.25 $spacer * 0.5;
+	border-bottom: none;
+	font-size: 0.875rem;
+	border: solid 1px var(--bs-gray-300);
+	text-transform: uppercase;
+	color: var(--bs-gray-700);
+}
+
+h1, .h1 {
+	font-weight: $font-weight-thin;
+}
+
+:root {
+	--bs-gray-950:#{$gray-950};
+}
+
+@include color-mode(dark) {
+	--bs-primary:#{$primary-dark};
+}

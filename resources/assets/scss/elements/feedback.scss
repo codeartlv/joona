@@ -1,0 +1,7 @@
+.custom-feedback {
+	display: none;
+
+	&.invalid-feedback {
+		display: block;
+	}
+}

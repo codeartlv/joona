@@ -1,0 +1,132 @@
+.header-nav {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	align-items: stretch;
+	height: 100%;
+
+	> li {
+		display: flex;
+
+		> a {
+			display: flex;
+			padding: 0 $spacer*0.5;
+			transition: all 80ms ease-in-out;
+			align-items: center;
+			position: relative;
+			color: var(--bs-gray-800);
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: none;
+				color: var(--bs-emphasis-color);
+			}
+		}
+
+		&.header-nav__mobile-menu {
+			display: none;
+		}
+
+		&.header-nav__lock {
+			> a {
+				&:hover {
+					color: var(--bs-danger);
+				}
+			}
+		}
+
+		&.header-nav__name {
+			align-items: center;
+			padding: 0 $spacer;
+			color: var(--bs-dark-text-emphasis);
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-end;
+			line-height: 1;
+			font-size: .875rem;
+
+			strong {
+				display: block;
+				line-height: 1;
+				color:var(--bs-body-color);
+				margin-bottom: .25rem;
+			}
+		}
+
+		&.header-nav__rounded {
+			> a {
+				> figure {
+					display: flex;
+					margin:0;
+					line-height: 1;
+					font-size: 0;
+					border-radius: 100%;
+					overflow: hidden;
+					aspect-ratio: 1/1;
+					padding:$spacer*0.25;
+					transition: backgroundColor 80ms ease-in-out;
+					align-items: center;
+					background: transparent;
+					height: $spacer*2;
+					justify-content: center;
+
+					> img {
+						display: block;
+						height: 1.25rem;
+						border-radius: 100%;
+						aspect-ratio: 1/1;
+						object-fit: cover;
+					}
+				}
+
+				&:hover {
+					> figure {
+						background: var(--bs-gray-200);
+					}
+				}
+			}
+		}
+	}
+
+
+	@include media-breakpoint-up(md) {
+		> li {
+			&.header-nav__sidebar-trigger {
+				display: none;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		> li {
+			> a {
+				padding: 0 $spacer*0.5;
+			}
+
+			&.header-nav__mobile-menu {
+				display: flex;
+			}
+		}
+	}
+}
+
+@include color-mode(dark) {
+	.header-nav {
+		> li {
+			> a {
+				color:var(--bs-gray-500);
+			}
+
+			&.header-nav__rounded {
+				> a {
+					&:hover {
+						> figure {
+							background: var(--bs-gray-800);
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,51 @@
+form {
+	transition: opacity 180ms ease-in;
+
+	&.loading-overlay {
+		position: relative;
+		opacity: 0.4;
+
+		.spinner {
+			position: absolute;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&.loading {
+		pointer-events: none;
+	}
+}
+
+fieldset {
+	border:solid 1px var(--bs-border-color);
+	padding:$spacer;
+	border-radius: $input-border-radius;
+}
+
+fieldset + fieldset {
+	margin-top:$spacer;
+}
+
+legend {
+	font-size:0.857rem;
+	text-transform: uppercase;
+	color:$text-muted;
+	font-weight:$font-weight-bold;
+	width:auto;
+	margin:0;
+	padding:0 $spacer*0.5;
+	margin-top: -$spacer;
+    position: relative;
+    transform: translateY(-50%);
+	background: var(--bs-body-bg);
+	border-color:var(--bs-border-color);
+}
+
+@include color-mode(dark) {
+	fieldset {
+		border-color:var(--bs-gray-700);
+	}
+}

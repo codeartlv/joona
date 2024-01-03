@@ -1,0 +1,76 @@
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: none;
+
+	> i {
+		margin-right:$spacer*0.5;
+		font-size: 1em;
+		display: inline-block;
+		transform: scale(1.25);
+	}
+
+	&.btn-block {
+		width:100%;
+	}
+
+	&.captionless {
+		> i {
+			margin:0;
+		}
+	}
+
+	&.btn-xs {
+		--bs-btn-padding-y: .125rem;
+		--bs-btn-padding-x: .5rem;
+		--bs-btn-font-size: .75rem;
+	}
+}
+
+.btn-close {
+	background: none;
+	text-shadow: none;
+	padding: 0;
+	margin: 0;
+	position: relative;
+	outline: none;
+	width: 1rem;
+	height: 1rem;
+	opacity: 1;
+
+	i {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
+
+	&:focus {
+		box-shadow: none;
+	}
+
+	&:active,
+	&:hover {
+		i {
+			color:$danger;
+		}
+	}
+}
+
+
+@include color-mode(light) {
+	.btn.btn-outline-subtle {
+		@include button-outline-variant($gray-500, $gray-600, $gray-100, $gray-500);
+	}
+}
+
+@include color-mode(dark) {
+	.btn.btn-outline-subtle {
+		@include button-outline-variant($gray-600);
+	}
+
+	.btn.btn-outline-primary {
+		@include button-outline-variant($gray-100);
+	}
+}

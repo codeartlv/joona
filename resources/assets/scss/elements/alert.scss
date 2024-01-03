@@ -1,0 +1,30 @@
+.alert {
+	font-size: .875rem;
+	align-items: center;
+	display: flex;
+
+	&::before {
+		@extend .material-symbols-outlined;
+		margin-right: $spacer*0.5;
+		opacity: 0.5;
+	}
+
+	&.alert-danger {
+		&::before {
+			content: "error";
+		}
+	}
+
+	&.alert-success {
+		&::before {
+			content: "check_circle";
+		}
+	}
+
+	&.alert-info {
+		&::before {
+			content: "info";
+		}
+	}
+
+}

@@ -1,0 +1,11 @@
+.form-control {
+	&.is-invalid {
+		&:focus {
+			box-shadow: none;
+		}
+	}
+}
+
+textarea.form-control {
+	min-height: 10rem;
+}

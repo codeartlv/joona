@@ -1,0 +1,48 @@
+.toast {
+	border:none;
+
+	.toast-header {
+		> i {
+			font-size: 1.25rem;
+			margin-right: $spacer*0.25;
+		}
+
+		> img {
+			display: block;
+			height: 1rem;
+			aspect-ratio: 1/1;
+		}
+
+		.btn-close {
+			margin:0;
+
+			i {
+				font-size: 20px;
+			}
+		}
+	}
+
+	&.toast-error {
+		.toast-header {
+			background: var(--bs-danger-bg-subtle);
+			border-bottom-color:var(--bs-danger-bg-subtle);
+			color:var(--bs-danger);
+
+			> i {
+				color:var(--bs-danger);
+			}
+		}
+	}
+
+	&.toast-success {
+		.toast-header {
+			background: var(--bs-success-bg-subtle);
+			border-bottom-color:var(--bs-success-bg-subtle);
+			color:var(--bs-success);
+
+			> i {
+				color:var(--bs-success);
+			}
+		}
+	}
+}

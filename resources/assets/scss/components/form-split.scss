@@ -1,0 +1,47 @@
+.form-split {
+	overflow: hidden;
+	display: flex;
+	margin-bottom: $spacer;
+
+	span {
+		position: relative;
+		text-transform: uppercase;
+		font-size: .8125rem;
+		padding:0 $spacer*0.5;
+		padding-left: 0;
+		color:var(--bs-gray);
+
+		&:before {
+			left:100%;
+		}
+
+		&:after {
+			right: 100%;
+		}
+
+		&:before,
+		&:after {
+			content:"";
+			height: 0.1px;
+			background: var(--bs-gray-200);
+			width: 100vw;
+			position: absolute;
+			top:50%;
+			transform: translateY(-50%);
+			display: block;
+		}
+	}
+}
+
+@include color-mode(dark) {
+	.form-split {
+		span {
+			color:var(--bs-gray-600);
+		}
+
+		span:before,
+		span:after {
+			background-color:var(--bs-gray-700);
+		}
+	}
+}

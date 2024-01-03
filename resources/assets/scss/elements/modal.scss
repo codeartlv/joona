@@ -1,0 +1,143 @@
+.modal-dialog {
+	background: none;
+
+	.modal-footer,
+	.modal-header {
+		padding: $spacer $spacer;
+		border-radius: 0;
+		border: none;
+	}
+
+	.modal-title {
+		text-transform: $title-bar-font-transform;
+		font-size: $title-bar-font-size;
+		font-weight: $title-bar-font-weight;
+		line-height: 1;
+	}
+
+	.modal-header {
+		border-radius: $border-radius-lg $border-radius-lg 0 0;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.modal-footer {
+		border-radius: 0px 0px $border-radius-lg $border-radius-lg;
+		padding-top: $spacer * 0.65;
+		padding-bottom: $spacer * 0.65;
+
+		> section:nth-child(2n) {
+			margin-left: auto;
+		}
+
+		> * {
+			margin:0;
+		}
+
+		> section {
+			* + * {
+				margin-left: $spacer*0.5;
+			}
+		}
+	}
+
+	.modal-content {
+		border: none;
+		border-radius: $border-radius-lg;
+	}
+
+	.modal-header + .modal-body {
+		border-top: solid 1px var(--bs-body-bg);
+	}
+
+	.modal-header {
+		align-items: center;
+	}
+
+	> form {
+		width: 100%;
+		height: 100%;
+	}
+
+	&.modal-dialog-scrollable {
+		@include media-breakpoint-up(md) {
+			height: auto;
+		}
+
+		@include media-breakpoint-down(md) {
+			max-height: 100svh;
+
+			.modal-content {
+				font-size: 0.875em;
+			}
+		}
+	}
+
+	&.modal-dialog--admin-user-edit {
+		max-width: 35rem;
+	}
+
+	@include media-breakpoint-down(md) {
+		margin: 0;
+		height: 100%;
+		min-height: 100%;
+		width: 100%;
+		max-width: 100% !important;
+
+		.modal-header {
+			align-items: center;
+			border-radius: 0;
+		}
+
+		.modal-footer {
+			border-radius: 0;
+		}
+
+		.modal-content {
+			height: 100%;
+			border-radius: 0;
+		}
+
+		.modal-body {
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
+			padding: 0;
+		}
+
+		.modal-inner {
+			position: absolute;
+			left: 0;
+			padding: $modal-inner-padding;
+			width: 100%;
+			top: 0;
+		}
+	}
+}
+
+@include color-mode(dark) {
+	.modal-dialog {
+		.modal-header {
+			background: var(--bs-gray-800);
+		}
+
+		.modal-footer {
+			background: var(--bs-gray-950);
+		}
+
+		.modal-body {
+			border-color: var(--bs-gray-800);
+		}
+	}
+}
+
+@include color-mode(light) {
+	.modal-dialog {
+		.modal-footer {
+			background: var(--bs-gray-200);
+		}
+
+		.modal-header {
+			background: var(--bs-gray-100);
+		}
+	}
+}

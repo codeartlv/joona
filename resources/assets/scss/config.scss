@@ -1,0 +1,73 @@
+/*
+|--------------------------------------------------------------------------
+| CONFIG
+|--------------------------------------------------------------------------
+*/
+$primary: #213555;
+$primary-dark: #517bb3;
+$secondary: #9da5b1;
+
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$gray-950: #12181a;
+
+$success:#367E18;
+$danger:#B80000;
+$warning:#ea580c;
+$info:#1391aa;
+
+$spacer: 1rem;
+
+$card-box-shadow:0px 0px 6px -1px rgba(154, 161, 171, 0.65);
+$card-cap-bg:$gray-100;
+
+$table-bg:transparent;
+
+$input-btn-focus-box-shadow: none;
+
+$alert-padding-y:$spacer*0.5;
+$alert-border-width:0;
+
+$border-radius:.25rem;
+
+$dropdown-padding-y:0;
+$dropdown-font-size:.875rem;
+
+$modal-backdrop-opacity:1;
+$modal-backdrop-bg:rgba(0, 0, 0, 0.5);
+
+$box-shadow-xs: 0px 2px 3px -2px rgba(0, 0, 0, 0.38);
+$box-shadow-sm-top: 0px -2px 7px -4px rgba(0,0,0,0.25);
+
+$font-family-sans-serif: 'IBM Plex Sans', sans-serif;
+
+$font-weight-thin:200;
+$font-weight-normal:400;
+$font-weight-bold:600;
+
+$title-bar-font-size:1rem;
+$title-bar-font-weight:$font-weight-bold;
+$title-bar-font-transform:none;
+$title-bar-padding-y:$spacer;
+$title-bar-padding-x:$spacer;
+
+$sidebar-width:16rem;
+$desktop-header-height:3.8rem;
+
+$content-padding-x:$spacer*1.5;
+
+/*
+|--------------------------------------------------------------------------
+| VENDOR SETTINGS
+|--------------------------------------------------------------------------
+*/
+
+// Material Symbols
+$material-symbols-font-path: '@joona-modules/material-symbols/';

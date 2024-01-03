@@ -1,0 +1,47 @@
+@import "fonts";
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import '../../../node_modules/material-symbols/outlined.scss';
+@import '../../../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
+@import '../../../node_modules/air-datepicker/air-datepicker.css';
+
+@import "globals";
+
+@import "elements/alert";
+@import "elements/backdrop";
+@import "elements/badge";
+@import "elements/breadcrumb";
+@import "elements/btn";
+@import "elements/card";
+@import "elements/dropdown-item";
+@import "elements/dropdown-menu";
+@import "elements/feedback";
+@import "elements/form";
+@import "elements/form-control";
+@import "elements/form-group";
+@import "elements/form-text";
+@import "elements/input-group";
+@import "elements/list-group";
+@import "elements/modal";
+@import "elements/nav";
+@import "elements/navbar";
+@import "elements/offcanvas";
+@import "elements/pagination";
+@import "elements/table";
+@import "elements/toast";
+
+@import "components/form-split";
+@import "components/header-nav";
+@import "components/main-header";
+@import "components/main-menu";
+@import "components/password-validator";
+@import "components/quick-stats";
+@import "components/uploader";
+@import "components/autocomplete";
+
+@import "layouts/block";
+@import "layouts/page";
+@import "layouts/content";
+
+@import "vendor/datepicker";
+@import "vendor/autocomplete";
