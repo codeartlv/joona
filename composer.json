@@ -1,0 +1,35 @@
+{
+	"name": "codeartlv/joona",
+	"version": "1.0.0",
+	"license": "MIT",
+	"description": "A simple backend template for Laravel projects",
+	"type": "library",
+	"autoload": {
+		"files" : [
+			"src/helpers.php"
+		],
+        "psr-4": {
+           "Codeart\\Joona\\": "src/",
+		   "Codeart\\Joona\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Deniss Kozlovs",
+            "email": "deniss@codeart.lv"
+        }
+    ],
+    "require": {
+		"php": "^8.0"
+	},
+	"require-dev": {
+
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Codeart\\Joona\\Providers\\JoonaServiceProvider"
+			]
+		}
+	}
+}

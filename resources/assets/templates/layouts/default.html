@@ -1,0 +1,144 @@
+{% extends "resources/assets/templates/global.html" %}
+
+{% block body %}
+	<main class="layout layout-default">
+		<aside class="main-menu"  data-bs-theme="dark">
+			<div class="main-menu__logo">
+				<img src="/images/example_logo.png" />
+				<span>
+					App name
+					<small>Backend control</small>
+				</span>
+			</div>
+			<div class="main-menu__content">
+				<div class="main-menu__inner">
+					{% include "resources/assets/templates/main-menu.html"  %}
+				</div>
+			</div>
+		</aside>
+		<div id="mobile-menu" class="offcanvas offcanvas-mobile-menu offcanvas-end offcanvas-md">
+			<div class="offcanvas-header">
+
+			</div>
+			<div class="offcanvas-body" data-bs-theme="dark">
+				<div class="offcanvas-inner">
+					{% include "resources/assets/templates/main-menu.html"  %}
+				</div>
+			</div>
+		</div>
+		<div class="layout__content">
+			<header class="main-header">
+				<div class="container-fluid">
+					<div class="main-header__content">
+						<section class="main-header__first-sec">
+							<img class="main-header__logo" src="/images/example_logo.png" />
+						</section>
+						<section class="main-header__menu">
+							<section class="main-header__breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="#">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Library</li>
+								</ol>
+							</section>
+
+							<section class="main-header__stats">
+								<ul class="quick-stats">
+									<li>
+										<dl>
+											<dt>
+												1374
+												<i class="text-success material-symbols-outlined">trending_up</i>
+											</dt>
+											<dd>Statistic 1</dd>
+										</dl>
+									</li>
+									<li>
+										<dl>
+											<dt>
+												1720
+												<i class="text-danger material-symbols-outlined">trending_down</i>
+											</dt>
+											<dd>Statistic 2</dd>
+										</dl>
+									</li>
+									<li>
+										<dl>
+											<dt>
+												1053
+												<i class="text-muted material-symbols-outlined">trending_flat</i>
+											</dt>
+											<dd>Statistic 3</dd>
+										</dl>
+									</li>
+									<li>
+										<dl>
+											<dt>
+												113
+												<i class="text-muted material-symbols-outlined">trending_flat</i>
+											</dt>
+											<dd>Statistic 4</dd>
+										</dl>
+									</li>
+								</ul>
+							</section>
+
+							<section class="main-header__side-nav">
+								<ul class="header-nav">
+									<li class="header-nav__name">admin</li>
+									<li class="dropdown header-nav__rounded">
+										<a href="javascript:;" data-bs-toggle="dropdown" data-expanded="false">
+											<figure>
+												<img src="/images/flags/lv.svg" />
+											</figure>
+										</a>
+										<div class="dropdown-menu">
+											<a class="dropdown-item active" href="">LAT</a>
+											<a class="dropdown-item" href="">ENG</a>
+										</div>
+									</li>
+									<li class="header-nav__rounded">
+										<a href="javascript:;" data-bind="admin.edit-my-profile">
+											<figure>
+												<i class="material-symbols-outlined">person_edit</i>
+											</figure>
+										</a>
+									</li>
+									<li class="header-nav__rounded">
+										<a href="javascript:;" data-dark-icon="dark_mode" data-light-icon="light_mode" data-bind="admin.color-theme-switch">
+											<figure>
+												<i data-role="icon" class="material-symbols-outlined">light_mode</i>
+											</figure>
+										</a>
+									</li>
+									<li class="header-nav__lock header-nav__rounded">
+										<a href="login.html">
+											<figure>
+												<i class="material-symbols-outlined">lock</i>
+											</figure>
+										</a>
+									</li>
+									<li class="header-nav__sidebar-trigger header-nav__rounded">
+										<a href="javascript:;" data-bind="admin.toggle-sidebar" data-sidebar="#sidebar">
+											<figure>
+												<i class="material-symbols-outlined">menu_open</i>
+											</figure>
+										</a>
+									</li>
+									<li class="header-nav__mobile-menu">
+										<a href="#mobile-menu" data-bs-toggle="offcanvas" role="button">
+											<i class="material-symbols-outlined">menu</i>
+										</a>
+									</li>
+								</ul>
+							</section>
+						</section>
+					</div>
+				</div>
+			</header>
+
+			{% block content %}
+    		{% endblock %}
+		</div>
+	</main>
+
+{% endblock %}

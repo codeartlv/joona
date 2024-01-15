@@ -1,0 +1,45 @@
+.offcanvas {
+	&.offcanvas-mobile-menu {
+		--bs-offcanvas-width:100%;
+		--bs-offcanvas-bg:transparent;
+		height: $vh100;
+
+		border:none;
+		pointer-events: none;
+
+		& ~ .offcanvas-backdrop {
+			display: none;
+		}
+
+		.offcanvas-header {
+			height: $desktop-header-height;
+		}
+
+		.offcanvas-inner {
+			position: absolute;
+			left:0;
+			top:0;
+			width:100%;
+			height:100%;
+			overflow-y: auto;
+			overscroll-behavior: none;
+		}
+
+		.offcanvas-body {
+			padding:0;
+			position: relative;
+			background: var(--bs-body-bg);
+			color:var(--bs-body-color);
+			pointer-events: all;
+			overflow: hidden;
+		}
+	}
+}
+
+@include color-mode(dark) {
+	.offcanvas.offcanvas-mobile-menu {
+		.offcanvas-body {
+			background: var(--bs-gray-800);
+		}
+	}
+}

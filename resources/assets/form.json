@@ -1,0 +1,12 @@
+{
+	"status":"error",
+	"fields" : {
+		"*" : ["Global message"],
+		"username" : ["Username error"],
+		"password" : ["Password error"]
+	},
+	"message" : "Success message",
+	"actions": {
+		"reset" : true
+	}
+}

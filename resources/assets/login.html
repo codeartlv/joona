@@ -1,0 +1,66 @@
+{% extends "resources/assets/templates/layouts/blank.html" %}
+
+{% block main %}
+	<div class="card card-auth">
+		<form data-bind="components.form" action="form.json" method="post" data-focus="username">
+			<div class="card-header">
+				<span>
+					<img src="/images/example_logo.png" />
+				</span>
+				<strong>Site name</strong>
+				<p>Backend authentication</p>
+			</div>
+			<div class="card-body">
+
+				<div data-role="form.response"></div>
+
+				<div class="block">
+					<div class="form-group required">
+						<label>Username:</label>
+						<div class="input-group">
+							<span class="input-group-icon">
+								<i class="material-symbols-outlined">person</i>
+							</span>
+							<input class="form-control" type="text" autocomplete="username" name="username" />
+						</div>
+						<div data-field-message="username"></div>
+					</div>
+
+					<div class="form-group required">
+						<label>Password:</label>
+						<div class="input-group">
+							<span class="input-group-icon">
+								<i class="material-symbols-outlined">key</i>
+							</span>
+							<input class="form-control" type="password" autocomplete="current-password" name="password" />
+						</div>
+						<div data-field-message="password"></div>
+					</div>
+				</div>
+
+				<div class="block card-auth__options">
+					<section class="card-auth__locale">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb breadcrumb-languages">
+								<li class="breadcrumb-item"><a href="#">LAT</a></li>
+								<li class="breadcrumb-item active" aria-current="page"><a href="#">ENG</a></li>
+								<li class="breadcrumb-item">RUS</li>
+							</ol>
+						</nav>
+					</section>
+					<section class="card-auth__lightmode">
+						<a href="javascript:;" data-dark-icon="dark_mode" data-light-icon="light_mode" data-bind="admin.color-theme-switch">
+							<i data-role="icon" class="material-symbols-outlined">light_mode</i>
+						</a>
+					</section>
+				</div>
+			</div>
+			<div class="card-footer">
+				<button type="submit" class="btn btn-primary btn-block">
+					<i class="material-symbols-outlined">key</i>
+					Sign in
+				</button>
+			</div>
+		</form>
+	</div>
+{% endblock %}

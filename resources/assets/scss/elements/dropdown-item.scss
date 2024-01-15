@@ -1,0 +1,46 @@
+.dropdown-item {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+
+	i {
+		margin-right: $spacer * 0.25;
+		display: inline-block;
+		width: 1.267rem;
+		color: var(--bs-gray-600);
+		margin-left: -0.267rem;
+		font-size: 1rem;
+	}
+
+	img {
+		display: block;
+		width: 1rem;
+		margin-right: 0.5rem;
+		outline:solid 1px var(--bs-gray-300);
+	}
+
+	&.active {
+		i {
+			color: var(--bs-gray-100);
+		}
+	}
+
+	&:focus {
+		small,
+		i {
+			color: var(--bs-gray-800);
+		}
+	}
+
+	&:active {
+		small,
+		i {
+			color: var(--bs-gray-100);
+		}
+	}
+
+	small {
+		display: block;
+		color: var(--bs-gray-600);
+	}
+}

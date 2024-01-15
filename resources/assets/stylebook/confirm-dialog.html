@@ -1,0 +1,59 @@
+<div class="__stylebook-block">
+	<p class="__stylebook-block-caption">Confirm dialog</p>
+
+	<p>
+		A component that can be used to ask user to confirm various things. Can be used either directly on link or as
+		standalone component.
+		Dialog automatically closes when any of the buttons is clicked.
+	</p>
+
+	<p class="__stylebook-block-caption-2">Usage on links</p>
+
+	<div class="row mb-3">
+		<div class="col-12 col-md-6">
+			<a href="?" data-bind="admin.confirm" data-caption="Confirm deletion" data-message="Delete this record?">Confirm action on link</a>
+		</div>
+		<div class="col-12 col-md-6">
+			<pre><code class="language-html">
+<a href="?" data-bind="admin.confirm" data-caption="Confirm deletion" data-message="Delete this record?">Confirm action on link</a>
+				</code></pre>
+		</div>
+	</div>
+
+	<p class="__stylebook-block-caption-2">Using as standalone component</p>
+
+	<div class="row mb-3">
+		<div class="col-12 col-md-6">
+
+		</div>
+		<div class="col-12 col-md-6">
+			<pre><code class="language-js">
+let caption = 'Confirm deletion';
+let message = 'The records will be deleted. Proceed?';
+let buttons = [
+	{
+		caption:'OK',
+		disabled:false,
+		role:'primary',
+		callback : () => {
+			// code to be executed
+		}
+	},
+	{
+		caption:'Cancel',
+		disabled:false,
+		role:'secondary',
+		callback : () => {
+			// code to be executed
+		}
+	}
+];
+let confirmDialog = new ConfirmDialog(
+	caption, message, buttons
+);
+
+confirmDialog.open();
+				</code></pre>
+		</div>
+	</div>
+</div>

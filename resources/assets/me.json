@@ -1,0 +1,10 @@
+{
+    "status": "success",
+    "fields": [],
+    "message": [
+        "Profile saved."
+    ],
+    "actions": {
+        "close_popup": true
+    }
+}

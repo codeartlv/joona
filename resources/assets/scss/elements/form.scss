@@ -1,0 +1,20 @@
+form {
+	transition: opacity 180ms ease-in;
+
+	&.loading-overlay {
+		position: relative;
+		opacity: 0.4;
+
+		.spinner {
+			position: absolute;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&.loading {
+		pointer-events: none;
+	}
+}

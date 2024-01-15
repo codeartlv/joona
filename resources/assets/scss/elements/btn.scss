@@ -1,0 +1,35 @@
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: none;
+
+	> i {
+		margin-right:$spacer*0.5;
+		font-size: 1em;
+	}
+
+	&.btn-block {
+		width:100%;
+	}
+
+	&.captionless {
+		> i {
+			margin:0;
+		}
+	}
+
+	&.btn-xs {
+		--bs-btn-padding-y: .125rem;
+		--bs-btn-padding-x: .5rem;
+		--bs-btn-font-size: .75rem;
+	}
+}
+
+.btn-close {
+	background: none;
+
+	&:focus {
+		box-shadow: none;
+	}
+}

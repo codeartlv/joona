@@ -1,0 +1,29 @@
+{% extends "resources/assets/templates/layouts/default.html" %}
+
+{% block content %}
+	<div class="content with-sidebar">
+		<aside class="content__sidebar" id="sidebar">
+			<div class="content__sidebar-inner" data-bind="admin.sidebar">
+				{% block sidebar %}
+				{% endblock %}
+			</div>
+		</aside>
+		<div class="content__inner">
+			<div class="content__panel">
+				<h1>Page name</h1>
+				<nav>
+					{% block pagenav %}
+					{% endblock %}
+				</nav>
+			</div>
+
+			<div class="content__main">
+				{% block main %}
+				{% endblock %}
+			</div>
+
+			{% block footer %}
+			{% endblock %}
+		</div>
+	</div>
+{% endblock %}

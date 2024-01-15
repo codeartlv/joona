@@ -1,0 +1,14 @@
+.pagination {
+	.page-item {
+		.page-link {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+
+			i {
+				font-size: 1em;
+			}
+		}
+	}
+}

@@ -1,0 +1,86 @@
+.layout {
+	&.layout-default {
+		min-height: $vh100;
+
+		.layout__content {
+			margin-left: $sidebar-width;
+			min-height: $vh100;
+			flex-direction: column;
+			display: flex;
+			position: relative;
+		}
+
+		@include media-breakpoint-down(md) {
+			display: block;
+
+			.main-menu {
+				display: none;
+			}
+
+			.main-header {
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: $zindex-offcanvas + 1;
+			}
+
+			.layout__content {
+				margin-left: 0;
+			}
+		}
+	}
+
+	&.layout-split {
+		width: 100%;
+		display: flex;
+
+		> figure {
+			flex:0 0 50%;
+			margin:0;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+		> aside {
+			flex:1;
+
+			> .container-fluid {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+			}
+		}
+
+		@include media-breakpoint-up(md) {
+			> aside {
+				box-shadow:-16px 0px 34px 0px rgba(0, 0, 0, 0.4);
+			}
+		}
+
+		@include media-breakpoint-down(md) {
+			flex-direction: column;
+
+			> figure {
+				display: none;
+			}
+
+			> aside {
+				display: flex;
+				align-items: center;
+				padding:$spacer 0;
+			}
+		}
+	}
+}
+
+@for $i from 1 through 51 {
+	.auth-bg-image-w#{$i} {background-image:url('/images/backgrounds/w#{$i}.jpg');}
+}
+
+@include color-mode(dark) {
+	@for $i from 1 through 51 {
+		.auth-bg-image-w#{$i} {background-image:url('/images/backgrounds/dark_w#{$i}.jpg');}
+	}
+}

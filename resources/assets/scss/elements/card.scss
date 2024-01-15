@@ -1,0 +1,162 @@
+.card {
+	box-shadow: var(--bs-card-box-shadow);
+
+	.card-header {
+		display: flex;
+		justify-content: space-between;
+		text-transform: uppercase;
+		text-transform: $title-bar-font-transform;
+		font-size: $title-bar-font-size;
+		font-weight: $title-bar-font-weight;
+		border-bottom: none;
+	}
+
+	.card-footer {
+		border-top:none;
+	}
+
+	&.card-admin-user-session {
+		.card-header {
+			border-radius: 0;
+			background:var(--bs-body-bg);
+			align-items: center;
+			border-bottom: solid 1px var(--bs-gray-300);
+
+			section {
+				h6 {
+					text-transform: none;
+					margin:0;
+				}
+
+				time {
+					text-transform: none;
+					font-weight: $font-weight-normal;
+					color:var(--bs-gray-500);
+				}
+			}
+
+			> div {
+				font-weight: $font-weight-normal;
+				display: flex;
+				align-items: center;
+
+				i {
+					margin-right: $spacer*0.5;
+				}
+			}
+		}
+
+		.card-body {
+			background:var(--bs-body-bg);
+			padding:0;
+			flex:0;
+			margin:0;
+			font-size: 0.875em;
+
+			td.card-admin-user-session__action {
+				width:15%;
+			}
+
+			td.card-admin-user-session__date {
+				width:1px;
+				white-space: nowrap;
+				color:var(--bs-gray-600);
+			}
+
+			tr:last-child td {
+				border-bottom: none;
+			}
+		}
+	}
+
+	&.card-auth {
+		box-shadow: none;
+		flex:0 1 20rem;
+		background: none;
+		border:none;
+
+		.card-header {
+			flex-direction: column;
+			align-items: center;
+			background: none !important;
+			text-transform: none;
+			border:none;
+
+			img {
+				display: block;
+				width: 100%;
+				max-width: 4rem;
+				margin: auto;
+				margin-bottom: $spacer;
+			}
+
+			p {
+				margin:0;
+				color:$text-muted;
+				font-size: 0.875rem;
+				font-weight: $font-weight-normal;
+			}
+
+			strong {
+				display: block;
+				line-height: 1;
+				font-size: 1.25rem;
+			}
+		}
+
+		.card-body {
+			padding:$spacer*2 0;
+			border:none;
+		}
+
+		.card-footer {
+			padding:0;
+			border:none;
+			background: none;
+		}
+
+		.card-auth__options {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			align-items: center;
+			justify-content: space-between;
+
+			> section {
+				&.card-auth__locale {
+					grid-column: 1;
+				}
+
+				&.card-auth__lightmode {
+					display: flex;
+					grid-column: 2;
+
+					a {
+						line-height: 1;
+						font-size: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+@include color-mode(dark) {
+	.card {
+		box-shadow: none;
+		border-color:var(--bs-gray-800);
+
+		.card-header {
+			background-color: var(--bs-gray-800);
+		}
+
+		.card-footer {
+			background-color: var(--bs-gray-800);
+		}
+
+		&.card-admin-user-session {
+			.card-header {
+				border-color: var(--bs-gray-700);
+			}
+		}
+	}
+}

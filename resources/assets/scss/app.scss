@@ -1,0 +1,122 @@
+/*
+|--------------------------------------------------------------------------
+| CONFIG
+|--------------------------------------------------------------------------
+*/
+$primary: #690e56;
+$secondary: #E36414;
+
+$gray-100: #f0f0f2;
+$gray-200: #eaeaef;
+$gray-300: #d8d9e0;
+$gray-400: #bebfc7;
+$gray-500: #767989;
+$gray-600: #5c5e6b;
+$gray-700: #41434c;
+$gray-800: #27282e;
+$gray-900: #10111d;
+$gray-950: #0c0d18;
+
+$dark-gray-800:#191a26;
+
+$success:#139a52;
+$danger:#d61f47;
+$warning:#ea580c;
+$info:#1391aa;
+
+$spacer: 1rem;
+$card-box-shadow:0px 0px 6px -1px rgba(154, 161, 171, 0.65);
+$card-cap-bg:$gray-100;
+
+$table-bg:transparent;
+
+$input-btn-focus-box-shadow: none;
+
+$font-family-sans-serif: 'IBM Plex Sans', sans-serif;
+
+$font-weight-thin:200;
+$font-weight-normal:400;
+$font-weight-bold:600;
+
+$alert-padding-y:$spacer*0.5;
+
+$sidebar-width:16rem;
+$desktop-header-height:3.8rem;
+
+$dropdown-padding-y:0;
+$dropdown-font-size:.875rem;
+
+$modal-backdrop-opacity:1;
+$modal-backdrop-bg:rgba(0, 0, 0, 0.5);
+
+$panel-height: 3.333rem;
+
+$box-shadow-xs: 0px 2px 3px -2px rgba(0, 0, 0, 0.38);
+
+$content-padding-x:$spacer*1.5;
+
+$title-bar-font-size:0.875rem;
+$title-bar-font-weight:$font-weight-bold;
+$title-bar-font-transform:uppercase;
+$title-bar-padding-y:$spacer*0.75;
+$title-bar-padding-x:$spacer;
+
+$modal-header-padding-y:$title-bar-padding-y;
+$modal-header-padding-x:$title-bar-padding-x;
+
+$card-cap-padding-y:$title-bar-padding-y;
+$card-cap-padding-x:$title-bar-padding-x;
+
+/*
+| Helpers
+|--------------------------------------------------------------------------
+*/
+$vh100: calc(var(--vh, 1vh) * 100);
+
+/*
+|--------------------------------------------------------------------------
+| IMPORTS
+|--------------------------------------------------------------------------
+*/
+
+@import "fonts";
+@import "@bootstrap/scss/bootstrap";
+@import 'material-symbols/index.css';
+@import 'perfect-scrollbar/css/perfect-scrollbar.css';
+@import 'air-datepicker/air-datepicker.css';
+
+@import "globals";
+
+@import "elements/alert";
+@import "elements/backdrop";
+@import "elements/badge";
+@import "elements/breadcrumb";
+@import "elements/btn";
+@import "elements/card";
+@import "elements/dropdown-item";
+@import "elements/feedback";
+@import "elements/form";
+@import "elements/form-group";
+@import "elements/input-group";
+@import "elements/list-group";
+@import "elements/material-symbols";
+@import "elements/modal";
+@import "elements/offcanvas";
+@import "elements/pagination";
+@import "elements/nav";
+@import "elements/navbar";
+@import "elements/table";
+@import "elements/quick-stats";
+
+@import "layouts/block";
+@import "layouts/content";
+@import "layouts/page";
+
+@import "components/form-split";
+@import "components/header-nav";
+@import "components/main-header";
+@import "components/main-menu";
+@import "components/password-validator";
+
+@import "vendor/datepicker";
+

@@ -1,0 +1,21 @@
+.input-group-icon {
+	@extend .input-group-text;
+	background: $input-bg;
+	transition: $input-transition;
+	color:var(--bs-gray-600);
+
+	& + .form-control {
+		padding-left: 0;
+		border-left: none;
+	}
+}
+
+.input-group {
+	&:has(.form-control:focus) .input-group-icon {
+		border-color:$input-focus-border-color;
+	}
+
+	&:has(.form-control.is-invalid) .input-group-icon {
+		border-color: var(--bs-form-invalid-border-color);
+	}
+}

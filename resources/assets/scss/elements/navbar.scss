@@ -1,0 +1,31 @@
+.navbar {
+	position: sticky;
+	padding-left: $content-padding-x;
+	padding-right: $content-padding-x;
+	background: var(--bs-body-bg);
+	min-height: calc(4.5rem - #{$spacer});
+
+	&.bottom {
+		bottom: 0;
+	}
+
+	.navbar-nav {
+		display: flex;
+		flex-direction: row;
+		font-size: .875rem;
+		color:var(--bs-gray-600);
+
+		.nav-item + .nav-item {
+			margin-left: $spacer * 0.5;
+		}
+	}
+}
+
+@include color-mode(dark) {
+	.navbar {
+		&.bottom {
+			background-color:var(--bs-gray-950);
+		}
+	}
+}
+

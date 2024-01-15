@@ -1,0 +1,38 @@
+.list-group {
+	.list-group-item {
+		display: flex;
+		justify-content: space-between;
+
+		> a {
+			color:$primary;
+		}
+
+		> nav {
+			display: flex;
+			align-items: center;
+
+			a {
+				display: flex;
+				line-height: 1;
+			    font-size: 0;
+				color:var(--bs-gray-500);
+
+				&:not(:last-child) {
+					margin-right: $spacer*0.25;
+				}
+			}
+		}
+
+		&.active {
+			> a {
+				color:var(--bs-gray-100);
+			}
+
+			> nav {
+				a {
+					color:var(--bs-gray-100);
+				}
+			}
+		}
+	}
+}
