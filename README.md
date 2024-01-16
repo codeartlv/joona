@@ -11,6 +11,27 @@ This package is tailored for seamless integration with a brand-new Laravel 10.x 
 2. Publish assets: `php artisan joona:publish`. Note that this exports UI assets into `public/vendor/joona` directory. If you build your assets in pipeline or production, you should gitignore this directory. Also this creates `config/joona.php` configuration file. Configuration options will be discussed later.
 3. Run migrations: `php artisan migrate`
 4. Seed defaults: `php artisan joona:seed`
+5. Include CSS and JS into your project:
+
+```scss
+@import "@joona/resources/assets/scss/app";
+```
+
+```javascript
+import { Joona } from '@joona/resources/assets/js/app.js';
+
+// Add your custom handlers
+Joona.addHandlers();
+
+// Add your custom translations
+Joona.addTranslations();
+
+// Add your custom routes
+Joona.addRoutes();
+
+// Bootstrap app
+Joona.ready();
+```
 
 By now, the setup should be complete. Navigate to `/admin` and log in using the following credentials:
 Username: **admin**

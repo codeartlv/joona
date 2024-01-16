@@ -12,7 +12,7 @@ export default class Admin extends Handler {
 	editMyProfile(el, parameters, runtime) {
 		el.addEventListener('click', () => {
 			const modal = new Modal();
-			const url = runtime.getRoute('joona.user.me');
+			const url = runtime.route('joona.user.me');
 
 			modal.open(url);
 		});
@@ -21,7 +21,7 @@ export default class Admin extends Handler {
 	changeMyPassword(el, parameters, runtime) {
 		el.addEventListener('click', () => {
 			const modal = new Modal();
-			const url = runtime.getRoute('joona.user.my-password');
+			const url = runtime.route('joona.user.my-password');
 			modal.open(url);
 		});
 	}
@@ -41,7 +41,7 @@ export default class Admin extends Handler {
 	userEdit(el, parameters, runtime) {
 		el.addEventListener('click', () => {
 			const modal = new Modal();
-			const url = runtime.getRoute('joona.user.edit', {
+			const url = runtime.route('joona.user.edit', {
 				id: parameters.id || 0,
 			});
 			modal.open(url);
@@ -51,9 +51,7 @@ export default class Admin extends Handler {
 	userEditForm(el, parameters, runtime) {
 		// Password toggle
 		let choosePasswordSetup = (method) => {
-			const passwordInput = el.querySelector(
-				'[data-role="password-input"]'
-			);
+			const passwordInput = el.querySelector('[data-role="password-input"]');
 
 			passwordInput.classList.add('d-none');
 
@@ -80,11 +78,11 @@ export default class Admin extends Handler {
 				element.classList.add('d-none');
 			});
 
-			el.querySelectorAll(
-				`[data-toggle="level"][data-level="${level}"]`
-			).forEach((element) => {
-				element.classList.remove('d-none');
-			});
+			el.querySelectorAll(`[data-toggle="level"][data-level="${level}"]`).forEach(
+				(element) => {
+					element.classList.remove('d-none');
+				}
+			);
 		};
 
 		let levelDropdown = el.querySelector('[data-role="level-toggle"]');
@@ -105,27 +103,23 @@ export default class Admin extends Handler {
 
 	confirm(el, parameters, runtime) {
 		el.addEventListener('click', (event) => {
-			let confirmDialog = new ConfirmDialog(
-				parameters.caption,
-				parameters.message,
-				[
-					{
-						caption: runtime.lang('common.cancel'),
-						role: 'secondary',
-						callback: () => {
-							return false;
-						},
+			let confirmDialog = new ConfirmDialog(parameters.caption, parameters.message, [
+				{
+					caption: runtime.lang('common.cancel'),
+					role: 'secondary',
+					callback: () => {
+						return false;
 					},
-					{
-						caption: runtime.lang('common.ok'),
-						role: 'primary',
-						callback: () => {
-							document.location = el.href;
-							return true;
-						},
+				},
+				{
+					caption: runtime.lang('common.ok'),
+					role: 'primary',
+					callback: () => {
+						document.location = el.href;
+						return true;
 					},
-				]
-			);
+				},
+			]);
 
 			confirmDialog.open();
 
@@ -148,7 +142,7 @@ export default class Admin extends Handler {
 				iconContainer.innerHTML = newIcon;
 			}
 
-			const url = runtime.getRoute('joona.set-theme', {
+			const url = runtime.route('joona.set-theme', {
 				mode: nextMode,
 			});
 
@@ -159,7 +153,7 @@ export default class Admin extends Handler {
 	roleEdit(el, parameters, runtime) {
 		el.addEventListener('click', () => {
 			const modal = new Modal();
-			const url = runtime.getRoute('joona.user.permission-edit-role', {
+			const url = runtime.route('joona.user.permission-edit-role', {
 				id: parameters.id || 0,
 			});
 			modal.open(url);

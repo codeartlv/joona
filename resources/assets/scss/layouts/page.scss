@@ -74,13 +74,3 @@
 		}
 	}
 }
-
-@for $i from 1 through 51 {
-	.auth-bg-image-w#{$i} {background-image:url('/images/backgrounds/w#{$i}.jpg');}
-}
-
-@include color-mode(dark) {
-	@for $i from 1 through 51 {
-		.auth-bg-image-w#{$i} {background-image:url('/images/backgrounds/dark_w#{$i}.jpg');}
-	}
-}

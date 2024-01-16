@@ -1,13 +1,79 @@
 import { parseUrl } from './helpers';
 
+import Components from './handlers/components.js';
+import Admin from './handlers/admin.js';
+
 export default class Runtime {
 	handlers = {};
 	routes = {};
 	translations = {};
+	instances = {};
 
-	constructor() {
-		window.JoonaPluginInstances = window.JoonaPluginInstances || new Map();
-		this.instances = window.JoonaPluginInstances;
+	constructor() {}
+
+	ready() {
+		return new Promise((resolve, reject) => {
+			this.setupEventListeners();
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', () => {
+					this.initializeApplication(resolve);
+				});
+			} else {
+				this.initializeApplication(resolve);
+			}
+		});
+	}
+
+	initializeApplication(resolve) {
+		const dataUrl = typeof DATA_URL !== 'undefined' ? DATA_URL : '/data.json';
+
+		fetch(dataUrl)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Network response for ${dataUrl} failed.`);
+				}
+				return response.json();
+			})
+			.then((data) => {
+				this.addRoutes(data.routes);
+				this.addTranslations(data.translations);
+				this.addHandlers(Components, Admin);
+				this.init(document.body);
+				resolve();
+			})
+			.catch((error) => {
+				console.error('Failed to fetch data:', error);
+				reject(error);
+			});
+	}
+
+	setupEventListeners() {
+		window.addEventListener('resize', () => {
+			// Add viewport height variable to document. This property allows to
+			// precisely set viewport height, accounting for virtual keyboards on
+			// mobile devices.
+
+			var vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+			// Save window scrollbar width to be used in CSS.
+			var scrollWidth = Math.ceil(
+				(window.innerWidth - document.documentElement.clientWidth) / 2
+			);
+			document.documentElement.style.setProperty('--body-scroll-width', `${scrollWidth}px`);
+		});
+
+		window.dispatchEvent(new Event('resize'));
+
+		window.addEventListener('scroll', () => {
+			// Save true window scroll position to be used in CSS.
+			document.documentElement.style.setProperty(
+				'--body-scroll-position',
+				`${window.scrollY}px`
+			);
+		});
+		window.dispatchEvent(new Event('scroll'));
 	}
 
 	// Add module handlers
@@ -25,7 +91,7 @@ export default class Runtime {
 		this.translations = { ...this.translations, ...keywords };
 	}
 
-	getRoute(name, parameters) {
+	route(name, parameters) {
 		parameters = { ...parameters };
 
 		if (!this.routes[name]) {
@@ -191,15 +257,11 @@ export default class Runtime {
 				domElement.dataset.binded = true;
 
 				const result = actionHandler(domElement, instance.data, this);
-				domElement.dataset._elementId = `el${Math.random()
-					.toString(36)
-					.substring(2, 15)}`;
+				domElement.dataset._elementId = `el${Math.random().toString(36).substring(2, 15)}`;
 
 				if (result && typeof result.then === 'function') {
 					result.then(
-						(instance) =>
-							(this.instances[domElement.dataset._elementId] =
-								instance)
+						(instance) => (this.instances[domElement.dataset._elementId] = instance)
 					);
 				} else if (result) {
 					this.instances[domElement.dataset._elementId] = result;

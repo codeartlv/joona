@@ -10,12 +10,13 @@
 			@endif
 			{{ config('app.name', 'Laravel') }} - @lang('joona::common.app_title')
 		</title>
-		<link href="{{ asset('vendor/joona/style.css') }}" rel="stylesheet">
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 		<script>
 			const DATA_URL = '{{route('joona.get-data')}}';
 		</script>
-		<script type="module" src="{{ asset('vendor/joona/joona.es.js') }}"></script>
+
+		@vite(['resources/css/app.scss', 'resources/js/app.js'])
+
 		@yield('html_head')
     </head>
 	<body>

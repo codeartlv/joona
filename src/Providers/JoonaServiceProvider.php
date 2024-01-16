@@ -48,7 +48,7 @@ class JoonaServiceProvider extends \Illuminate\Support\ServiceProvider
 
 	private function getPackageDistAssetPath(): string
 	{
-		return $this->getPackageRoot().'resources/assets/dist/';
+		return $this->getPackageRoot().'resources/assets/images/';
 	}
 
 	private function offerPublish(): void
@@ -60,7 +60,7 @@ class JoonaServiceProvider extends \Illuminate\Support\ServiceProvider
 
 		// Publish assets
 		$this->publishes([
-			$this->getPackageDistAssetPath() => public_path('vendor/joona'),
+			$this->getPackageDistAssetPath() => public_path('vendor/joona/images'),
 		], 'joona-assets');
 	}
 
