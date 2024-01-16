@@ -24,4 +24,6 @@ return [
 	'date_from' => 'Date from',
 	'date_to' => 'Date to',
 	'filter' => 'Filter',
+	'select_files' => 'Select files',
+	'delete' => 'Delete',
 ];

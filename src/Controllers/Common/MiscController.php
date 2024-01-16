@@ -14,6 +14,7 @@ class MiscController
 
 		$keywords = [
 			'common.ok' => 'joona::common.ok',
+			'common.delete' => 'joona::common.delete',
 			'common.cancel' => 'joona::common.cancel',
 			'common.error' => 'joona::common.error',
 		];

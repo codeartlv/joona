@@ -250,6 +250,15 @@ Creates a dynamic form. Form is submitted via Ajax.
 <x-joona-button caption="Submit" type="submit" role="primary" icon="check" :attr="['custom-attribute'  =>  'yes']" />
 ```
 
+### Uploader
+
+Creates a file uploader. When setting uploaded files, use instance of `Codeart\Joona\View\Components\Form\UploadedFile`.
+When uploading file, return response of the same class.
+
+```html
+<x-joona-uploader uploadroute="files.upload" deleteroute="files.delete" limit="5" submitbtn="#test-button" :files="$files"></x-joona-uploader>
+```
+
 ## Commands
 
 Package adds additional console commands. Please see description of each of them:

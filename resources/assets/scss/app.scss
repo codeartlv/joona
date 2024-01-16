@@ -67,6 +67,8 @@ $modal-header-padding-x:$title-bar-padding-x;
 $card-cap-padding-y:$title-bar-padding-y;
 $card-cap-padding-x:$title-bar-padding-x;
 
+$dropdown-min-width:2rem;
+
 /*
 | Helpers
 |--------------------------------------------------------------------------
@@ -117,6 +119,7 @@ $vh100: calc(var(--vh, 1vh) * 100);
 @import "components/main-header";
 @import "components/main-menu";
 @import "components/password-validator";
+@import "components/uploader";
 
 @import "vendor/datepicker";
 

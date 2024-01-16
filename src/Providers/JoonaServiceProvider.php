@@ -141,6 +141,7 @@ class JoonaServiceProvider extends \Illuminate\Support\ServiceProvider
 		Blade::component('joona-form', \Codeart\Joona\View\Components\Form\FormElement::class);
 		Blade::component('joona-form-group', \Codeart\Joona\View\Components\Form\Group::class);
 		Blade::component('joona-button', \Codeart\Joona\View\Components\Form\Button::class);
+		Blade::component('joona-uploader', \Codeart\Joona\View\Components\Form\Uploader::class);
 	}
 
 	private function registerGate(): void

@@ -14,3 +14,7 @@ While this change introduces a slight inconvenience, it simplifies the integrati
 
 Further tweaks to make possible integration with the package. Added head.blade.php to allow injection code into <head> of the page event when view is rendered completely from inside the package.
 Removed alias from internal inclusion of Bootstrap, as this provides possibility to use shorter path on user side.
+
+## [1.0.3] - 2024-01-16
+
+Added file uploader component.

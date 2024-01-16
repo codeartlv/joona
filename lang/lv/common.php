@@ -24,4 +24,6 @@ return [
 	'date_from' => 'Datums no',
 	'date_to' => 'Datums līdz',
 	'filter' => 'Filtrēt',
+	'select_files' => 'Izvēlēties failus',
+	'delete' => 'Dzēst',
 ];

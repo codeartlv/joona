@@ -3,6 +3,7 @@ import Handler from './../handler.js';
 import AjaxForm from '../components/ajax-form/ajax-form.js';
 import PasswordValidator from '../components/password-validator.js';
 import Datepicker from '../components/datepicker.js';
+import Uploader from '../components/uploader.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -19,5 +20,9 @@ export default class Components extends Handler {
 
 	calendar(el, params) {
 		return new Datepicker(el, params);
+	}
+
+	uploader(el, params) {
+		return new Uploader(el, params);
 	}
 }

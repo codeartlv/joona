@@ -17,6 +17,19 @@ export function removeSpinner(context) {
 	});
 }
 
+export function parseJsonLd(element) {
+	var jsonText = element.textContent;
+	var data = [];
+
+	try {
+		data = JSON.parse(jsonText);
+	} catch (errorText) {
+		data = {};
+	}
+
+	return data;
+}
+
 export function setButtonLoading(buttonElement) {
 	const buttonCaption = buttonElement.innerHTML;
 

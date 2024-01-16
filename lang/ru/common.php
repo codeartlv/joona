@@ -24,4 +24,6 @@ return [
 	'date_from' => 'Дата от',
 	'date_to' => 'Дата до',
 	'filter' => 'Фильтровать',
+	'select_files' => 'Выбрать файлы',
+	'delete' => 'Удалить',
 ];
