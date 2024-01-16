@@ -14,11 +14,11 @@ This package is tailored for seamless integration with a brand-new Laravel 10.x 
 5. Include CSS and JS into your project:
 
 ```scss
-@import "@joona/resources/assets/scss/app";
+@import "@joona/scss/app";
 ```
 
 ```javascript
-import { Joona } from '@joona/resources/assets/js/app.js';
+import { Joona } from '@joona/js/app.js';
 
 // Add your custom handlers
 Joona.addHandlers();
@@ -110,6 +110,10 @@ The block layout is the same as in simple layout, but sidebar content has dedica
 @endsection
 ```
 
+#### Including metadata
+You will likely need to inject additional data into <head> even when the view is completely rendered from inside the package.
+Just create `resources/views/vendor/joona/head.blade.php` file and Laravel will include it inside the <head>
+
 ### Working with UI components
 Backend features a very simple JS framework to separate view from JS code. It utilizes `data` attributes on HTML elements to which every component is binded. You are not required to use this, but for simple interactions it can be faster than to deploy React/Vue etc. framework. It's up to you anyway.
 
@@ -118,7 +122,7 @@ First of all, if you need to add interaction you create a JS class that collects
 ```javascript
 // resources/js/blog.js
 
-import Handler from  '@joona/handler';
+import Handler from  '@joona/js/handler';
 
 export default class Blog extends Handler {
     static  get  pluginName() {
@@ -131,7 +135,7 @@ export default class Blog extends Handler {
 export default defineConfig({
     resolve: {
         alias: {
-            '@joona': path.resolve(__dirname, 'vendor/codeartlv/joona/resources/assets/js'),
+            '@joona': path.resolve(__dirname, 'vendor/codeartlv/joona/resources/assets'),
         },
     },
 });
@@ -202,7 +206,7 @@ The package provides several commonly used components that can be included in th
 
 ### Modal dialog
 ```javascript
-import Modal from  '@joona/components/modal.js';
+import Modal from  '@joona/js/components/modal.js';
 
 let modalDialog = new Modal();
 modalDialog.open('/page', {
@@ -214,7 +218,7 @@ modalDialog.open('/page', {
 ```
 ### Confirmation dialog
 ```javascript
-import ConfirmDialog from  '@joona/components/confirm-dialog.js';
+import ConfirmDialog from  '@joona/js/components/confirm-dialog.js';
 
 const caption = 'Confirm';
 const message = 'Are you sure you want to delete this record?';

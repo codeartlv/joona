@@ -14,10 +14,8 @@
 		<script>
 			const DATA_URL = '{{route('joona.get-data')}}';
 		</script>
-
-		@vite(['resources/css/app.scss', 'resources/js/app.js'])
-
 		@yield('html_head')
+		@include('joona::head')
     </head>
 	<body>
 		@yield('html_body')

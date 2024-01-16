@@ -80,10 +80,10 @@ $vh100: calc(var(--vh, 1vh) * 100);
 */
 
 @import "fonts";
-@import "@joona/node_modules/bootstrap/scss/bootstrap";
-@import '@joona/node_modules/material-symbols/index.css';
-@import '@joona/node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
-@import '@joona/node_modules/air-datepicker/air-datepicker.css';
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import '../../../node_modules/material-symbols/index.css';
+@import '../../../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
+@import '../../../node_modules/air-datepicker/air-datepicker.css';
 
 @import "globals";
 
