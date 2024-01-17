@@ -22,3 +22,7 @@ Added file uploader component.
 ## [1.0.4] - 2024-01-17
 
 Added modal dialog component.
+
+## [1.0.5] - 2024-01-17
+
+Various package integration fixes.
