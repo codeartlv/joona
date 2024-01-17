@@ -67,6 +67,7 @@ return [
 	'user' => 'Пользователь',
 	'session_end_reason_logout' => 'Закрыта',
 	'session_end_reason_auto' => 'Закончена',
+	'session_end_reason_stopped' => 'Нет активности',
 	'activity_log' => 'Журнал событий',
 	'log_entries' => [
 		'login' => 'Авторизация',

@@ -67,6 +67,7 @@ return [
 	'user' => 'User',
 	'session_end_reason_logout' => 'Logged out',
 	'session_end_reason_auto' => 'Ended',
+	'session_end_reason_stopped' => 'No activity',
 	'activity_log' => 'Activity log',
 	'log_entries' => [
 		'login' => 'Logged in',

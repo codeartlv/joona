@@ -67,6 +67,7 @@ return [
 	'user' => 'Lietotājs',
 	'session_end_reason_logout' => 'Izlogojās',
 	'session_end_reason_auto' => 'Izbeigta',
+	'session_end_reason_stopped' => 'Nav aktivitātes',
 	'activity_log' => 'Notikumu žurnāls',
 	'log_entries' => [
 		'login' => 'Ielogojās',

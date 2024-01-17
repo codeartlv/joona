@@ -266,6 +266,8 @@ Package adds additional console commands. Please see description of each of them
 `joona:seed` - creates default credentials. After running this seeds, you can authorize in backend panel with username `admin` and password `password`.
 `joona:publish` - publishes backend template assets and related packages assets.
 
+Please add `$schedule->command('joona:update-session')->everyTenMinutes();` in your scheduler. This will make updating admin user session data more precise.
+
 ## Notes
 
 This package adds `admin` guard to `auth.php` and `joona` guard to configuration. Please consider this naming when adding additional guards and/or providers.
