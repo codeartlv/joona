@@ -1,14 +1,8 @@
-<x-joona-form :action="route('joona.user.save')" class="modal-content">
+<x-joona-form :action="route('joona.user.save')">
 	<input type="hidden" name="id" value="{{$fields['id']}}" />
+	<x-joona-dialog :caption="__($fields['id'] ? 'joona::user.edit_user_caption' : 'joona::user.create_user_caption')">
 
-	<div class="modal-header">
-		<h5 class="modal-title">@lang($fields['id'] ? 'joona::user.edit_user_caption' : 'joona::user.create_user_caption')</h5>
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-			@icon('close')
-		</button>
-	</div>
-	<div class="modal-body" data-bind="admin.user-edit-form">
-		<div class="modal-inner">
+		<div data-bind="admin.user-edit-form">
 			<div data-role="form.response"></div>
 
 			<div class="block">
@@ -104,8 +98,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="modal-footer">
-		<x-joona-button :caption="__('joona::common.save')" icon="check" />
-	</div>
+
+		<x-slot name="footer">
+			<x-joona-button :caption="__('joona::common.save')" icon="check" />
+		</x-slot>
+	</x-joona-dialog>
 </x-joona-form>

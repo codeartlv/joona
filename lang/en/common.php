@@ -26,4 +26,5 @@ return [
 	'filter' => 'Filter',
 	'select_files' => 'Select files',
 	'delete' => 'Delete',
+	'close' => 'Close',
 ];

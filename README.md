@@ -250,6 +250,35 @@ Creates a dynamic form. Form is submitted via Ajax.
 <x-joona-button caption="Submit" type="submit" role="primary" icon="check" :attr="['custom-attribute'  =>  'yes']" />
 ```
 
+### Dialoag
+```html
+<x-joona-dialog :caption="Caption">
+	<p>Dialog content</p>
+
+	<x-slot name="footer">
+		Optional footer
+	</x-slot>
+</x-joona-dialog>
+```
+
+Dialog example with form and save button:
+```html
+<x-joona-form :action="route('blog.save')">
+	<x-joona-dialog :caption="Edit post">
+
+		<div data-bind="blog.post-edit-form">
+			<div data-role="form.response"></div>
+
+			<!-- Form fields -->
+		</div>
+
+		<x-slot name="footer">
+			<x-joona-button :caption="Save" icon="check" />
+		</x-slot>
+	</x-joona-dialog>
+</x-joona-form>
+
+```
 ### Uploader
 
 Creates a file uploader. When setting uploaded files, use instance of `Codeart\Joona\View\Components\Form\UploadedFile`.
