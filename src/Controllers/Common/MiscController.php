@@ -10,6 +10,12 @@ class MiscController
 {
 	public function getJsData()
 	{
+		$debugbar = app('debugbar');
+
+		if ($debugbar) {
+			$debugbar->disable();
+		}
+
 		header("Content-Type: text/javascript");
 
 		$keywords = [

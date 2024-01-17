@@ -16,7 +16,7 @@ This package is tailored for seamless integration with a brand-new Laravel 10.x 
 
 Your SCSS file:
 ```scss
-@import "@joona/scss/app";
+@import "@joona/scss/app.scss";
 
 // At this point, include your custom SCSS files. All Bootstrap mixins and variables are available.
 ```

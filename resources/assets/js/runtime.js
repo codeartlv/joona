@@ -17,16 +17,17 @@ export default class Runtime {
 
 			if (document.readyState === 'loading') {
 				document.addEventListener('DOMContentLoaded', () => {
-					this.initializeApplication(resolve);
+					this.initializeApplication(resolve, reject);
 				});
 			} else {
-				this.initializeApplication(resolve);
+				this.initializeApplication(resolve, reject);
 			}
 		});
 	}
 
-	initializeApplication(resolve) {
-		const dataUrl = typeof DATA_URL !== 'undefined' ? DATA_URL : '/data.json';
+	initializeApplication(resolve, reject) {
+		const dataUrl =
+			typeof DATA_URL !== 'undefined' ? DATA_URL : '/data.json';
 
 		fetch(dataUrl)
 			.then((response) => {
@@ -61,7 +62,10 @@ export default class Runtime {
 			var scrollWidth = Math.ceil(
 				(window.innerWidth - document.documentElement.clientWidth) / 2
 			);
-			document.documentElement.style.setProperty('--body-scroll-width', `${scrollWidth}px`);
+			document.documentElement.style.setProperty(
+				'--body-scroll-width',
+				`${scrollWidth}px`
+			);
 		});
 
 		window.dispatchEvent(new Event('resize'));
@@ -257,11 +261,15 @@ export default class Runtime {
 				domElement.dataset.binded = true;
 
 				const result = actionHandler(domElement, instance.data, this);
-				domElement.dataset._elementId = `el${Math.random().toString(36).substring(2, 15)}`;
+				domElement.dataset._elementId = `el${Math.random()
+					.toString(36)
+					.substring(2, 15)}`;
 
 				if (result && typeof result.then === 'function') {
 					result.then(
-						(instance) => (this.instances[domElement.dataset._elementId] = instance)
+						(instance) =>
+							(this.instances[domElement.dataset._elementId] =
+								instance)
 					);
 				} else if (result) {
 					this.instances[domElement.dataset._elementId] = result;
