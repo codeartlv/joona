@@ -1,4 +1,5 @@
 
+
 # Joona
 Joona is a utility package for Laravel, designed to enhance backend development. It features user management, permission settings, and an activity log. The frontend integrates Bootstrap 5 and additional UI components for improved interface design. It provides a quick way to kickstart any project that requires administration interface.
 
@@ -8,29 +9,57 @@ This package is tailored for seamless integration with a brand-new Laravel 10.x 
 ## Installation
 
 1. Require the package via Composer: `composer require codeartlv/joona`
-2. Publish assets: `php artisan joona:publish`. Note that this exports UI assets into `public/vendor/joona` directory. If you build your assets in pipeline or production, you should gitignore this directory. Also this creates `config/joona.php` configuration file. Configuration options will be discussed later.
+2. Publish assets: `php artisan joona:publish`. Note that this exports UI assets into `public/vendor/joona` directory. If you build your assets in pipeline or production, you should gitignore this directory. Also this creates `config/joona.php` configuration file. Configuration options are explained in the file itself.
 3. Run migrations: `php artisan migrate`
 4. Seed defaults: `php artisan joona:seed`
-5. Include CSS and JS into your project:
+5. To support extending CSS/JS within your project, add dependency in your files:
 
+Your SCSS file:
 ```scss
 @import "@joona/scss/app";
+
+// At this point, include your custom SCSS files. All Bootstrap mixins and variables are available.
 ```
 
+Your Javascript entry point:
 ```javascript
+//app.js
 import { Joona } from '@joona/js/app.js';
 
-// Add your custom handlers
-Joona.addHandlers();
-
-// Add your custom translations
-Joona.addTranslations();
-
-// Add your custom routes
-Joona.addRoutes();
-
-// Bootstrap app
+// Bootstrap app. Returns a Promise in which resolver indicates that everything is done loading.
 Joona.ready();
+
+// Also available as global variable:
+// window.Joona.ready();
+```
+If your are using Vite, the basic setup could look like this:
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import path from 'path';
+
+export default defineConfig({
+	plugins: [
+		laravel({
+			input: [
+				'resources/js/app.js',
+				'resources/scss/main.scss',
+			],
+			refresh: true,
+		}),
+	],
+	resolve: {
+		alias: {
+			'@joona': path.resolve(__dirname, 'vendor/codeartlv/joona/resources/assets'),
+		},
+	},
+});
+```
+
+After defining CSS/JS files, build the project:
+```
+npx vite build
 ```
 
 By now, the setup should be complete. Navigate to `/admin` and log in using the following credentials:
@@ -41,13 +70,6 @@ It's important to note that the actual password policy is stricter. You are advi
 
 ## Usage
 The package introduces several middlewares and templates to integrate into backend interface. It uses custom `auth` guard and users are authenticated against database.
-
-### Configuration settings
-Inside your published `config/joona.php` there are several settings which can be adjusted to match your needs:
-`app_logo` - provide URL to logo image to match your branding.
-`locales` - lists available locales for the backend. Remove the ones you don't need.
-`admin_password_policy` - specify policy for passwords. Possible options are documented inside the config file.
-
 Application title which is used inside backend is taken from `app.name` configuration setting.
 
 ### Create routes inside backend
@@ -111,14 +133,14 @@ The block layout is the same as in simple layout, but sidebar content has dedica
 ```
 
 #### Including metadata
-You will likely need to inject additional data into <head> even when the view is completely rendered from inside the package.
-Just create `resources/views/vendor/joona/head.blade.php` file and Laravel will include it inside the <head>
+You will likely need to inject additional data into `<head>` even when the view is completely rendered from inside the package.
+Just create `resources/views/vendor/joona/head.blade.php` file and Laravel will include it inside the `<head>`
 
 ### Working with UI components
 Backend features a very simple JS framework to separate view from JS code. It utilizes `data` attributes on HTML elements to which every component is binded. You are not required to use this, but for simple interactions it can be faster than to deploy React/Vue etc. framework. It's up to you anyway.
 
 #### Create new component handler
-First of all, if you need to add interaction you create a JS class that collects a group functions for a problem domain. Let's say you have a blog and need to add component in the backend. Start by creating blog component handler:
+First of all, if you need to add interaction to element, you create a Javascript class that collects a group functions for a problem domain. Let's say you have a blog and need to add component in the backend. Start by creating blog component handler:
 ```javascript
 // resources/js/blog.js
 
@@ -130,16 +152,16 @@ export default class Blog extends Handler {
     }
 }
 ```
-*Note: If you use Vite, jo can alias `@joona` like this:*
+Register handler at the application:
 ```javascript
-export default defineConfig({
-    resolve: {
-        alias: {
-            '@joona': path.resolve(__dirname, 'vendor/codeartlv/joona/resources/assets'),
-        },
-    },
-});
+// resource/js/app.js
+
+import Blog from 'blog';
+
+// Add your custom handlers
+Joona.addHandlers(Blog);
 ```
+
 The `pluginName` is an only required function for a handler.  Now, let's say you need to create functionality around some HTML code. You start by referencing the handler through `data` attributes:
 ```html
 <div data-bind="blog.edit-form" data-id="1">
@@ -161,6 +183,7 @@ export default class Blog extends Handler {
     }
 }
 ```
+The handler name gets converted to camel case. `edit-form` becomes `editForm`.
 Each handler function receives 3 arguments:
 ***element*** - reference to DOM node where `data-bind` is assigned on;
 ***parameters*** - any additional `data` arguments on the node;
@@ -199,16 +222,55 @@ export default class Blog extends Handler {
 `runtime.getInstance` returns the first found component. If you presume that there can be many instances, use `runtime.getInstances`.
 
 #### Dynamically binding handler
-If you load your content dynamically, after inserting new nodes into the DOM, call `Runtime.init(context)` on the new HTML nodes. `context` is the most highest DOM node you can reference that contains new HTML.
+If you load your content dynamically, after inserting new nodes into the DOM, call `window.Joona.init(context)` on the new HTML nodes. `context` is the most highest DOM node you can reference that contains new HTML.
+
+### Adding translations
+When you need a translation available in Javascript, first, register them:
+```javascript
+//app.js
+
+const translations = {
+	"greeting" : "Hello, :name!",
+	"ok" : "OK",
+};
+
+Joona.addTranslations(translations);
+
+// Retreive translations
+// If you have access to runtime instance (for example, inside handler function)
+runtime.lang('greeting', {name:'John'});
+
+// Anywhere else, use global instance
+// window.Joona.lang('greeting', {name:'John'});
+```
+### Adding routes
+
+You can register routes defined in your backend to maintain single source of knowledge:
+
+```javascript
+const routes = {
+	"blogEdit" : "/blog/edit/{id}"
+};
+
+Joona.addRoutes(routes);
+
+// Use routes
+runtime.route('blogEdit', {id:1});
+
+// Anywhere else, use global instance
+// window.Joona.route('blogEdit', {id:1});
+```
 
 ## Javascript UI components
 The package provides several commonly used components that can be included in the views.
 
 ### Modal dialog
+A modal dialog that is loaded by remote request.
 ```javascript
 import Modal from  '@joona/js/components/modal.js';
 
 let modalDialog = new Modal();
+
 modalDialog.open('/page', {
     animations : true,
 }).then(() => {
@@ -216,6 +278,7 @@ modalDialog.open('/page', {
     // close by calling modalDialog.close();
 });
 ```
+
 ### Confirmation dialog
 ```javascript
 import ConfirmDialog from  '@joona/js/components/confirm-dialog.js';
@@ -245,12 +308,46 @@ Creates a dynamic form. Form is submitted via Ajax.
     <!-- Form elements -->
 <x-joona-form>
 ```
+When providing response to the form submission, use `Form` class:
+
+```php
+use  Codeart\Joona\Contracts\Form;
+
+// Inside your controller
+$form = new Form();
+
+// Form submitted successfully
+$form->setSuccess('Data saved!');
+
+// Set error on field
+$form->setError('Value required.', 'name');
+
+// Add action on a form. The action gets executed only if there are no errors.
+// Multiple actions can be added.
+$form->setAction('reload', true); // Reload page
+$form->setAction('redurect', '/home'); // Redirect user to the URL
+$form->setAction('close_popup', true); // Closes opened modal dialog
+$form->setAction('reset', true); // Resets form to default state.
+
+// Attaching additional data
+$form->addData(['id' => 1]);
+
+// Render form
+return response()->json($form);
+```
+When setting error on the form field, any input with provided name gets searched. If empty field name is provided, the message is rendered into dedicated alert component. If form element can't have a specific name, you can defined where the form error gets rendered by adding:
+```html
+<div data-field="name"></div>
+```
+
 ### Button
+Displays a button.
 ```html
 <x-joona-button caption="Submit" type="submit" role="primary" icon="check" :attr="['custom-attribute'  =>  'yes']" />
 ```
 
-### Dialoag
+### Dialog
+Should be included when outputting a dialog content.
 ```html
 <x-joona-dialog :caption="Caption">
 	<p>Dialog content</p>
