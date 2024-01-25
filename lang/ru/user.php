@@ -73,4 +73,5 @@ return [
 		'login' => 'Авторизация',
 		'logout' => 'Выход',
 	],
+	'no_roles_created_to_assign' => 'Нет ни одной роли.',
 ];

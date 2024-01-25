@@ -346,6 +346,12 @@ Displays a button.
 <x-joona-button caption="Submit" type="submit" role="primary" icon="check" :attr="['custom-attribute'  =>  'yes']" />
 ```
 
+### Alert
+Displays an alert message.
+```html
+<x-joona-alert role="info" message="Hello World!" />
+```
+
 ### Dialog
 Should be included when outputting a dialog content.
 ```html

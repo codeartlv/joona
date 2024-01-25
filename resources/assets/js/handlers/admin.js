@@ -40,7 +40,7 @@ export default class Admin extends Handler {
 
 	userEdit(el, parameters, runtime) {
 		el.addEventListener('click', () => {
-			const modal = new Modal();
+			const modal = new Modal('admin-user-edit');
 			const url = runtime.route('joona.user.edit', {
 				id: parameters.id || 0,
 			});

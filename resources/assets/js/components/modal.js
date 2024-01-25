@@ -3,8 +3,9 @@ import BootstrapModal from 'bootstrap/js/dist/modal';
 import { addSpinner, removeSpinner } from '../helpers';
 
 export default class Modal {
-	constructor() {
+	constructor(id) {
 		this.eventListeners = new Map();
+		this.id = id;
 	}
 
 	on(event, callback) {
@@ -64,6 +65,10 @@ export default class Modal {
 						'modal-dialog-centered',
 						'modal-dialog-scrollable'
 					);
+
+					if (this.id) {
+						modalDialogEl.classList.add(`modal-dialog--${this.id}`);
+					}
 
 					modalEl.appendChild(modalDialogEl);
 

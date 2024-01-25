@@ -101,6 +101,10 @@
 		}
 	}
 
+	&.modal-dialog--admin-user-edit {
+		max-width: 35rem;
+	}
+
 	@include media-breakpoint-down(md) {
 		margin: 0;
 		height: 100%;

@@ -73,4 +73,5 @@ return [
 		'login' => 'Logged in',
 		'logout' => 'Logged out',
 	],
+	'no_roles_created_to_assign' => 'No roles available to assign.',
 ];

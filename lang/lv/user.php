@@ -29,7 +29,7 @@ return [
 	'last_seen' => 'Manīts',
 	'last_ip' => 'Pēdējā IP',
 	'user_list_page_title' => 'Lietotāju pārvaldība',
-	'permissions_page_title' => 'Groupas un tiesības',
+	'permissions_page_title' => 'Grupas un tiesības',
 	'activity_log_page_title' => 'Notikumu žurnāls',
 	'user_not_found' => 'Lietotāja konts nav atrasts.',
 	'account_inactive' => 'Jūsu konts nav aktīvs.',
@@ -73,4 +73,5 @@ return [
 		'login' => 'Ielogojās',
 		'logout' => 'Izlogojās',
 	],
+	'no_roles_created_to_assign' => 'Nav nevienas lomas ko izvēlēties.',
 ];
