@@ -33,3 +33,15 @@
 		box-shadow: none;
 	}
 }
+
+@include color-mode(light) {
+	.btn.btn-outline-subtle {
+		@include button-outline-variant($gray-500, $gray-600, $gray-100, $gray-500);
+	}
+}
+
+@include color-mode(dark) {
+	.btn.btn-outline-subtle {
+		@include button-outline-variant($gray-600);
+	}
+}

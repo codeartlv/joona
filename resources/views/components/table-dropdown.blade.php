@@ -1,6 +1,6 @@
 @if (!empty($options))
 	<div class="dropdown">
-		<button class="btn btn-sm btn-outline-dark captionless" data-bs-toggle="dropdown">
+		<button class="btn btn-sm btn-outline-subtle captionless" data-bs-toggle="dropdown">
 			@icon('page_info')
 		</button>
 		<div class="dropdown-menu dropdown-menu-right">

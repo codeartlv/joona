@@ -184,36 +184,6 @@ class AdminUser extends Authenticatable
 	}
 
 	/**
-	 * Write action to journal
-	 *
-	 * @param string $action
-	 * @param string|int $object_id
-	 * @return void
-
-	public function logAction(string $action, $object_id = null)
-	{
-		$session = AdminSession::getActiveSession($this);
-
-		if (!$session) {
-			return false;
-		}
-
-
-		DB::table('admin_users_log')->insert([
-			'user_id' => $this->id,
-			'action' => $action,
-			'session_id' => $session->id,
-			'ua' => request()->header('User-Agent'),
-			'object_id' => $object_id ?: null,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s'),
-		]);
-
-
-		return true;
-	} */
-
-	/**
 	 * Sets password for user
 	 *
 	 * @param string $password
@@ -309,7 +279,8 @@ class AdminUser extends Authenticatable
 		}
 
 		if (!$user || array_key_exists('status', $attributes)) {
-			$rules['status'] = ['required', 'string'];
+			$status_keys = array_column(self::getStatuses(), 'value');
+			$rules['status'] = ['required', Rule::in($status_keys)];
 		}
 
 		if (!$user || array_key_exists('last_name', $attributes)) {
