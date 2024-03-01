@@ -37,6 +37,9 @@ return [
 		'et' => 'ee',
 	],
 
+	// Use embedded permission and role mechanism
+	'use_permissions' => true,
+
 	// Defines the admin password policy. Possible values, separated by commas:
 	// min:<int> - minimum password length
 	// max:<int> - length beyond which any password is considered secure

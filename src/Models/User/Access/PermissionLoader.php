@@ -140,12 +140,16 @@ class PermissionLoader
 	 */
 	public function validate(AdminUser $user, string $permission_name): bool
 	{
-		if (in_array($permission_name, $this->elevated_routes) && $user->level != AdminUser::LEVEL_ADMIN) {
-			return false;
+		if (!config('joona.use_permissions')) {
+			return true;
 		}
 
 		if ($user->level == AdminUser::LEVEL_ADMIN) {
 			return true;
+		}
+
+		if (in_array($permission_name, $this->elevated_routes) && $user->level != AdminUser::LEVEL_ADMIN) {
+			return false;
 		}
 
 		$available_perms = $user->permissions();

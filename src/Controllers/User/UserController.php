@@ -166,6 +166,10 @@ class UserController
 		$user_id = $request->post('id');
 		$available_roles = $admin->canManageRoles();
 
+		if (!config('joona.use_permissions')) {
+			$level = AdminUser::LEVEL_ADMIN;
+		}
+
 		$roles = array_intersect($roles, $available_roles);
 
 		if ($user_id) {

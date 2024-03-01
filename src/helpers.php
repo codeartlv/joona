@@ -115,6 +115,25 @@ function get_admin_menu(): array
 {
 	$user_menu = (array) config('joona.menu');
 
+	$settings = [];
+
+	$settings[] = [
+		'caption' => __('joona::common.menu.settings_users'),
+		'icon' => 'person',
+		'badge' => 0,
+		'route' => 'joona.user.list',
+		'active' => ['joona.user.activities']
+	];
+
+	if (config('joona.use_permissions')) {
+		$settings[] = [
+			'caption' => __('joona::common.menu.settings_permissions'),
+			'icon' => 'linked_services',
+			'badge' => 0,
+			'route' => 'joona.user.permission-groups',
+		];
+	}
+
 	$default_menu = [
 		'home' => [
 			'caption' => __('joona::common.menu.home'),
@@ -125,21 +144,7 @@ function get_admin_menu(): array
 			'caption' => __('joona::common.menu.settings'),
 			'icon' => 'tune',
 			'badge' => 0,
-			'childs' => [
-				[
-					'caption' => __('joona::common.menu.settings_users'),
-					'icon' => 'person',
-					'badge' => 0,
-					'route' => 'joona.user.list',
-					'active' => ['joona.user.activities']
-				],
-				[
-					'caption' => __('joona::common.menu.settings_permissions'),
-					'icon' => 'linked_services',
-					'badge' => 0,
-					'route' => 'joona.user.permission-groups',
-				]
-			]
+			'childs' => $settings
 		]
 	];
 

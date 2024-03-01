@@ -90,10 +90,15 @@ class JoonaServiceProvider extends \Illuminate\Support\ServiceProvider
 	{
 		$router = $this->app['router'];
 
-		$router->middlewareGroup('admin.auth', [
+		$auth_middlewares = [
 			\Codeart\Joona\Middleware\Authenticate::class,
-			\Codeart\Joona\Middleware\CheckPermissions::class,
-		]);
+		];
+
+		if (config('joona.use_permissions')) {
+			$auth_middlewares[] = \Codeart\Joona\Middleware\CheckPermissions::class;
+		}
+
+		$router->middlewareGroup('admin.auth', $auth_middlewares);
 
 		$router->middlewareGroup('admin.web', [
 			\Codeart\Joona\Middleware\Locale::class,

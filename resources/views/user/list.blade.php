@@ -35,7 +35,9 @@
 					<th>@lang('joona::user.last_name')</th>
 					<th>@lang('joona::user.email')</th>
 					<th>@lang('joona::user.status')</th>
-					<th>@lang('joona::user.groups')</th>
+					@if (config('joona.use_permissions'))
+						<th>@lang('joona::user.groups')</th>
+					@endif
 					<th>@lang('joona::user.last_seen')</th>
 					<th>@lang('joona::user.last_ip')</th>
 					<th></th>
@@ -73,16 +75,18 @@
 							<div class="table__mcaption">@lang('joona::user.status')</div>
 							<span class="badge bg-{{$user['status']=='active' ? 'success':'danger'}}">@lang('joona::user.status_names.'.$user['status'])</span>
 						</td>
-						<td>
-							<div class="table__mcaption">@lang('joona::user.groups')</div>
-							@if ($user['level'] == 'admin')
-								<span class="badge bg-danger">@lang('joona::user.level_names.admin')</span>
-							@else
-								@foreach ($user['roles'] as $role)
-								    <span class="badge rounded-pill text-bg-light">{{ $role['title'] }}</span>
-								@endforeach
-							@endif
-						</td>
+						@if (config('joona.use_permissions'))
+							<td>
+								<div class="table__mcaption">@lang('joona::user.groups')</div>
+								@if ($user['level'] == 'admin')
+									<span class="badge bg-danger">@lang('joona::user.level_names.admin')</span>
+								@else
+									@foreach ($user['roles'] as $role)
+										<span class="badge rounded-pill text-bg-light">{{ $role['title'] }}</span>
+									@endforeach
+								@endif
+							</td>
+						@endif
 						<td class="table__date">
 							<div class="table__mcaption">@lang('joona::user.last_seen')</div>
 							{{$user['logged_at'] ? date('d.m.Y H:i', strtotime($user['logged_at'])) : __('joona::common.never')}}
