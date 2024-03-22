@@ -18,7 +18,7 @@ export default class Uploader {
 			name: '',
 			fileOptions: {
 				remove: {
-					caption: window.Joona.lang('common.delete'),
+					caption: trans('joona::common.delete'),
 					icon: 'delete',
 					callback: (id, thumbnail) => {
 						this.deleteFile(id, thumbnail);
@@ -59,12 +59,17 @@ export default class Uploader {
 
 		this.name = this.params.name;
 		this.fileSelector.setAttribute('name', '');
-		this.fileSelector.parentNode.insertBefore(this.dataField, this.fileSelector.nextSibling);
+		this.fileSelector.parentNode.insertBefore(
+			this.dataField,
+			this.fileSelector.nextSibling
+		);
 
 		this.initSortable();
 		this.initUploader();
 
-		let images = parseJsonLd(this.element.querySelector('[data-role="data"]'));
+		let images = parseJsonLd(
+			this.element.querySelector('[data-role="data"]')
+		);
 
 		if (images.length) {
 			this.setImages(images);
@@ -140,7 +145,9 @@ export default class Uploader {
 			filter: '.upload-area',
 			preventOnFilter: false,
 			onStart: () => {
-				freezed = [].slice.call(this.element.querySelectorAll('.upload-area'));
+				freezed = [].slice.call(
+					this.element.querySelectorAll('.upload-area')
+				);
 				positions = freezed.map(function (el) {
 					return Sortable.utils.index(el);
 				});
@@ -158,7 +165,10 @@ export default class Uploader {
 
 						if (list.children[idx] !== el) {
 							var realIdx = Sortable.utils.index(el);
-							list.insertBefore(el, list.children[idx + (realIdx < idx)]);
+							list.insertBefore(
+								el,
+								list.children[idx + (realIdx < idx)]
+							);
 						}
 					});
 				}, 0);
@@ -253,7 +263,9 @@ export default class Uploader {
 
 	// Generates new file thumbnail
 	createThumbnail() {
-		let template = this.element.querySelector('template[data-role="thumbnail"]');
+		let template = this.element.querySelector(
+			'template[data-role="thumbnail"]'
+		);
 
 		let thumbnail = template.content.cloneNode(true);
 
@@ -290,7 +302,7 @@ export default class Uploader {
 
 	deleteFile(id, thumbnail) {
 		if (id) {
-			let url = window.Joona.route(this.params.deleteroute);
+			let url = route(this.params.deleteroute);
 
 			let csrfToken = document
 				.querySelector('meta[name="csrf-token"]')
@@ -406,12 +418,14 @@ export default class Uploader {
 
 		this.bindEvents(thumbnail);
 
-		let url = window.Joona.route(this.params.uploadroute);
+		let url = route(this.params.uploadroute);
 
 		let ajax = new XMLHttpRequest();
 		ajax.open('POST', url);
 
-		let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+		let csrfToken = document
+			.querySelector('meta[name="csrf-token"]')
+			.getAttribute('content');
 		ajax.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 
 		ajax.upload.addEventListener('progress', function (e) {
@@ -429,7 +443,8 @@ export default class Uploader {
 
 			if (response.error) {
 				thumbnail.classList.add('error');
-				thumbnail.querySelector('[data-role="message"]').innerText = response.message;
+				thumbnail.querySelector('[data-role="message"]').innerText =
+					response.message;
 			} else {
 				thumbnail.classList.add('success');
 				thumbnail.dataset.id = response.id;

@@ -24,4 +24,5 @@ return [
 	'filter' => 'Filtrēt',
 	'delete' => 'Dzēst',
 	'close' => 'Aizvērt',
+	'select_files' => 'Izvēlēties failus',
 ];

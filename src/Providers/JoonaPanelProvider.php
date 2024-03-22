@@ -182,6 +182,7 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			'alert' => \Codeart\Joona\View\Components\Alert::class,
 			'password-validator' => \Codeart\Joona\View\Components\PasswordValidator::class,
 			'datepicker' => \Codeart\Joona\View\Components\Datepicker::class,
+			'uploader' => \Codeart\Joona\View\Components\Uploader\Uploader::class,
 		];
 
 		foreach ($components as $name => $class) {
@@ -368,6 +369,7 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			'joona::common.ok',
 			'joona::common.cancel',
 			'joona::common.error',
+			'joona::common.delete',
 		], $userKeys);
 
 		$panel = resolve('joona.panel');
