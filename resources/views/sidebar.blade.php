@@ -2,7 +2,7 @@
 
 @section('header_nav')
 	<li class="header-nav__sidebar-trigger header-nav__rounded">
-		<a href="javascript:;" data-bind="admin.toggle-sidebar" data-sidebar="#sidebar">
+		<a href="javascript:;" x-data="adminToggleSidebar" data-sidebar="#sidebar">
 			<figure>
 				@icon('menu_open')
 			</figure>
@@ -13,7 +13,7 @@
 @section('content_main')
 	<div class="content with-sidebar">
 		<div class="content__sidebar" id="sidebar">
-			<div class="content__sidebar-inner" data-bind="admin.sidebar">
+			<div class="content__sidebar-inner" x-data="adminSidebar">
 				@yield('sidebar')
 			</div>
 		</div>

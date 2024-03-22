@@ -101,7 +101,7 @@
 				border-right: none;
 				position: fixed;
 				width: 100%;
-				height: $vh100;
+				height: 100svh;
 				transition: transform 180ms ease-out;
 				transform: translateX(-100%);
 				pointer-events: none;
@@ -126,11 +126,11 @@
 
 @include color-mode(dark) {
 	.content {
-		background: var(--bs-gray-900);
+		background: var(--bs-gray-950);
 
 		.content__panel {
 			background:transparent;
-			background: var(--bs-gray-950);
+			background: var(--bs-gray-900);
 		}
 
 		&.with-sidebar {

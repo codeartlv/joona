@@ -4,8 +4,6 @@ return [
 	'app_title' => 'Admin panel',
 	'admin_caption' => 'Backend control',
 	'throttle' => 'Too many request attempts. Please try again in :seconds seconds.',
-	'color_theme_dark' => 'Dark theme',
-	'color_theme_light' => 'Light theme',
 	'id' => 'ID',
 	'save' => 'Save',
 	'records' => ':0 record|:0 records',
@@ -24,7 +22,6 @@ return [
 	'date_from' => 'Date from',
 	'date_to' => 'Date to',
 	'filter' => 'Filter',
-	'select_files' => 'Select files',
 	'delete' => 'Delete',
 	'close' => 'Close',
 ];

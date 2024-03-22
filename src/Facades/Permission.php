@@ -11,6 +11,6 @@ class Permission extends Facade
 	 */
 	protected static function getFacadeAccessor()
 	{
-		return 'JoonaPermissionLoader';
+		return 'joona.permission-loader';
 	}
 }

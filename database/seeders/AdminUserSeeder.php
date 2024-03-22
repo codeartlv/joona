@@ -2,22 +2,26 @@
 
 namespace Codeart\Joona\Database\Seeders;
 
+use Codeart\Joona\Enums\UserLevel;
+use Codeart\Joona\Models\User\AdminUser;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Codeart\Joona\Models\User\AdminUser;
 
 class AdminUserSeeder extends Seeder
 {
+	/**
+	 * Run the database seeder
+	 *
+	 * @return void
+	 */
 	public function run(): void
 	{
 		AdminUser::create([
-			'username' => 'admin',
 			'password' => Hash::make('password'),
 			'first_name' => 'Default',
 			'last_name' => 'User',
 			'email' => 'admin@localhost',
-			'status' => AdminUser::STATUS_ACTIVE,
-			'level' => AdminUser::LEVEL_ADMIN,
+			'level' => UserLevel::Admin,
 		]);
 	}
 }

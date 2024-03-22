@@ -23,16 +23,65 @@ export default class Datepicker {
 	}
 
 	init() {
+		let locales = {
+			en: localeEn,
+			lv: {
+				days: [
+					'Svētdiena',
+					'Pirmdiena',
+					'Otrdiena',
+					'Trešdiena',
+					'Ceturtdiena',
+					'Piektdiena',
+					'Sestdiena',
+				],
+				daysShort: ['Sve', 'Pr', 'Otr', 'Tre', 'Cet', 'Pt', 'Ses'],
+				daysMin: ['Sv', 'Pr', 'Ot', 'Tr', 'Ct', 'Pt', 'Se'],
+				months: [
+					'Janvāris',
+					'Februāris',
+					'Marts',
+					'Aprīlis',
+					'Maijs',
+					'Jūnijs',
+					'Jūlijs',
+					'Augusts',
+					'Septembris',
+					'Oktobris',
+					'Novembris',
+					'Decembris',
+				],
+				monthsShort: [
+					'Jan',
+					'Feb',
+					'Mar',
+					'Apr',
+					'Mai',
+					'Jūn',
+					'Jūl',
+					'Aug',
+					'Sep',
+					'Okt',
+					'Nov',
+					'Dec',
+				],
+				today: 'Šodien',
+				clear: 'Notīrīt',
+				dateFormat: 'dd.mm.yyyy',
+				timeFormat: 'hh:mm aa',
+				firstDay: 1,
+			},
+		};
+
 		const settings = {
-			language: localeEn,
+			locale: window.locale in locales ? locales[window.locale] : locales['en'],
 			range: this.params.range,
 			autoClose: true,
 			position: this.params.position,
 			multipleDatesSeparator: this.params.dateSeparator,
 			dateFormat: this.params.format,
 			timepicker: this.params.timepicker,
-			altFieldDateFormat:
-				'yyyy-MM-dd' + (this.params.timepicker ? ' hh:ii:00' : ''),
+			altFieldDateFormat: 'yyyy-MM-dd' + (this.params.timepicker ? ' hh:ii:00' : ''),
 			altField: this.valueField,
 		};
 
@@ -51,15 +100,11 @@ export default class Datepicker {
 				if (parts.length > 1) {
 					var from = moment(
 						parts[0],
-						settings.altFieldDateFormat
-							.toUpperCase()
-							.replaceAll('I', 'm')
+						settings.altFieldDateFormat.toUpperCase().replaceAll('I', 'm')
 					);
 					var to = moment(
 						parts[1],
-						settings.altFieldDateFormat
-							.toUpperCase()
-							.replaceAll('I', 'm')
+						settings.altFieldDateFormat.toUpperCase().replaceAll('I', 'm')
 					);
 
 					if (from.isValid() && to.isValid()) {
@@ -67,9 +112,7 @@ export default class Datepicker {
 					}
 				}
 			} else {
-				var format = settings.altFieldDateFormat
-					.toUpperCase()
-					.replaceAll('I', 'm');
+				var format = settings.altFieldDateFormat.toUpperCase().replaceAll('I', 'm');
 				var date = moment(value, format);
 
 				if (date.isValid()) {

@@ -1,7 +1,6 @@
 <?php
 
 return [
-	'username' => 'Username',
 	'password' => 'Password',
 	'change_password' => 'Change password',
 	'first_name' => 'First name',
@@ -13,17 +12,12 @@ return [
 	'current_password' => 'Current password',
 	'new_password' => 'New password',
 	'level' => 'Level',
-	'status' => 'Status',
 	'create_new' => 'Create new user',
 	'create_user_caption' => 'Create user',
 	'edit_user_caption' => 'Edit user',
 	'level_names' => [
 		'admin' => 'Administrator',
 		'user' => 'User',
-	],
-	'status_names' => [
-		'active' => 'Active',
-		'blocked' => 'Blocked',
 	],
 	'groups' => 'Groups',
 	'last_seen' => 'Last seen',
@@ -32,7 +26,6 @@ return [
 	'permissions_page_title' => 'Groups and permissions',
 	'activity_log_page_title' => 'Activity log',
 	'user_not_found' => 'User not found.',
-	'account_inactive' => 'Your account is not active.',
 	'mail_subject_new_password' => 'A password has been set for you account',
 	'edit_user_label_basic_data' => 'Basic data',
 	'edit_user_label_permissions' => 'Permissions',
@@ -65,13 +58,17 @@ return [
 	'report_choose_user_and_date_range' => 'Please select user and date range.',
 	'report_no_sessions' => 'No sessions found.',
 	'user' => 'User',
-	'session_end_reason_logout' => 'Logged out',
-	'session_end_reason_auto' => 'Ended',
-	'session_end_reason_stopped' => 'No activity',
 	'activity_log' => 'Activity log',
 	'log_entries' => [
 		'login' => 'Logged in',
 		'logout' => 'Logged out',
 	],
 	'no_roles_created_to_assign' => 'No roles available to assign.',
+	'ungrouped_permissions' => 'No group',
+	'session_end_reason_logout' => 'Session ended by user',
+	'role_saved' => 'Role saved.',
+	'admin-users-permissions' => 'Administration access',
+	'permission_user_activities' => 'View user journal',
+	'permission_manage_admin_users' => 'Manage admin users',
+	'permission_view_admin_users' => 'View admin users',
 ];

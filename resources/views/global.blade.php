@@ -10,11 +10,17 @@
 			@endif
 			{{ config('app.name', 'Laravel') }} - @lang('joona::common.app_title')
 		</title>
-		<meta name="csrf-token" content="{{ csrf_token() }}" />
-		<script>
-			const DATA_URL = '{{route('joona.get-data')}}';
+		<script data-role="js-translations" type="application/ld+json">
+			@json($translations)
 		</script>
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
+
+		@routes
+
+		@vite($vite_resources)
+
 		@yield('html_head')
+
 		@include('joona::head')
     </head>
 	<body>

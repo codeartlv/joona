@@ -1,4 +1,4 @@
-<div class="password-validator" data-bind="components.password-validator" data-policy="{{$policy}}">
+<div class="password-validator" x-data="passwordValidator" data-policy="{{$policy}}">
 	<div class="input-group">
 		<input class="form-control" type="password" data-role="password-validator.password-input" name="{{$name}}" autocomplete="new-password" />
 		<a href="javascript:;" data-role="password-validator.toggle-visbility" class="input-group-icon">

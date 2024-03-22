@@ -49,6 +49,7 @@ export default class Modal {
 
 				let modalEl;
 				let modalDialogEl;
+				let modalDialogContent;
 
 				if (typeof urlOrElement == 'string') {
 					modalEl = document.createElement('div');
@@ -90,9 +91,11 @@ export default class Modal {
 					const backdropEl = this.modalInstance._backdrop._getElement();
 					removeSpinner(backdropEl);
 
-					resolve(modalEl);
+					if (modalDialogContent) {
+						modalDialogEl.innerHTML = modalDialogContent;
+					}
 
-					window.Joona.init(modalEl);
+					resolve(modalEl);
 				});
 
 				modalEl.addEventListener('hidden.bs.modal', () => {
@@ -103,13 +106,13 @@ export default class Modal {
 					modalEl.remove();
 				});
 
-				this.modalInstance.show();
-
 				if (typeof urlOrElement == 'string') {
 					axios
 						.get(urlOrElement)
 						.then((response) => {
-							modalDialogEl.innerHTML = response.data;
+							modalDialogContent = response.data;
+
+							this.modalInstance.show();
 						})
 						.catch((e) => {
 							modalDialogEl.innerHTML = `
@@ -130,6 +133,8 @@ export default class Modal {
 
 							reject();
 						});
+				} else {
+					this.modalInstance.show();
 				}
 			};
 

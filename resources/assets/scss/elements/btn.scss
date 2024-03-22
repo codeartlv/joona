@@ -7,6 +7,8 @@
 	> i {
 		margin-right:$spacer*0.5;
 		font-size: 1em;
+		display: inline-block;
+		transform: scale(1.25);
 	}
 
 	&.btn-block {

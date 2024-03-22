@@ -33,3 +33,7 @@ Public release.
 
 - Added Alert component
 - Small bug fixes.
+
+## [1.1.0] - 2024-03-08
+
+- Rewrite how pages and permissions are registered in application. Got rid of config files, now configuration is done via extended service provider.

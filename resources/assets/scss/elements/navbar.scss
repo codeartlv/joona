@@ -7,6 +7,7 @@
 
 	&.bottom {
 		bottom: 0;
+		border-top:solid 1px transparent;
 	}
 
 	.navbar-nav {
@@ -21,10 +22,19 @@
 	}
 }
 
+@include color-mode(light) {
+	.navbar {
+		&.bottom {
+			box-shadow: $box-shadow-sm-top;
+		}
+	}
+}
+
 @include color-mode(dark) {
 	.navbar {
 		&.bottom {
-			background-color:var(--bs-gray-950);
+			background-color:var(--bs-gray-900);
+			border-top:solid 1px $gray-800;
 		}
 	}
 }

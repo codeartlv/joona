@@ -1,20 +1,21 @@
 .air-datepicker {
 	border-radius:0;
 	font-family:$font-family-base;
+	background:var(--bs-body-bg);
 
 	.air-datepicker-nav {
 		border-bottom:none;
 	}
 
 	.air-datepicker-nav--title {
-		color:var(--bs-secondary);
+		color:var(--bs-primary);
 
 		&:hover {
 			background:var(--bs-gray-100);
 		}
 
 		> i {
-			color:var(--bs-secondary);
+			color:var(--bs-primary);
 		}
 	}
 
@@ -34,7 +35,7 @@
 		border-radius:0 !important;
 
 		&.-in-range- {
-			background:lighten($secondary,45%);
+			background:lighten($primary,45%);
 		}
 
 		&.-day- {
@@ -53,22 +54,22 @@
 		}
 
 		&.-selected- {
-			background:var(--bs-secondary);
+			background:var(--bs-primary);
 			color:var(--bs-body-bg);
 		}
 
 		&.-range-to-,
 		&.-focus- {
-			border-color:var(--bs-secondary);
-			background:lighten($secondary,45%);
+			border-color:var(--bs-primary);
+			background:lighten($primary,45%);
 		}
 
 		&.-range-to-.-selected- {
-			background:var(--bs-secondary);
+			background:var(--bs-primary);
 		}
 
 		&.-current- {
-			color:var(--bs-secondary);
+			color:var(--bs-primary);
 			font-weight:$font-weight-bold;
 		}
 
@@ -78,17 +79,23 @@
 
 		&.-current-.-selected-.-focus-,
 		&.-range-from-.-selected-.-focus- {
-			color:var(--bs-secondary);
+			color:var(--bs-primary);
 		}
 	}
 
 	.air-datepicker-nav--action {
-		color:var(--bs-secondary);
+		color:var(--bs-primary);
 		height:2.133em;
 		border-radius:0;
 
 		&:hover {
 			background:var(--bs-gray-200);
 		}
+	}
+}
+
+@include color-mode(dark) {
+	.air-datepicker {
+		border-color:var(--bs-input-border-color) !important;
 	}
 }

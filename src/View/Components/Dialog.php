@@ -9,7 +9,6 @@ class Dialog extends Component
 	public function __construct(
 		public string $caption = '',
 	) {
-
 	}
 
 	/**

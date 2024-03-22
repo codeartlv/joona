@@ -10,7 +10,7 @@
 					<div class="card-header">
 						@lang('joona::user.permissions.roles')
 						<span>
-							<a href="javascript:;" class="btn btn-xs btn-outline-primary" data-bind="admin.role-edit" data-id="0">
+							<a href="javascript:;" class="btn btn-xs btn-outline-primary" x-data="adminRoleEdit" data-id="0">
 								<i class="material-symbols-outlined">group_add</i>
 								@lang('joona::user.permissions.add_role')
 							</a>
@@ -24,12 +24,12 @@
 										{{$role['title']}}
 									</a>
 									<nav>
-										<a href="javascript:;" data-bind="admin.role-edit" data-id="{{$role['id']}}">
+										<a href="javascript:;" x-data="adminRoleEdit" data-id="{{$role['id']}}">
 											<i class="material-symbols-outlined">
 												edit
 											</i>
 										</a>
-										<a href="{{route('joona.user.permission-delete-role', ['id' => $role['id']])}}" data-bind="admin.confirm" data-message="@lang('joona::user.permissions.confirm_role_delete')">
+										<a href="{{route('joona.user.permission-delete-role', ['id' => $role['id']])}}" x-data="confirm" data-message="@lang('joona::user.permissions.confirm_role_delete')">
 											<i class="material-symbols-outlined">
 												delete
 											</i>
@@ -47,24 +47,24 @@
 			</div>
 			<div class="col-12 col-md-9">
 				@if ($role_id)
-					<x-joona-form action="{{route('joona.user.permission-save')}}">
+					<x-form action="{{route('joona.user.permission-save')}}">
 						<input type="hidden" name="role_id" value="{{$role_id}}" />
 						<div class="card">
 							<div class="card-header">@lang('joona::user.permissions.permissions')</div>
 							<div class="card-body">
 								<div data-role="form.response"></div>
 
-								@foreach ($permissions as $group => $page_permissions)
+								@foreach ($permissions as $group)
 									<div class="form-split">
-										<span>{{__('joona::permissions.group_'.$group)}}</span>
+										<span>{{$group['label']}}</span>
 									</div>
 
 									<div class="form-group">
-										@foreach ($page_permissions as $page_permission)
+										@foreach ($group['permissions'] as $permission)
 											<div class="form-check">
-												<input class="form-check-input" name="permissions[]" {{in_array($page_permission->getId(), $selected) ? 'checked':''}} type="checkbox" value="{{$page_permission->getId()}}" id="{{$page_permission->getId()}}">
-												<label class="form-check-label" for="{{$page_permission->getId()}}">
-													{{$page_permission->getTitle()}}
+												<input class="form-check-input" name="permissions[]" {{in_array($permission['id'], $selected) ? 'checked':''}} type="checkbox" value="{{$permission['id']}}" id="p{{$permission['id']}}">
+												<label class="form-check-label" for="p{{$permission['id']}}">
+													{{$permission['label']}}
 												</label>
 											</div>
 										@endforeach
@@ -72,10 +72,10 @@
 								@endforeach
 							</div>
 							<div class="card-footer">
-								<x-joona-button :caption="__('joona::common.save')" icon="check" />
+								<x-button :caption="__('joona::common.save')" icon="check" />
 							</div>
 						</div>
-					</x-joona-form>
+					</x-form>
 				@else
 					<div class="alert alert-info">@lang('joona::user.permissions.no_role_selected')</div>
 				@endif

@@ -11,15 +11,15 @@
 	</ul>
 	<ul class="navbar-nav">
 		<li class="nav-item">
-			<x-joona-paginator :total="$total" :size="$size" />
+			<x-paginator :total="$total" :size="$size" />
 		</li>
 	</ul>
 </div>
 @endsection
 
 @section('controls')
-	@can('manage_admin_users')
-		<x-joona-button :caption="__('joona::user.create_new')" icon="person_add" :attr="['data-bind' => 'admin.user-edit', 'data-id' => 0]" />
+	@can('admin_edit_users')
+		<x-button :caption="__('joona::user.create_new')" icon="person_add" :attr="['x-data' => 'adminUserEdit', 'data-id' => 0]" />
 	@endif
 @endsection
 
@@ -30,12 +30,10 @@
 			<thead>
 				<tr>
 					<th>@lang('joona::common.id')</th>
-					<th>@lang('joona::user.username')</th>
+					<th>@lang('joona::user.email')</th>
 					<th>@lang('joona::user.first_name')</th>
 					<th>@lang('joona::user.last_name')</th>
-					<th>@lang('joona::user.email')</th>
-					<th>@lang('joona::user.status')</th>
-					@if (config('joona.use_permissions'))
+					@if ($uses_permissions)
 						<th>@lang('joona::user.groups')</th>
 					@endif
 					<th>@lang('joona::user.last_seen')</th>
@@ -52,11 +50,11 @@
 						</td>
 
 						<td>
-							<div class="table__mcaption">@lang('joona::user.username')</div>
-							@if ($user['can_manage'] && Gate::allows('manage_admin_users'))
-								<a href="javascript:;" data-bind="admin.user-edit" data-id="{{$user['id']}}">{{$user['username']}}</a>
+							<div class="table__mcaption">@lang('joona::user.email')</div>
+							@if ($user['can_manage'] && Gate::allows('admin_edit_users'))
+								<a href="javascript:;" x-data="adminUserEdit" data-id="{{$user['id']}}">{{$user['email']}}</a>
 							@else
-								{{$user['username']}}
+								{{$user['email']}}
 							@endif
 						</td>
 						<td>
@@ -67,15 +65,7 @@
 							<div class="table__mcaption">@lang('joona::user.last_name')</div>
 							{{$user['last_name']}}
 						</td>
-						<td>
-							<div class="table__mcaption">@lang('joona::user.email')</div>
-							{{$user['email']}}
-						</td>
-						<td>
-							<div class="table__mcaption">@lang('joona::user.status')</div>
-							<span class="badge bg-{{$user['status']=='active' ? 'success':'danger'}}">@lang('joona::user.status_names.'.$user['status'])</span>
-						</td>
-						@if (config('joona.use_permissions'))
+						@if ($uses_permissions)
 							<td>
 								<div class="table__mcaption">@lang('joona::user.groups')</div>
 								@if ($user['level'] == 'admin')
@@ -97,17 +87,17 @@
 						</td>
 						<td class="table__options">
 							@php
-							$options = [];
+								$options = [];
 							@endphp
 
-							@can('joona.user.activities')
-							@php
-							$options[] = [
-								'caption' => __('joona::user.activity_log'),
-								'icon' => 'browse_activity',
-								'href' => route('joona.user.activities', ['user_id' => $user['id']])
-							]
-							@endphp
+							@can('admin_view_userlog')
+								@php
+								$options[] = [
+									'caption' => __('joona::user.activity_log'),
+									'icon' => 'browse_activity',
+									'href' => route('joona.user.activities', ['user_id' => $user['id']])
+								]
+								@endphp
 							@endif
 
 							@include('joona::components/table-dropdown', [

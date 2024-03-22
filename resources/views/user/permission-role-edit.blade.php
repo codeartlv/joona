@@ -1,16 +1,17 @@
-<x-joona-form :action="route('joona.user.permission-save-role')" class="modal-content" focus="title">
+<x-form :action="route('joona.user.permission-save-role')" class="modal-content" focus="title">
 	<input type="hidden" name="id" value="{{$id}}" />
 
-	<x-joona-dialog :caption="__('joona::user.permissions.edit_role')">
+	<x-dialog :caption="__('joona::user.permissions.edit_role')">
 		<div data-role="form.response"></div>
 
 		<div class="block">
-			<x-joona-form-group required="true" :label="__('joona::user.permissions.role_name')">
+			<div class="form-group">
+				<label class="required">@lang('joona::user.permissions.role_name')</label>
 				<input class="form-control" name="title" maxlength="55" type="text" value="{{$title ?? ''}}" />
-			</x-joona-form-group>
+			</div>
 		</div>
 		<x-slot name="footer">
-			<x-joona-button :caption="__('joona::common.save')" icon="check" />
+			<x-button :caption="__('joona::common.save')" icon="check" />
 		</x-slot>
-	</x-joona-dialog>
-</x-joona-form>
+	</x-dialog>
+</x-form>

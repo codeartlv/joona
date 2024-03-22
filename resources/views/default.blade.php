@@ -4,7 +4,7 @@
 	<main class="layout layout-default">
 		<aside class="main-menu" data-bs-theme="dark">
 			<div class="main-menu__logo">
-				<img src="{{config('joona.app_logo')}}" />
+				<img src="{{$logo}}" />
 				<span>
 					{{ config('app.name', 'Laravel') }}
 					<small>@lang('joona::common.admin_caption')</small>
@@ -16,7 +16,6 @@
 				</div>
 			</div>
 		</aside>
-
 
 		<div id="mobile-menu" class="offcanvas offcanvas-mobile-menu offcanvas-end offcanvas-md">
 			<div class="offcanvas-header">
@@ -34,12 +33,15 @@
 				<div class="container-fluid">
 					<div class="main-header__content">
 						<section class="main-header__first-sec">
-							<img class="main-header__logo" src="{{config('joona.app_logo')}}" />
+							<img class="main-header__logo" src="{{$logo}}" />
 						</section>
 						<section class="main-header__menu">
 							<section class="main-header__side-nav">
 								<ul class="header-nav">
-									<li class="header-nav__name">{{$username}}</li>
+									<li class="header-nav__name">
+										<strong>{{$name}}</strong>
+										{{$email}}
+									</li>
 
 									@if (!empty($languages) && count($languages) > 1)
 										<li class="dropdown header-nav__rounded">
@@ -63,21 +65,21 @@
 										</li>
 									@endif
 									<li class="header-nav__rounded">
-										<a href="javascript:;" data-bind="admin.edit-my-profile">
-											<figure>
-												@icon('person_edit')
-											</figure>
-										</a>
-									</li>
-									<li class="header-nav__rounded">
-										<a href="javascript:;" data-dark-icon="dark_mode" data-light-icon="light_mode" data-bind="admin.color-theme-switch">
+										<a href="javascript:;" data-dark-icon="dark_mode" data-light-icon="light_mode" x-data="adminColorThemeSwitch()" @click="changeTheme()">
 											<figure>
 												<i data-role="icon" class="material-symbols-outlined">{{$theme == 'dark' ? 'light_mode':'dark_mode'}}</i>
 											</figure>
 										</a>
 									</li>
+									<li class="header-nav__rounded">
+										<a href="javascript:;" x-data="adminEditMyProfile()">
+											<figure>
+												@icon('person_edit')
+											</figure>
+										</a>
+									</li>
 									<li class="header-nav__lock header-nav__rounded">
-										<a href="{{route('joona.user.auth-logout')}}">
+										<a href="{{route('joona.user.logout')}}">
 											<figure>
 												@icon('lock')
 											</figure>

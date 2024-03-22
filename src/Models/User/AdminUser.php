@@ -3,28 +3,20 @@
 namespace Codeart\Joona\Models\User;
 
 use Codeart\Joona\Contracts\Result;
-use Codeart\Joona\Models\User\Access\Role;
-use Codeart\Joona\Models\User\Access\UserRole;
+use Codeart\Joona\Enums\UserLevel;
 use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\Models\User\Log\LogEvent;
+use Codeart\Joona\Models\User\Access\Role;
+use Codeart\Joona\Models\User\Access\UserRole;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use \ReflectionClass;
+use Illuminate\Support\Facades\Validator;
 
 class AdminUser extends Authenticatable
 {
-	const LEVEL_ADMIN = 'admin';
-	const LEVEL_USER = 'user';
-
-	const STATUS_ACTIVE = 'active';
-	const STATUS_BLOCKED = 'blocked';
-
-	use HasFactory;
+	use SoftDeletes;
 
 	/**
 	 * Models associated table
@@ -39,13 +31,12 @@ class AdminUser extends Authenticatable
 	 * @var array<int, string>
 	 */
 	protected $fillable = [
-		'username',
+		'email',
 		'password',
 		'first_name',
 		'last_name',
-		'email',
 		'level',
-		'status',
+		'class',
 		'logged_at',
 		'logged_ip',
 	];
@@ -67,98 +58,6 @@ class AdminUser extends Authenticatable
 	protected $casts = [
 		'password' => 'hashed',
 	];
-
-	public function roles()
-	{
-		return $this->belongsToMany(Role::class)->using(UserRole::class);
-	}
-
-	public function setRoles(array $roles)
-	{
-		$this->roles()->sync($roles);
-	}
-
-	public function permissions(): array
-	{
-		$permissions = collect();
-
-		foreach ($this->roles as $role) {
-			$permissions = $permissions->merge($role->permissions()->pluck('permission'));
-		}
-
-		return $permissions->unique()->all();
-	}
-
-	public static function getStatuses(): array
-	{
-		$reflection = new ReflectionClass(static::class);
-		$constants = $reflection->getConstants();
-
-		$filtered = array_filter(array_keys($constants), function ($constant) {
-			return strncmp($constant, 'STATUS_', 7) === 0;
-		});
-
-		return array_map(function ($status_name) use ($constants) {
-			$value = $constants[$status_name];
-
-			return [
-				'value' => $value,
-				'caption' => __('joona::user.status_names.'.$value)
-			];
-		}, $filtered);
-	}
-
-	public static function getLevels(): array
-	{
-		$reflection = new ReflectionClass(static::class);
-		$constants = $reflection->getConstants();
-
-		$filtered = array_filter(array_keys($constants), function ($constant) {
-			return strncmp($constant, 'LEVEL_', 6) === 0;
-		});
-
-		return array_map(function ($level_name) use ($constants) {
-			$value = $constants[$level_name];
-			return [
-				'value' => $value,
-				'caption' => __('joona::user.level_names.'.$value)
-			];
-		}, $filtered);
-	}
-
-	public function canManageRoles(): array
-	{
-		$all_roles = Role::all()->pluck('id')->toArray();
-
-		if ($this->level == self::LEVEL_ADMIN) {
-			return $all_roles;
-		}
-
-		return $this->roles()->get()->pluck('id')->toArray();
-	}
-
-	public function canManageLevels(): array
-	{
-		if ($this->level == self::LEVEL_ADMIN) {
-			return [self::LEVEL_ADMIN, self::LEVEL_USER];
-		}
-
-		return [self::LEVEL_USER];
-	}
-
-	public function canBeManagedBy(AdminUser $user): bool
-	{
-		if ($user->level == self::LEVEL_ADMIN) {
-			// Admins can modify any user
-			return true;
-		} elseif ($user->level != self::LEVEL_ADMIN && $this->level != self::LEVEL_ADMIN) {
-			// Non-admins can modify other non-admins
-			return true;
-		}
-
-		return false;
-	}
-
 
 	public function logEvent(LogEvent $event, string $object_id = null): ?LogEntry
 	{
@@ -183,15 +82,143 @@ class AdminUser extends Authenticatable
 		return $entry;
 	}
 
+	public static function createOrUpdate(array $attributes, AdminUser $user = null, Result $result = null)
+	{
+		$result =  $result ?: new Result();
+
+		$rules = [
+
+		];
+
+		if (!$user || array_key_exists('first_name', $attributes)) {
+			$rules['first_name'] = ['required', 'string', 'max:55'];
+		}
+
+		if (!$user || array_key_exists('level', $attributes)) {
+			$rules['level'] = ['required', 'string'];
+		}
+
+
+		if (!$user || array_key_exists('last_name', $attributes)) {
+			$rules['last_name'] = ['required', 'string', 'max:55'];
+		}
+
+		if (!$user || array_key_exists('email', $attributes)) {
+			$rules['email'] = ['required', 'string', 'email', 'max:128'];
+
+			if ($user) {
+				$rules['email'][] = Rule::unique('admin_users')->ignore($user->id);
+			}
+
+			if (!$user) {
+				$rules['email'][] = 'unique:admin_users';
+			}
+
+			$attributes['email'] = strtolower($attributes['email']);
+		}
+
+		if (!$user || array_key_exists('password', $attributes)) {
+			$rules['password'] = ['required', 'string'];
+		}
+
+		$validator = Validator::make($attributes, $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->errors()->messages();
+			$result->setErrors($messages);
+		}
+
+		if (isset($attributes['password']) && !self::isSecurePassword($attributes['password'])) {
+			$result->setError(__('joona::validation.password.unsecure'), 'password');
+		}
+
+		if ($result->hasError()) {
+			return $result;
+		}
+
+		if (!$user) {
+			try {
+				$user = self::create($attributes);
+				$user->setPassword($attributes['password']);
+			} catch (\Exception $e) {
+				$result->setError(__('joona::common.failed_to_create'));
+				return $result;
+			}
+		} else {
+			if (isset($attributes['password'])) {
+				$user->setPassword($attributes['password']);
+			}
+
+			$user->update($attributes);
+		}
+
+		$result->addData('user', $user);
+		return $result;
+	}
+
+	public function roles()
+	{
+		return $this->belongsToMany(Role::class)->using(UserRole::class);
+	}
+
+	public function setRoles(array $roles)
+	{
+		$this->roles()->sync($roles);
+	}
+
+	public function permissions(): array
+	{
+		$permissions = collect();
+
+		foreach ($this->roles as $role) {
+			$permissions = $permissions->merge($role->permissions()->pluck('permission'));
+		}
+
+		return $permissions->unique()->all();
+	}
+
+	public function canManageRoles(): array
+	{
+		$all_roles = Role::all()->pluck('id')->toArray();
+
+		if (UserLevel::from($this->level) == UserLevel::Admin) {
+			return $all_roles;
+		}
+
+		return $this->roles()->get()->pluck('id')->toArray();
+	}
+
+	public function canBeManagedBy(AdminUser $user): bool
+	{
+		if (UserLevel::from($user->level) == UserLevel::Admin) {
+			// Admins can modify any user
+			return true;
+		} elseif (UserLevel::from($user->level) != UserLevel::Admin && UserLevel::from($this->level) != UserLevel::Admin) {
+			// Non-admins can modify other non-admins
+			return true;
+		}
+
+		return false;
+	}
+
+	public function canManageLevels(): array
+	{
+		if (UserLevel::from($this->level) == UserLevel::Admin) {
+			return [UserLevel::Admin, UserLevel::User];
+		}
+
+		return [UserLevel::User];
+	}
+
 	/**
 	 * Sets password for user
 	 *
 	 * @param string $password
 	 * @return void
 	 */
-	public function setPassword($password): bool
+	public function setPassword($password, bool $force = false): bool
 	{
-		if ($this->isSecurePassword($password)) {
+		if ($this->isSecurePassword($password) || $force) {
 			$this->password = Hash::make($password);
 			return (bool) $this->save();
 		}
@@ -260,96 +287,5 @@ class AdminUser extends Authenticatable
 		}
 
 		return true;
-	}
-
-	public static function createOrUpdate(array $attributes, AdminUser $user = null, Result $result = null)
-	{
-		$result =  $result ?: new Result();
-
-		$rules = [
-
-		];
-
-		if (!$user || array_key_exists('first_name', $attributes)) {
-			$rules['first_name'] = ['required', 'string', 'max:55'];
-		}
-
-		if (!$user || array_key_exists('level', $attributes)) {
-			$rules['level'] = ['required', 'string'];
-		}
-
-		if (!$user || array_key_exists('status', $attributes)) {
-			$status_keys = array_column(self::getStatuses(), 'value');
-			$rules['status'] = ['required', Rule::in($status_keys)];
-		}
-
-		if (!$user || array_key_exists('last_name', $attributes)) {
-			$rules['last_name'] = ['required', 'string', 'max:55'];
-		}
-
-		if (!$user || array_key_exists('email', $attributes)) {
-			$rules['email'] = ['required', 'string', 'email', 'max:128'];
-
-			if ($user) {
-				$rules['email'][] = Rule::unique('admin_users')->ignore($user->id);
-			} else {
-				$rules['email'][] = 'unique:admin_users';
-			}
-		}
-
-		if (!$user || array_key_exists('username', $attributes)) {
-			$rules['username'] = ['required', 'string', 'max:25'];
-
-			if ($user) {
-				$rules['username'][] = Rule::unique('admin_users')->ignore($user->id);
-			} else {
-				$rules['username'][] = 'unique:admin_users';
-			}
-
-			$attributes['username'] = Str::slug($attributes['username']);
-		}
-
-		if (!$user || array_key_exists('password', $attributes)) {
-			$rules['password'] = ['required', 'string'];
-		}
-
-		$validator = Validator::make($attributes, $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->errors()->messages();
-			$result->setErrors($messages);
-		}
-
-		if (isset($attributes['password']) && !self::isSecurePassword($attributes['password'])) {
-			$result->setError(__('joona::validation.password.unsecure'), 'password');
-		}
-
-		if ($result->hasError()) {
-			return $result;
-		}
-
-		if (!$user) {
-			try {
-				$user = self::create($attributes);
-				$user->setPassword($attributes['password']);
-			} catch (\Exception $e) {
-				$result->setError(__('joona::common.failed_to_create'));
-				return $result;
-			}
-		} else {
-			if (isset($attributes['password'])) {
-				$user->setPassword($attributes['password']);
-			}
-
-			$user->update($attributes);
-		}
-
-		$result->addData('user', $user);
-		return $result;
-	}
-
-	public function isActive(): bool
-	{
-		return $this->status == self::STATUS_ACTIVE;
 	}
 }

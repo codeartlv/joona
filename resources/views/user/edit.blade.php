@@ -1,13 +1,14 @@
-<x-joona-form :action="route('joona.user.save')">
+<x-form :action="route('joona.user.save')">
 	<input type="hidden" name="id" value="{{$fields['id']}}" />
-	<x-joona-dialog :caption="__($fields['id'] ? 'joona::user.edit_user_caption' : 'joona::user.create_user_caption')">
+	<x-dialog :caption="__($fields['id'] ? 'joona::user.edit_user_caption' : 'joona::user.create_user_caption')">
 
-		<div data-bind="admin.user-edit-form">
+		<div x-data="adminUserEditForm">
 			<div data-role="form.response"></div>
 
-			<x-joona-form-group required="true" :label="__('joona::user.username')">
-				<input class="form-control" name="username" maxlength="25" type="text" {{$fields['id'] ? 'disabled':''}} value="{{$fields['username'] ?? ''}}" />
-			</x-joona-form-group>
+			<div class="form-group">
+				<label class="required">@lang('joona::user.email')</label>
+				<input class="form-control" type="email" maxlength="128" name="email" value="{{$fields['email'] ?? ''}}" autocomplete="email" />
+			</div>
 
 			<div class="block">
 				<div class="form-split">
@@ -16,20 +17,20 @@
 
 				<div class="block row">
 					<div class="col-12 col-md-6">
-						<x-joona-form-group required="true" :label="__('joona::user.first_name')">
+						<div class="form-group">
+							<label class="required">@lang('joona::user.first_name')</label>
 							<input class="form-control" type="text" maxlength="55" name="first_name" value="{{$fields['first_name'] ?? ''}}" autocomplete="name" />
-						</x-joona-form-group>
+						</div>
 					</div>
 					<div class="col-12 col-md-6">
-						<x-joona-form-group required="true" :label="__('joona::user.last_name')">
+						<div class="form-group">
+							<label class="required">@lang('joona::user.last_name')</label>
 							<input class="form-control" type="text" maxlength="55" name="last_name" value="{{$fields['last_name'] ?? ''}}" autocomplete="family-name" />
-						</x-joona-form-group>
+						</div>
 					</div>
 				</div>
 
-				<x-joona-form-group required="true" :label="__('joona::user.email')">
-					<input class="form-control" type="email" maxlength="128" name="email" value="{{$fields['email'] ?? ''}}" autocomplete="email" />
-				</x-joona-form-group>
+
 			</div>
 
 			<div class="block">
@@ -37,24 +38,15 @@
 					<span>@lang('joona::user.edit_user_label_permissions')</span>
 				</div>
 
-				<x-joona-form-group required="true" :label="__('joona::user.status')">
-					<select class="form-select" name="status">
-						@foreach ($statuses as $status)
-							<option {{$status['value'] == $fields['status'] ? 'selected':''}} value="{{$status['value']}}">{{$status['caption']}}</option>
-						@endforeach
-					</select>
-				</x-joona-form-group>
-
-				@if (config('joona.use_permissions'))
-				<x-joona-form-group required="true" :label="__('joona::user.level')">
-					<select class="form-select" name="level" data-role="level-toggle">
-						@foreach ($levels as $level)
-							@if (in_array($level['value'], $available_levels))
-							<option {{$level['value'] == $fields['level'] ? 'selected':''}} value="{{$level['value']}}">{{$level['caption']}}</option>
-							@endif
-						@endforeach
-					</select>
-				</x-joona-form-group>
+				@if ($uses_permissions)
+					<div class="form-group">
+						<label class="required">@lang('joona::user.level')</label>
+						<select class="form-select" name="level" data-role="level-toggle">
+							@foreach ($available_levels as $level)
+								<option {{$level->value == $fields['level'] ? 'selected':''}} value="{{$level->value}}">{{$level->getLabel()}}</option>
+							@endforeach
+						</select>
+					</div>
 				@endif
 
 				<div class="form-group d-none mb-0" data-toggle="level" data-level="user">
@@ -69,7 +61,7 @@
 							</div>
 						@endforeach
 					@else
-						<x-joona-alert role="info" class="mb-0" :message="__('joona::user.no_roles_created_to_assign')" />
+						<x-alert role="info" class="mb-0" :message="__('joona::user.no_roles_created_to_assign')" />
 					@endif
 				</div>
 			</div>
@@ -104,13 +96,13 @@
 				</div>
 
 				<div class="d-none form-group mb-0 block" data-role="password-input">
-					<x-joona-password-validator name="password" policy="{{config('joona.admin_password_policy')}}" />
+					<x-password-validator name="password" policy="{{config('joona.admin_password_policy')}}" />
 				</div>
 			</div>
 		</div>
 
 		<x-slot name="footer">
-			<x-joona-button :caption="__('joona::common.save')" icon="check" />
+			<x-button :caption="__('joona::common.save')" icon="check" />
 		</x-slot>
-	</x-joona-dialog>
-</x-joona-form>
+	</x-dialog>
+</x-form>

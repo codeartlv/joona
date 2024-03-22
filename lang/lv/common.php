@@ -4,8 +4,6 @@ return [
 	'app_title' => 'Administrācija',
 	'admin_caption' => 'Satura vadība',
 	'throttle' => 'Pārāk daudz pieprasījumu. Lūdzu, mēģiniet vēlreiz pēc :seconds sekundēm.',
-	'color_theme_dark' => 'Tumšā tēma',
-	'color_theme_light' => 'Gaišā tēma',
 	'id' => 'ID',
 	'save' => 'Saglabāt',
 	'records' => ':0 ieraksti|:0 ieraksts',
@@ -24,7 +22,6 @@ return [
 	'date_from' => 'Datums no',
 	'date_to' => 'Datums līdz',
 	'filter' => 'Filtrēt',
-	'select_files' => 'Izvēlēties failus',
 	'delete' => 'Dzēst',
 	'close' => 'Aizvērt',
 ];

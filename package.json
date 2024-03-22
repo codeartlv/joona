@@ -17,14 +17,17 @@
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
 		"air-datepicker": "^3.4.0",
-		"bootstrap": "^5.3.2",
-		"material-symbols": "^0.14.3",
-		"perfect-scrollbar": "^1.5.5",
-		"sortablejs": "1.15.1",
-		"moment": "^2.30"
+		"alpinejs": "^3.13.7",
+		"axios": "^1.6.1",
+		"bootstrap": "^5.3",
+		"htmx.org": "^1.9.11",
+		"lang.js": "^1.1.14",
+		"material-symbols": "^0.14",
+		"moment": "^2.30",
+		"perfect-scrollbar": "^1.5",
+		"sortablejs": "1.15"
 	},
 	"devDependencies": {
-		"axios": "^1.6.1",
 		"rollup-plugin-copy": "^3.5.0",
 		"sass": "^1.69.5",
 		"vite": "^5.0.10",

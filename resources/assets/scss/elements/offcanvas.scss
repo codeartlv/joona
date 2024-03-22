@@ -2,7 +2,7 @@
 	&.offcanvas-mobile-menu {
 		--bs-offcanvas-width:100%;
 		--bs-offcanvas-bg:transparent;
-		height: $vh100;
+		height: 100svh;
 
 		border:none;
 		pointer-events: none;
@@ -23,6 +23,7 @@
 			height:100%;
 			overflow-y: auto;
 			overscroll-behavior: none;
+			padding:$spacer 0 0 0;
 		}
 
 		.offcanvas-body {

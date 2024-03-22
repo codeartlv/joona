@@ -17,19 +17,6 @@ export function removeSpinner(context) {
 	});
 }
 
-export function parseJsonLd(element) {
-	var jsonText = element.textContent;
-	var data = [];
-
-	try {
-		data = JSON.parse(jsonText);
-	} catch (errorText) {
-		data = {};
-	}
-
-	return data;
-}
-
 export function setButtonLoading(buttonElement) {
 	const buttonCaption = buttonElement.innerHTML;
 
@@ -53,28 +40,15 @@ export function unsetButtonLoading(buttonElement) {
 	delete buttonElement.dataset._title;
 }
 
-export function parseUrl(url, params) {
-	const matches = url.match(/{(.*?)}/g);
-	const usedParams = new Set();
+export function parseJsonLd(element) {
+	var jsonText = element.textContent;
+	var data = [];
 
-	if (matches) {
-		matches.forEach((match) => {
-			const key = match.slice(1, -1); // Removes the curly braces
-
-			if (params[key] !== undefined && params[key] !== null) {
-				url = url.replace(match, encodeURIComponent(params[key]));
-				usedParams.add(key);
-			}
-		});
+	try {
+		data = JSON.parse(jsonText);
+	} catch (errorText) {
+		data = {};
 	}
 
-	const getParams = Object.keys(params)
-		.filter((key) => !usedParams.has(key))
-		.map((key) => `${key}=${encodeURIComponent(params[key])}`);
-
-	if (getParams.length) {
-		url += '?' + getParams.join('&');
-	}
-
-	return url;
+	return data;
 }

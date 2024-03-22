@@ -13,7 +13,7 @@
 
 					<a class="collapsed {{$top_item['active'] ? 'active':''}}" data-bs-toggle="collapse" href="#menu-{{$key}}">
 						@icon($top_item['icon'])
-						<span>{{$top_item['caption']}}</span>
+						<span>{{__($top_item['caption'])}}</span>
 						@if ($total_badge > 0)
 							<span class="badge bg-primary">{{$total_badge}}</span>
 						@endif
@@ -22,12 +22,12 @@
 						<ul>
 							@foreach ($top_item['childs'] as $child_item)
 								<li class="nav-subitem">
-									<a class="{{$child_item['active'] ? 'active':''}}" href="{{route($child_item['route'])}}">
+									<a class="{{$child_item['active'] ? 'active':''}}" href="{{$child_item['url']}}">
 										@if ($child_item['icon'] ?? '')
 											@icon($child_item['icon'])
 										@endif
 
-										<span>{{$child_item['caption']}}</span>
+										<span>{{__($child_item['caption'])}}</span>
 										@if ($child_item['badge'] ?? 0)
 											<span class="badge bg-secondary">{{$child_item['badge']}}</span>
 										@endif
@@ -37,10 +37,12 @@
 						</ul>
 					</div>
 				@else
-					<a href="{{route($top_item['route'])}}" class="{{$top_item['active'] ? 'active':''}}">
-						@icon($top_item['icon'])
-						<span>{{$top_item['caption']}}</span>
-					</a>
+					@if ($top_item['url'])
+						<a href="{{$top_item['url']}}" class="{{$top_item['active'] ? 'active':''}}">
+							@icon($top_item['icon'])
+							<span>{{__($top_item['caption'])}}</span>
+						</a>
+					@endif
 				@endif
 			</li>
 		@endforeach

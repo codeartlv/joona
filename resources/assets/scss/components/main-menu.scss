@@ -21,6 +21,7 @@
 		width: 100%;
 		height: 100%;
 		overflow-y: scroll;
+		padding:$spacer 0 0 0;
 
 		&::-webkit-scrollbar {
 			width: 1px;
@@ -38,7 +39,7 @@
 	.main-menu__logo {
 		height: $desktop-header-height;
 		padding: $spacer $spacer * 1.5;
-		border-bottom: solid 1px rgba(255, 255, 255, 0.035);
+		border-bottom: solid 1px transparent;
 		color: var(--bs-gray-100);
 		display: flex;
 		align-items: center;
@@ -76,14 +77,14 @@
 		background: var(--bs-gray-900);
 
 		.main-menu__logo {
-			background: var(--bs-dark-gray-800);
+			background: var(--bs-gray-800);
 		}
 	}
 }
 
 @include color-mode(dark) {
 	.main-menu {
-		background: var(--bs-gray-800);
+		background: var(--bs-gray-950);
 		border-right-color: var(--bs-gray-800);
 
 		.main-menu__logo {
@@ -91,4 +92,3 @@
 		}
 	}
 }
-

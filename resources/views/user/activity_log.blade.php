@@ -6,32 +6,29 @@
 	<form action="" method="get">
 		<div class="card">
 			<div class="card-body">
-				<x-joona-form-group required="true" :label="__('joona::user.user')">
+				<div class="form-group">
+					<label class="required">@lang('joona::user.user')</label>
 					<select name="user_id" class="form-select">
 						@foreach ($users as $user)
 							<option value="{{$user['id']}}" {{$user['id'] == $user_id ? 'selected':''}}>
-								{{$user['username']}}
+								{{$user['email']}}
 							</option>
 						@endforeach
 					</select>
-				</x-joona-form-group>
+				</div>
 
-				<x-joona-form-group required="true" :label="__('joona::common.date_from')">
-					<div data-bind="components.calendar" class="input-group">
-						<input type="text" data-role="control" class="form-control" />
-						<input type="hidden" data-role="value" name="date_from" value="{{$date_from}}" />
-					</div>
-				</x-joona-form-group>
+				<div class="form-group">
+					<label class="required">@lang('joona::common.date_from')</label>
+					<x-datepicker :value="$date_from" name="date_from" />
+				</div>
 
-				<x-joona-form-group required="true" class="mb-0" :label="__('joona::common.date_to')">
-					<div data-bind="components.calendar" class="input-group">
-						<input type="text" data-role="control" class="form-control" />
-						<input type="hidden" data-role="value" name="date_to" value="{{$date_to}}" />
-					</div>
-				</x-joona-form-group>
+				<div class="form-group">
+					<label class="required">@lang('joona::common.date_to')</label>
+					<x-datepicker :value="$date_to" name="date_to" />
+				</div>
 			</div>
 			<div class="card-footer">
-				<x-joona-button :caption="__('joona::common.filter')" icon="search" />
+				<x-button :caption="__('joona::common.filter')" icon="search" />
 			</div>
 		</div>
 	</form>

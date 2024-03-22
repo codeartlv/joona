@@ -4,6 +4,11 @@ namespace Codeart\Joona\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * Payload that contains response from various objects
+ *
+ * @package Codeart\Joona\Contracts
+ */
 class Result implements Arrayable
 {
 	/**

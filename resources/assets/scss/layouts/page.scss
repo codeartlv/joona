@@ -1,10 +1,10 @@
 .layout {
 	&.layout-default {
-		min-height: $vh100;
+		min-height: 100svh;
 
 		.layout__content {
 			margin-left: $sidebar-width;
-			min-height: $vh100;
+			min-height: 100svh;
 			flex-direction: column;
 			display: flex;
 			position: relative;
@@ -30,7 +30,7 @@
 		}
 	}
 
-	&.layout-split {
+	&.layout-blank {
 		width: 100%;
 		display: flex;
 
@@ -53,24 +53,22 @@
 			}
 		}
 
-		@include media-breakpoint-up(md) {
-			> aside {
-				box-shadow:-16px 0px 34px 0px rgba(0, 0, 0, 0.4);
-			}
-		}
-
 		@include media-breakpoint-down(md) {
 			flex-direction: column;
-
-			> figure {
-				display: none;
-			}
 
 			> aside {
 				display: flex;
 				align-items: center;
 				padding:$spacer 0;
 			}
+		}
+	}
+}
+
+@include color-mode(light) {
+	.layout {
+		&.layout-blank {
+			background: var(--bs-gray-200);
 		}
 	}
 }

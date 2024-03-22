@@ -1,7 +1,6 @@
 <?php
 
 return [
-	'username' => 'Lietotājvārds',
 	'password' => 'Parole',
 	'change_password' => 'Mainīt paroli',
 	'first_name' => 'Vārds',
@@ -13,17 +12,12 @@ return [
 	'current_password' => 'Esošā parole',
 	'new_password' => 'Jaunā parole',
 	'level' => 'Līmenis',
-	'status' => 'Statuss',
 	'create_new' => 'Izveidot lietotāju',
 	'create_user_caption' => 'Izveidot lietotāju',
 	'edit_user_caption' => 'Rediģēt lietotāju',
 	'level_names' => [
 		'admin' => 'Administrators',
 		'user' => 'Lietotājs',
-	],
-	'status_names' => [
-		'active' => 'Aktīvs',
-		'blocked' => 'Bloķēts',
 	],
 	'groups' => 'Grupas',
 	'last_seen' => 'Manīts',
@@ -32,7 +26,6 @@ return [
 	'permissions_page_title' => 'Grupas un tiesības',
 	'activity_log_page_title' => 'Notikumu žurnāls',
 	'user_not_found' => 'Lietotāja konts nav atrasts.',
-	'account_inactive' => 'Jūsu konts nav aktīvs.',
 	'mail_subject_new_password' => 'Jūsu kontam iestatīta parole',
 	'edit_user_label_basic_data' => 'Pamatdati',
 	'edit_user_label_permissions' => 'Tiesības',
@@ -65,13 +58,16 @@ return [
 	'report_choose_user_and_date_range' => 'Izvēlieties lietotāju un datuma diapazonu.',
 	'report_no_sessions' => 'Nav atrasta neviena sessija.',
 	'user' => 'Lietotājs',
-	'session_end_reason_logout' => 'Izlogojās',
-	'session_end_reason_auto' => 'Izbeigta',
-	'session_end_reason_stopped' => 'Nav aktivitātes',
 	'activity_log' => 'Notikumu žurnāls',
 	'log_entries' => [
 		'login' => 'Ielogojās',
 		'logout' => 'Izlogojās',
 	],
 	'no_roles_created_to_assign' => 'Nav nevienas lomas ko izvēlēties.',
+	'ungrouped_permissions' => 'Bez grupas',
+	'session_end_reason_logout' => 'Lietotājs pabeidza sessiju',
+	'role_saved' => 'Loma saglabāta.',
+	'permission_user_activities' => 'Skatīt lietotāju darbības žurnālu',
+	'permission_manage_admin_users' => 'Pārvaldīt administrācijas lietotājus',
+	'permission_view_admin_users' => 'Skatīt administrācijas lietotāju sarakstu',
 ];

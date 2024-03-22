@@ -3,6 +3,7 @@
 }
 
 html {
+	/*
 	font-size: max(8px, 0.833333vw);
 
 	@include media-breakpoint-down(xl) {
@@ -20,12 +21,15 @@ html {
 	@include media-breakpoint-down(sm) {
 		font-size: max(16px, 4.33vw);
 	}
+	*/
+
+	font-size: 16px;
 }
 
 body {
 	display: flex;
 	flex-direction: column;
-	min-height: $vh100;
+	min-height: 100svh;
 	font-size: 1rem;
 }
 
@@ -79,11 +83,9 @@ h1, .h1 {
 }
 
 :root {
-	--bs-dark-gray-800:#{$dark-gray-800};
 	--bs-gray-950:#{$gray-950};
 }
 
 @include color-mode(dark) {
-	// Override color variables in dark mode here.
-	--bs-gray-800:var(--bs-dark-gray-800);
+	--bs-primary:#{$primary-dark};
 }

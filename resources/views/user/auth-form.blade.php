@@ -2,40 +2,42 @@
 
 @section('main')
 	<div class="card card-auth">
-		<x-joona-form :action="route('joona.user.auth-process')" focus="username">
-			<input type="hidden" name="continue" value="{{$continue}}" />
-
+		<x-form :action="route('joona.user.auth-process')" focus="username">
 			<div class="card-header">
 				<span>
-					<img src="{{config('joona.app_logo')}}" />
+					<img src="{{$logo}}" />
 				</span>
 				<strong>{{ config('app.name', 'Laravel') }}</strong>
 				<p>@lang('joona::user.auth.caption')</p>
 			</div>
 			<div class="card-body">
-
 				<div {!!$logout_message ? 'class="alert alert-danger"':''!!} data-role="form.response">{{$logout_message}}</div>
 
 				<div class="block">
-					<x-joona-form-group required="true" :label="__('joona::user.username')">
+					<div class="form-group">
+						<label>@lang('joona::user.email')</label>
 						<div class="input-group">
 							<span class="input-group-icon">
 								@icon('person')
 							</span>
-							<input class="form-control" type="text" autocomplete="username" name="username" />
+							<input class="form-control" type="text" autocomplete="email" name="email" />
 						</div>
-						<div data-field-message="username"></div>
-					</x-joona-form-group>
+						<div data-field-message="email"></div>
+					</div>
 
-					<x-joona-form-group required="true" :label="__('joona::user.password')">
-						<div class="input-group">
-							<span class="input-group-icon">
-								@icon('key')
-							</span>
-							<input class="form-control" type="password" autocomplete="current-password" name="password" />
+					<div class="form-group required">
+						<div class="form-group">
+							<label>@lang('joona::user.password')</label>
+
+							<div class="input-group">
+								<span class="input-group-icon">
+									@icon('key')
+								</span>
+								<input class="form-control" type="password" autocomplete="current-password" name="password" />
+							</div>
+							<div data-field-message="password"></div>
 						</div>
-						<div data-field-message="password"></div>
-					</x-joona-form-group>
+					</div>
 				</div>
 
 				<div class="block card-auth__options">
@@ -54,16 +56,25 @@
 							</nav>
 						</section>
 					@endif
+
 					<section class="card-auth__lightmode">
-						<a href="javascript:;" data-dark-icon="dark_mode" data-light-icon="light_mode" data-bind="admin.color-theme-switch">
-							<i data-role="icon" class="material-symbols-outlined">{{$theme == 'dark' ? 'light_mode':'dark_mode'}}</i>
+						<a href="javascript:;" data-dark-icon="dark_mode" data-light-icon="light_mode" x-data="adminColorThemeSwitch()" @click="changeTheme()">
+							@php
+								$icon = $theme == 'dark' ? 'light_mode':'dark_mode';
+							@endphp
+
+							@icon($icon)
 						</a>
 					</section>
 				</div>
 			</div>
 			<div class="card-footer">
-				<x-joona-button type="submit" role="primary" :block="true" :caption="__('joona::user.auth.button')" icon="key" />
+				<x-button type="submit" role="primary" :block="true" :caption="__('joona::user.auth.button')" icon="key" />
 			</div>
-		</x-joona-form>
+		</x-form>
 	</div>
+</div>
+
+
+
 @endsection

@@ -70,10 +70,10 @@
 	}
 
 	&.card-auth {
-		box-shadow: none;
-		flex:0 1 20rem;
-		background: none;
+		flex:0 1 25rem;
+		background: var(--bs-body-bg);
 		border:none;
+		padding:$spacer*2;
 
 		.card-header {
 			flex-direction: column;
@@ -112,23 +112,20 @@
 		.card-footer {
 			padding:0;
 			border:none;
-			background: none;
+			background: none !important;
 		}
 
 		.card-auth__options {
-			display: grid;
-			grid-template-columns: 1fr auto;
-			align-items: center;
-			justify-content: space-between;
+			position: relative;
 
 			> section {
-				&.card-auth__locale {
-					grid-column: 1;
-				}
-
 				&.card-auth__lightmode {
+					position: absolute;
+					right: 0;
+					top: 50%;
 					display: flex;
-					grid-column: 2;
+					line-height: 1;
+					transform: translateY(-50%);
 
 					a {
 						line-height: 1;
@@ -153,10 +150,8 @@
 			background-color: var(--bs-gray-800);
 		}
 
-		&.card-admin-user-session {
-			.card-header {
-				border-color: var(--bs-gray-700);
-			}
+		&.card-auth {
+			background: var(--bs-gray-950);
 		}
 	}
 }

@@ -100,7 +100,7 @@
 @include color-mode(dark) {
 	.main-header {
 		box-shadow: none;
-		border-bottom: solid 1px var(--bs-gray-800);
+		border-bottom: solid 1px $gray-800;
+		background-color: var(--bs-gray-950);
 	}
 }
-
