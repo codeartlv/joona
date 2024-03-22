@@ -367,6 +367,7 @@ abstract class JoonaPanelProvider extends ServiceProvider
 		$translationKeys = array_merge([
 			'joona::common.ok',
 			'joona::common.cancel',
+			'joona::common.error',
 		], $userKeys);
 
 		$panel = resolve('joona.panel');

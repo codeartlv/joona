@@ -31,7 +31,10 @@ export default class Modal {
 				return;
 			}
 
-			this.modalInstance._element.addEventListener('hidden.bs.modal', resolve);
+			this.modalInstance._element.addEventListener(
+				'hidden.bs.modal',
+				resolve
+			);
 			this.modalInstance.hide();
 		});
 	}
@@ -83,19 +86,19 @@ export default class Modal {
 				});
 
 				modalEl.addEventListener('show.bs.modal', () => {
-					const backdropEl = this.modalInstance._backdrop._getElement();
+					const backdropEl =
+						this.modalInstance._backdrop._getElement();
 					addSpinner(backdropEl, 'light');
 				});
 
 				modalEl.addEventListener('shown.bs.modal', () => {
-					const backdropEl = this.modalInstance._backdrop._getElement();
+					const backdropEl =
+						this.modalInstance._backdrop._getElement();
 					removeSpinner(backdropEl);
 
 					if (modalDialogContent) {
 						modalDialogEl.innerHTML = modalDialogContent;
 					}
-
-					resolve(modalEl);
 				});
 
 				modalEl.addEventListener('hidden.bs.modal', () => {
@@ -113,12 +116,13 @@ export default class Modal {
 							modalDialogContent = response.data;
 
 							this.modalInstance.show();
+							resolve(modalEl);
 						})
 						.catch((e) => {
 							modalDialogEl.innerHTML = `
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">${window.Joona.lang('common.error')}</h5>
+								<h5 class="modal-title">${trans('joona::common.error')}</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 									<i class="material-symbols-outlined">close</i>
 								</button>
@@ -131,6 +135,7 @@ export default class Modal {
 						</div>
 						`;
 
+							this.modalInstance.show();
 							reject();
 						});
 				} else {
