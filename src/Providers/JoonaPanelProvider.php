@@ -130,6 +130,11 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			$this->publishes([
 				$this->getPackageDistAssetPath() => public_path('vendor/joona/images'),
 			], 'joona-assets');
+
+			// Publish provider
+			$this->publishes([
+				$this->getPackageExportPath() . 'JoonaServiceProvider.php' => app_path('Providers/JoonaServiceProvider.php'),
+			], 'joona-provider');
 		}
 	}
 
@@ -436,5 +441,15 @@ abstract class JoonaPanelProvider extends ServiceProvider
 	private function getPackageDistAssetPath(): string
 	{
 		return $this->getPackageRoot().'resources/assets/images/';
+	}
+
+	/**
+	 * Export directory
+	 *
+	 * @return string
+	 */
+	private function getPackageExportPath(): string
+	{
+		return $this->getPackageRoot().'export/';
 	}
 }

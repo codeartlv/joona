@@ -40,5 +40,9 @@ class PublishAssets extends Command
 		$this->call('vendor:publish', [
 			'--tag' => 'joona-config',
 		]);
+
+		$this->call('vendor:publish', [
+			'--tag' => 'joona-provider',
+		]);
 	}
 }
