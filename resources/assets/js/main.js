@@ -169,7 +169,7 @@ Alpine.data('confirm', function () {
 							caption: trans('joona::common.ok'),
 							role: 'primary',
 							callback: () => {
-								document.location = el.href;
+								document.location = this.$el.href;
 								return true;
 							},
 						},
