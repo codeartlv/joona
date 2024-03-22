@@ -10,9 +10,10 @@ This package is tailored for seamless integration with a brand-new Laravel 10.x 
 
 1. Require the package via Composer: `composer require codeartlv/joona`
 2. Publish assets: `php artisan joona:publish`. Note that this exports UI assets into `public/vendor/joona` directory. If you build your assets in pipeline or production, you should gitignore this directory.
-3. Run migrations: `php artisan migrate`
-4. Seed defaults: `php artisan joona:seed`
-5. To support extending CSS/JS within your project, add dependency in your files:
+3. Add `App\Providers\JoonaServiceProvider::class,` service provider in `config/app.php`:
+4. Run migrations: `php artisan migrate`
+5. Seed defaults: `php artisan joona:seed`
+6. To support extending CSS/JS within your project, add dependency in your files:
 
 Your SCSS file:
 
