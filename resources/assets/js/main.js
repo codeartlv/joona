@@ -11,6 +11,7 @@ import Uploader from './components/uploader.js';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { parseJsonLd } from './helpers.js';
 import Lang from 'lang.js';
+import axios from 'axios';
 
 window.locale = document.documentElement.getAttribute('lang');
 
@@ -135,7 +136,9 @@ Alpine.data('adminToggleSidebar', function () {
 	return {
 		init() {
 			this.$el.addEventListener('click', () => {
-				const sidebar = document.querySelector(this.$el.dataset.sidebar);
+				const sidebar = document.querySelector(
+					this.$el.dataset.sidebar
+				);
 
 				if (!sidebar) {
 					return;
@@ -187,7 +190,9 @@ Alpine.data('adminUserEditForm', function () {
 		init() {
 			// Password toggle
 			let choosePasswordSetup = (method) => {
-				const passwordInput = this.$el.querySelector('[data-role="password-input"]');
+				const passwordInput = this.$el.querySelector(
+					'[data-role="password-input"]'
+				);
 
 				passwordInput.classList.add('d-none');
 
@@ -196,13 +201,17 @@ Alpine.data('adminUserEditForm', function () {
 				}
 			};
 
-			this.$el.querySelectorAll('[data-role="pass-setup"]').forEach((input) => {
-				input.addEventListener('click', () => {
-					choosePasswordSetup(input.value);
+			this.$el
+				.querySelectorAll('[data-role="pass-setup"]')
+				.forEach((input) => {
+					input.addEventListener('click', () => {
+						choosePasswordSetup(input.value);
+					});
 				});
-			});
 
-			let selected = this.$el.querySelector('[data-role="pass-setup"]:checked');
+			let selected = this.$el.querySelector(
+				'[data-role="pass-setup"]:checked'
+			);
 
 			if (selected) {
 				choosePasswordSetup(selected.value);
@@ -210,18 +219,24 @@ Alpine.data('adminUserEditForm', function () {
 
 			// Level toggle
 			let selectLevel = (level) => {
-				this.$el.querySelectorAll('[data-toggle="level"]').forEach((element) => {
-					element.classList.add('d-none');
-				});
+				this.$el
+					.querySelectorAll('[data-toggle="level"]')
+					.forEach((element) => {
+						element.classList.add('d-none');
+					});
 
 				this.$el
-					.querySelectorAll(`[data-toggle="level"][data-level="${level}"]`)
+					.querySelectorAll(
+						`[data-toggle="level"][data-level="${level}"]`
+					)
 					.forEach((element) => {
 						element.classList.remove('d-none');
 					});
 			};
 
-			let levelDropdown = this.$el.querySelector('[data-role="level-toggle"]');
+			let levelDropdown = this.$el.querySelector(
+				'[data-role="level-toggle"]'
+			);
 
 			if (levelDropdown) {
 				levelDropdown.addEventListener('change', (event) => {
