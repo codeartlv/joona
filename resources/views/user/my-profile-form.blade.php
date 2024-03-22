@@ -7,8 +7,8 @@
 				<span>@lang('joona::user.profile_data')</span>
 			</div>
 
-			<div class="form-group">
-				<label class="required">@lang('joona::user.email')</label>
+			<div class="form-group required">
+				<label>@lang('joona::user.email')</label>
 				<input class="form-control" type="email" name="email" autocomplete="email" maxlength="128" value="{{$email}}" />
 			</div>
 

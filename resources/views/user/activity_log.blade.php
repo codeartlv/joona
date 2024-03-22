@@ -6,8 +6,8 @@
 	<form action="" method="get">
 		<div class="card">
 			<div class="card-body">
-				<div class="form-group">
-					<label class="required">@lang('joona::user.user')</label>
+				<div class="form-group required">
+					<label>@lang('joona::user.user')</label>
 					<select name="user_id" class="form-select">
 						@foreach ($users as $user)
 							<option value="{{$user['id']}}" {{$user['id'] == $user_id ? 'selected':''}}>
@@ -17,13 +17,13 @@
 					</select>
 				</div>
 
-				<div class="form-group">
-					<label class="required">@lang('joona::common.date_from')</label>
+				<div class="form-group required">
+					<label>@lang('joona::common.date_from')</label>
 					<x-datepicker :value="$date_from" name="date_from" />
 				</div>
 
-				<div class="form-group">
-					<label class="required">@lang('joona::common.date_to')</label>
+				<div class="form-group required">
+					<label>@lang('joona::common.date_to')</label>
 					<x-datepicker :value="$date_to" name="date_to" />
 				</div>
 			</div>

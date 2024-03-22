@@ -5,8 +5,8 @@
 		<div data-role="form.response"></div>
 
 		<div class="block">
-			<div class="form-group">
-				<label class="required">@lang('joona::user.permissions.role_name')</label>
+			<div class="form-group required">
+				<label>@lang('joona::user.permissions.role_name')</label>
 				<input class="form-control" name="title" maxlength="55" type="text" value="{{$title ?? ''}}" />
 			</div>
 		</div>

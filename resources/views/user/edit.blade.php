@@ -5,8 +5,8 @@
 		<div x-data="adminUserEditForm">
 			<div data-role="form.response"></div>
 
-			<div class="form-group">
-				<label class="required">@lang('joona::user.email')</label>
+			<div class="form-group required">
+				<label>@lang('joona::user.email')</label>
 				<input class="form-control" type="email" maxlength="128" name="email" value="{{$fields['email'] ?? ''}}" autocomplete="email" />
 			</div>
 
@@ -17,14 +17,14 @@
 
 				<div class="block row">
 					<div class="col-12 col-md-6">
-						<div class="form-group">
-							<label class="required">@lang('joona::user.first_name')</label>
+						<div class="form-group required">
+							<label>@lang('joona::user.first_name')</label>
 							<input class="form-control" type="text" maxlength="55" name="first_name" value="{{$fields['first_name'] ?? ''}}" autocomplete="name" />
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
-						<div class="form-group">
-							<label class="required">@lang('joona::user.last_name')</label>
+						<div class="form-group required">
+							<label>@lang('joona::user.last_name')</label>
 							<input class="form-control" type="text" maxlength="55" name="last_name" value="{{$fields['last_name'] ?? ''}}" autocomplete="family-name" />
 						</div>
 					</div>
@@ -39,8 +39,8 @@
 				</div>
 
 				@if ($uses_permissions)
-					<div class="form-group">
-						<label class="required">@lang('joona::user.level')</label>
+					<div class="form-group required">
+						<label>@lang('joona::user.level')</label>
 						<select class="form-select" name="level" data-role="level-toggle">
 							@foreach ($available_levels as $level)
 								<option {{$level->value == $fields['level'] ? 'selected':''}} value="{{$level->value}}">{{$level->getLabel()}}</option>

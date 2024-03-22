@@ -14,8 +14,8 @@
 				<div {!!$logout_message ? 'class="alert alert-danger"':''!!} data-role="form.response">{{$logout_message}}</div>
 
 				<div class="block">
-					<div class="form-group">
-						<label>@lang('joona::user.email')</label>
+					<div class="form-group required">
+						<label>@lang('joona::user.email'):</label>
 						<div class="input-group">
 							<span class="input-group-icon">
 								@icon('person')
@@ -26,8 +26,8 @@
 					</div>
 
 					<div class="form-group required">
-						<div class="form-group">
-							<label>@lang('joona::user.password')</label>
+						<div class="form-group required">
+							<label>@lang('joona::user.password'):</label>
 
 							<div class="input-group">
 								<span class="input-group-icon">
