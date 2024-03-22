@@ -68,7 +68,14 @@ export  default  defineConfig({
     ],
     resolve: {
         alias: {
-            '@joona': path.resolve(__dirname, 'vendor/codeartlv/joona/resources/assets'),
+            '@joona': path.resolve(
+				__dirname,
+				'vendor/codeartlv/joona/resources/assets'
+			),
+			'@joona-modules': path.resolve(
+				__dirname,
+				'vendor/codeartlv/joona/node_modules'
+			),
         },
     },
 });
