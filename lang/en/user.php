@@ -66,6 +66,7 @@ return [
 	'no_roles_created_to_assign' => 'No roles available to assign.',
 	'ungrouped_permissions' => 'No group',
 	'session_end_reason_logout' => 'Session ended by user',
+	'session_end_reason_auto' => 'Session timed out',
 	'role_saved' => 'Role saved.',
 	'admin-users-permissions' => 'Administration access',
 	'permission_user_activities' => 'View user journal',

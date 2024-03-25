@@ -16,7 +16,7 @@
 							</a>
 						</span>
 					</div>
-					@if (!empty($roles))
+					@if ($roles->count())
 						<nav class="list-group list-group-flush">
 							@foreach ($roles as $role)
 								<div class="list-group-item {{$role_id == $role['id'] ? 'active':''}}">

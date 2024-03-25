@@ -46,4 +46,8 @@
 	.btn.btn-outline-subtle {
 		@include button-outline-variant($gray-600);
 	}
+
+	.btn.btn-outline-primary {
+		@include button-outline-variant($gray-100);
+	}
 }
