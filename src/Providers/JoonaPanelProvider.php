@@ -175,6 +175,7 @@ abstract class JoonaPanelProvider extends ServiceProvider
 		});
 
 		$components = [
+			'autocomplete' => \Codeart\Joona\View\Components\Autocomplete\Autocomplete::class,
 			'button' => \Codeart\Joona\View\Components\Button::class,
 			'form' => \Codeart\Joona\View\Components\Form\FormElement::class,
 			'dialog' => \Codeart\Joona\View\Components\Dialog::class,

@@ -9,6 +9,7 @@ class Datepicker extends Component
 	public function __construct(
 		public ?string $value = '',
 		public ?string $name = 'date',
+		public ?bool $timepicker = false,
 	) {
 	}
 

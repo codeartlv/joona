@@ -1,0 +1,12 @@
+.input-autocomplete {
+	.input-group-icon {
+		cursor: pointer;
+		display: none;
+	}
+
+	&.selected {
+		.input-group-icon {
+			display: flex;
+		}
+	}
+}

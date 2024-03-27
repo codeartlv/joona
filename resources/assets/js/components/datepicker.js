@@ -11,13 +11,16 @@ export default class Datepicker {
 			name: 'date',
 			range: false,
 			dateSeparator: ' / ',
-			position: 'bottom center',
+			position: 'bottom left',
 			format: 'dd.MM.yyyy',
 			timepicker: false,
 			pastDate: true,
 			firstDay: 1,
 			...params,
 		};
+
+		this.params.timepicker =
+			this.params.timepicker === 'true' || this.params.timepicker === true;
 
 		this.init();
 	}
