@@ -120,11 +120,16 @@ export default class AjaxForm {
 		let messageContainers = this.form.querySelectorAll(
 			'.invalid-feedback:not(.custom-feedback)'
 		);
+
 		if (messageContainers) {
 			messageContainers.forEach((element) => {
 				element.remove();
 			});
 		}
+
+		this.form.querySelectorAll('.invalid-feedback.custom-feedback').forEach((element) => {
+			element.classList.remove('invalid-feedback');
+		});
 	}
 
 	executeActions(response) {
