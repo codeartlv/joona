@@ -1,4 +1,4 @@
-<div class="uploader uploader--{{$class}}" x-data="uploader" data-name="{{$name}}" data-submitbtn="{{$submitbtn}}" data-limit="{{$limit}}" data-uploadroute="{{$uploadroute}}" data-deleteroute="{{$deleteroute}}">
+<div class="uploader uploader--{{$class}}" x-data="uploader" data-name="{{$name}}" data-submitbtn="{{$submitButton}}" data-limit="{{$limit}}" data-uploadroute="{{$uploadRoute}}" data-deleteroute="{{$deleteRoute}}">
 	<label data-role="trigger" class="upload-area uploader__item">
 		<input type="file" name="{{$name}}" />
 		<figcaption>

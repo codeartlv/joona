@@ -184,6 +184,9 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			'password-validator' => \Codeart\Joona\View\Components\PasswordValidator::class,
 			'datepicker' => \Codeart\Joona\View\Components\Datepicker::class,
 			'uploader' => \Codeart\Joona\View\Components\Uploader\Uploader::class,
+			'select' => \Codeart\Joona\View\Components\Select\Select::class,
+			'textarea' => \Codeart\Joona\View\Components\Textarea::class,
+			'input' => \Codeart\Joona\View\Components\Input::class,
 		];
 
 		foreach ($components as $name => $class) {

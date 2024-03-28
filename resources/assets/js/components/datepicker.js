@@ -14,7 +14,7 @@ export default class Datepicker {
 			position: 'bottom left',
 			format: 'dd.MM.yyyy',
 			timepicker: false,
-			pastDate: true,
+			mindate: '',
 			firstDay: 1,
 			...params,
 		};
@@ -88,8 +88,8 @@ export default class Datepicker {
 			altField: this.valueField,
 		};
 
-		if (!this.params.pastDate) {
-			settings.minDate = new Date();
+		if (this.params.mindate) {
+			settings.minDate = new Date(this.params.mindate);
 		}
 
 		this.instance = new AirDatepicker(this.input, settings);

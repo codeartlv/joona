@@ -4,13 +4,11 @@ namespace Codeart\Joona\View\Components;
 
 use Illuminate\View\Component;
 
-class Datepicker extends Component
+class Input extends Component
 {
 	public function __construct(
+		public ?string $name = '',
 		public ?string $value = '',
-		public ?string $name = 'date',
-		public ?bool $timepicker = false,
-		public $minDate = null,
 	) {
 	}
 
@@ -19,8 +17,6 @@ class Datepicker extends Component
 	 */
 	public function render()
 	{
-		return view('joona::components.datepicker', [
-
-		]);
+		return view('joona::components.input');
 	}
 }

@@ -9,9 +9,9 @@ class Uploader extends Component
 	public function __construct(
 		public string $name = 'files',
 		public string $class = 'default',
-		public string $uploadroute = '',
-		public string $deleteroute = '',
-		public string $submitbtn = '',
+		public string $uploadRoute = '',
+		public string $deleteRoute = '',
+		public string $submitButton = '',
 		public int $limit = 1,
 		public array $files = [],
 	) {
