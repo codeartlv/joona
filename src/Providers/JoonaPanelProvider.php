@@ -371,6 +371,7 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			'joona::common.cancel',
 			'joona::common.error',
 			'joona::common.delete',
+			'joona::common.no_results_found',
 		], $userKeys);
 
 		$panel = resolve('joona.panel');

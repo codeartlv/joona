@@ -36,7 +36,7 @@ export default class Autocomplete {
 			noCache: true,
 			minChars: 1,
 			showNoSuggestionNotice: true,
-			noSuggestionNotice: 'Nekas netika atrasts',
+			noSuggestionNotice: trans('joona::common.no_results_found'),
 			params: {
 				proxy: this.dataProxy,
 			},

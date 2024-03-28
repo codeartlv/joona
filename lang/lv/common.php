@@ -25,4 +25,5 @@ return [
 	'delete' => 'Dzēst',
 	'close' => 'Aizvērt',
 	'select_files' => 'Izvēlēties failus',
+	'no_results_found' => 'Nekas netika atrasts.',
 ];
