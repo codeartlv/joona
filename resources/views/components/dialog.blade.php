@@ -7,6 +7,7 @@
 	</div>
 	<div class="modal-body">
 		<div class="modal-inner">
+			<div data-role="form.response"></div>
 			{{ $slot }}
 		</div>
 	</div>

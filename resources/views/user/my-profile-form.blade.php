@@ -1,6 +1,5 @@
 <x-form action="{{route('joona.user.me-save')}}">
 	<x-dialog :caption="__('joona::user.my_profile_titlebar')">
-		<div data-role="form.response"></div>
 
 		<div class="block">
 			<x-form-section-heading :label="__('joona::user.profile_data')"/>

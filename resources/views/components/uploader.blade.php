@@ -1,4 +1,4 @@
-<div class="uploader uploader--{{$class}}" data-bind="components.uploader">
+<div class="uploader uploader--{{$class}}" data-bind="components.uploader" {{$attributes}}>
 	<label data-role="trigger" class="upload-area uploader__item">
 		<input type="file" name="{{$name}}" />
 		<figcaption>

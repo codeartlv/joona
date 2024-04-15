@@ -1,6 +1,5 @@
 <x-form action="{{route('joona.user.my-password-save')}}">
 	<x-dialog :caption="__('joona::user.my_password_titlebar')">
-		<div data-role="form.response"></div>
 		<div class="block">
 			<div class="form-group required">
 				<x-input :label="__('joona::user.current_password')" type="password" name="current_password" autocomplete="current-password" />

@@ -1,10 +1,7 @@
 <x-form action="{{route('joona.user.save')}}">
 	<input type="hidden" name="id" value="{{$fields['id']}}" />
 	<x-dialog :caption="__($fields['id'] ? 'joona::user.edit_user_caption' : 'joona::user.create_user_caption')">
-
 		<div data-bind="admin.userEditForm">
-			<div data-role="form.response"></div>
-
 			<div class="form-group required">
 				<x-input :label="__('joona::user.email')" name="email" :value="$fields['email'] ?? ''" autocomplete="email" maxlength="128" type="email" />
 			</div>
