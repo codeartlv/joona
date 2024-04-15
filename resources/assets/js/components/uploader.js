@@ -368,6 +368,22 @@ export default class Uploader {
 		}
 	}
 
+	setThumbnailType(thumbnail, type) {
+		const regex = /\bfile-\S+/g;
+
+		const classes = thumbnail.className.split(' ');
+		const filteredClasses = classes.filter((c) => !c.match(regex));
+		thumbnail.className = filteredClasses.join(' ');
+
+		thumbnail.classList.add(`file-${type}`);
+
+		if (type == 'image') {
+			thumbnail.classList.remove('no-preview');
+		} else {
+			thumbnail.classList.add('no-preview');
+		}
+	}
+
 	// Main upload routine
 	uploadFile(file) {
 		const thumbnail = this.createThumbnail();
@@ -396,7 +412,8 @@ export default class Uploader {
 
 			reader.readAsDataURL(file);
 		} else {
-			thumbnail.classList.add(`no-preview file-${extension}`);
+			thumbnail.classList.add('no-preview');
+			this.setThumbnailType(thumbnail, extension);
 		}
 
 		thumbnail.querySelector('[data-role="filename"]').innerText = file.name;
@@ -433,11 +450,13 @@ export default class Uploader {
 				thumbnail.classList.add('success');
 				thumbnail.dataset.id = response.id;
 
-				if (response.url) {
+				if (response.type == 'image' && response.url) {
 					thumbnail.querySelector(
 						'[data-role="thumbnail"]'
 					).style.backgroundImage = `url('${response.url}')`;
 				}
+
+				this.setThumbnailType(thumbnail, response.type);
 			}
 
 			this.onComplete();
