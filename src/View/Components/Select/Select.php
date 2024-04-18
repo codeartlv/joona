@@ -11,6 +11,7 @@ class Select extends Component
 		public bool $blank = false,
 		public string $label = '',
 		public string $size = '',
+		public bool $required = false,
 	) {
 	}
 

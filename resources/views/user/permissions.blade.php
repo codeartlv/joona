@@ -1,20 +1,14 @@
-@extends('joona::simple')
+<x-content :title="__('joona::user.permissions_page_title')">
+	<x-slot name="controls">
+		<x-button :caption="__('joona::user.permissions.add_role')" icon="group_add" data-bind="admin.roleEdit" data-id="0" />
+	</x-slot>
 
-@section('page_title', __('joona::user.permissions_page_title'))
-
-@section('main')
 	<div class="block">
 		<div class="row">
 			<div class="col-12 col-md-3 mb-3 mb-md-0">
 				<div class="card">
 					<div class="card-header">
 						@lang('joona::user.permissions.roles')
-						<span>
-							<a href="javascript:;" class="btn btn-xs btn-outline-primary" data-bind="admin.roleEdit" data-id="0">
-								<i class="material-symbols-outlined">group_add</i>
-								@lang('joona::user.permissions.add_role')
-							</a>
-						</span>
 					</div>
 					@if ($roles->count())
 						<nav class="list-group list-group-flush">
@@ -75,4 +69,9 @@
 			</div>
 		</div>
 	</div>
+</x-content>
+
+
+@section('main')
+
 @endsection

@@ -110,7 +110,7 @@ return [
 	],
 	'string'               => ' :attribute jābūt virknē.',
 	'timezone'             => ' :attribute jābūt derīgā zonā.',
-	'unique'               => ' :attribute jau ir aizņemts.',
+	'unique'               => 'Šī lauka vērtībā jau ir izmantota.',
 	'uploaded'             => ' :attribute netika augšuplādēts.',
 	'url'                  => ' :attribute formāts ir nederīgs.',
 

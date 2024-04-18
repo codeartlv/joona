@@ -10,6 +10,7 @@ class Datepicker extends Component
 		public ?string $label = '',
 		public ?string $value = '',
 		public ?string $name = 'date',
+		public bool $required = false,
 	) {
 	}
 

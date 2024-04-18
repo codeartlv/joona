@@ -1,44 +1,27 @@
-@extends('joona::sidebar')
+<x-content :title="__('joona::user.activity_log_page_title')">
+	<x-slot name="sidebar">
+		<form action="" method="get">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+						<x-select name="user_id" required="true" :label="__('joona::user.user')" :options="$users" blank />
+					</div>
 
-@section('page_title', __('joona::user.activity_log_page_title'))
+					<div class="form-group">
+						<x-datepicker :value="$date_from" required="true" :label="__('joona::common.date_from')" name="date_from" />
+					</div>
 
-@section('sidebar')
-	<form action="" method="get">
-		<div class="card">
-			<div class="card-body">
-				<div class="form-group required">
-					<label>@lang('joona::user.user')</label>
-					<x-select name="user_id" :options="$users" blank />
+					<div class="form-group required">
+						<x-datepicker :value="$date_to" name="date_to" required="true" :label="__('joona::common.date_to')" />
+					</div>
 				</div>
-
-				<div class="form-group required">
-					<label>@lang('joona::common.date_from')</label>
-					<x-datepicker :value="$date_from" name="date_from" />
-				</div>
-
-				<div class="form-group required">
-					<label>@lang('joona::common.date_to')</label>
-					<x-datepicker :value="$date_to" name="date_to" />
+				<div class="card-footer">
+					<x-button :caption="__('joona::common.filter')" icon="search" />
 				</div>
 			</div>
-			<div class="card-footer">
-				<x-button :caption="__('joona::common.filter')" icon="search" />
-			</div>
-		</div>
-	</form>
-@endsection
+		</form>
+	</x-slot>
 
-@section('foot')
-<div class="navbar bottom">
-	<ul class="navbar-nav">
-		<li class="nav-item">
-			@choice('joona::common.records', $total, [$total])
-		</li>
-	</ul>
-</div>
-@endsection
-
-@section('main')
 	@if ($can_display)
 		@if (!empty($sessions))
 			<div class="block">
@@ -81,4 +64,14 @@
 	@else
 		<div class="alert alert-info">{{__('joona::user.report_choose_user_and_date_range')}}</div>
 	@endif
-@endsection
+
+	<x-slot name="footer">
+		<div class="navbar bottom">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					@choice('joona::common.records', $total, [$total])
+				</li>
+			</ul>
+		</div>
+	</x-slot>
+</x-content>

@@ -3,8 +3,8 @@
 
 	<x-dialog :caption="__('joona::user.permissions.edit_role')">
 		<div class="block">
-			<div class="form-group required">
-				<x-input :label="__('joona::user.permissions.role_name')" type="text" name="title" maxlength="55" :value="$title" />
+			<div class="form-group">
+				<x-input :label="__('joona::user.permissions.role_name')" required="true" type="text" name="title" maxlength="55" :value="$title" />
 			</div>
 		</div>
 		<x-slot name="footer">

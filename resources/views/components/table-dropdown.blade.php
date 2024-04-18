@@ -10,9 +10,10 @@
 					'caption' => '',
 					'icon' => null,
 					'href' => 'javascript:;',
+					'attributes' => [],
 				];
 				@endphp
-				<a href="{{$option['href']}}" class="dropdown-item">
+				<a href="{{$option['href']}}" @attributes($option['attributes']) class="dropdown-item">
 					@icon($option['icon'])
 					{{$option['caption']}}
 				</a>

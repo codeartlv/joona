@@ -1,4 +1,4 @@
-<label class="form-label">{{$label}}</label>
+<label class="form-label {{$required ? 'required':''}}">{{$label}}</label>
 
 <div class="input-group">
 	<span class="input-group-icon">

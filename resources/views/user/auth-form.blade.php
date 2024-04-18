@@ -14,13 +14,13 @@
 				<div {!!$logout_message ? 'class="alert alert-danger"':''!!} data-role="form.response">{{$logout_message}}</div>
 
 				<div class="block">
-					<div class="form-group required">
-						<x-input-icon :label="__('joona::user.email')" icon="person" autocomplete="email" name="email" />
+					<div class="form-group">
+						<x-input-icon :label="__('joona::user.email')" icon="person" autocomplete="email" name="email" required="true" />
 						<div data-field-message="email"></div>
 					</div>
 
-					<div class="form-group required">
-						<x-input-icon :label="__('joona::user.password')" icon="key" type="password" autocomplete="current-password" name="password" />
+					<div class="form-group">
+						<x-input-icon :label="__('joona::user.password')" icon="key" type="password" autocomplete="current-password" name="password" required="true" />
 						<div data-field-message="password"></div>
 					</div>
 				</div>

@@ -11,6 +11,7 @@ class InputIcon extends Component
 		public ?string $value = '',
 		public ?string $icon = '',
 		public ?string $label = '',
+		public bool $required = false,
 	) {
 	}
 

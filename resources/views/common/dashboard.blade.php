@@ -1,5 +1,3 @@
-@extends('joona::simple')
+<x-content>
 
-@section('main')
-
-@endsection
+</x-content>

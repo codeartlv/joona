@@ -1,18 +1,6 @@
 .form-group {
 	margin-bottom: $spacer;
 
-	&.required {
-		label {
-			&::after {
-				content: " *";
-				color:$danger;
-				font-size: 0.9375em;
-				position: relative;
-				top:-0.125em;
-			}
-		}
-	}
-
 	> label {
 		font-size: .875rem;
 		display: block;

@@ -1,5 +1,5 @@
 @if ($label)
-	<label class="form-label">{{$label}}</label>
+	<label class="form-label {{$required ? 'required':''}}">{{$label}}</label>
 @endif
 <select class="form-select {{$size ? 'form-select-'.$size:''}}" {{ $attributes }}>
 	@foreach ($options as $option)

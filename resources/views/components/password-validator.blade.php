@@ -1,5 +1,5 @@
 @if ($label)
-	<label class="form-label">{{$label}}</label>
+	<label class="form-label {{$required ? 'required':''}}">{{$label}}</label>
 @endif
 
 <div class="password-validator" data-bind="components.passwordValidator" data-policy="{{$policy}}">

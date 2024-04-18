@@ -10,6 +10,7 @@ class PasswordValidator extends Component
 		public string $name = 'new_password',
 		public string $policy = '',
 		public ?string $label = '',
+		public bool $required = false,
 	) {
 	}
 

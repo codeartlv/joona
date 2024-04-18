@@ -1,5 +1,5 @@
 @if ($label)
-	<label class="form-label">{{$label}}</label>
+	<label class="form-label {{$required ? 'required':''}}">{{$label}}</label>
 @endif
 
 <div {{$attributes}} data-bind="components.datepicker" class="input-group">

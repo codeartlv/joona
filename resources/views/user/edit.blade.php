@@ -2,8 +2,8 @@
 	<input type="hidden" name="id" value="{{$fields['id']}}" />
 	<x-dialog :caption="__($fields['id'] ? 'joona::user.edit_user_caption' : 'joona::user.create_user_caption')">
 		<div data-bind="admin.userEditForm">
-			<div class="form-group required">
-				<x-input :label="__('joona::user.email')" name="email" :value="$fields['email'] ?? ''" autocomplete="email" maxlength="128" type="email" />
+			<div class="form-group">
+				<x-input :label="__('joona::user.email')" name="email" required="true" :value="$fields['email'] ?? ''" autocomplete="email" maxlength="128" type="email" />
 			</div>
 
 			<div class="block">
@@ -11,13 +11,13 @@
 
 				<div class="block row">
 					<div class="col-12 col-md-6">
-						<div class="form-group required">
-							<x-input :label="__('joona::user.first_name')" name="first_name" :value="$fields['first_name'] ?? ''" autocomplete="name" maxlength="55" type="text" />
+						<div class="form-group">
+							<x-input :label="__('joona::user.first_name')" required="true" name="first_name" :value="$fields['first_name'] ?? ''" autocomplete="name" maxlength="55" type="text" />
 						</div>
 					</div>
 					<div class="col-12 col-md-6">
-						<div class="form-group required">
-							<x-input :label="__('joona::user.last_name')" name="last_name" :value="$fields['last_name'] ?? ''" autocomplete="family-name" maxlength="55" type="text" />
+						<div class="form-group">
+							<x-input :label="__('joona::user.last_name')" required="true" name="last_name" :value="$fields['last_name'] ?? ''" autocomplete="family-name" maxlength="55" type="text" />
 						</div>
 					</div>
 				</div>
@@ -27,8 +27,8 @@
 				<x-form-section-heading :label="__('joona::user.edit_user_label_permissions')"/>
 
 				@if ($uses_permissions)
-					<div class="form-group required">
-						<x-select :label="__('joona::user.level')" name="level" data-role="level-toggle" :options="$available_levels" />
+					<div class="form-group">
+						<x-select :label="__('joona::user.level')" required="true" name="level" data-role="level-toggle" :options="$available_levels" />
 					</div>
 				@endif
 

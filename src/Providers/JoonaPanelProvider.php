@@ -174,6 +174,10 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			return "<i data-role=\"icon\" class=\"material-symbols-outlined\"><?={$name};?></i>";
 		});
 
+		Blade::directive('attributes', function ($expression) {
+			return "<?php echo \Codeart\Joona\Helpers\HtmlHelper::attributes({$expression}); ?>";
+		});
+
 		$components = [
 			'autocomplete' => \Codeart\Joona\View\Components\Autocomplete\Autocomplete::class,
 			'button' => \Codeart\Joona\View\Components\Button::class,
@@ -194,6 +198,7 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			'colorpicker' => \Codeart\Joona\View\Components\Colorpicker::class,
 			'range' => \Codeart\Joona\View\Components\Range::class,
 			'accordion' => \Codeart\Joona\View\Components\Accordion::class,
+			'content' => \Codeart\Joona\View\Components\Layout\Content::class,
 		];
 
 		foreach ($components as $name => $class) {
