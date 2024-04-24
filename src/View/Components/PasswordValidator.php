@@ -9,6 +9,7 @@ class PasswordValidator extends Component
 	public function __construct(
 		public string $name = 'new_password',
 		public string $policy = '',
+		public string $value = '',
 		public ?string $label = '',
 		public bool $required = false,
 	) {

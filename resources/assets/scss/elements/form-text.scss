@@ -5,6 +5,7 @@
 	margin:0;
 }
 
+.password-validator ~ .form-text,
 .input-group ~ .form-text,
 .form-control ~ .form-text {
 	margin-top: $spacer*0.25;

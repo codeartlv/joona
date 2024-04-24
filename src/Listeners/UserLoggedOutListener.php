@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Codeart\Joona\Models\User\Log\Event\Logout as LogoutEvent;
 use Codeart\Joona\Models\User\AdminSession;
+use Codeart\Joona\Models\User\AdminUser;
 
 class UserLoggedOutListener
 {
@@ -27,8 +28,10 @@ class UserLoggedOutListener
 			return;
 		}
 
-		$event->user->logEvent(new LogoutEvent(), request()->ip());
+		if ($event->user instanceof AdminUser) {
+			$event->user->logEvent(new LogoutEvent(), request()->ip());
 
-		AdminSession::endSession($event->user, 'logout');
+			AdminSession::endSession($event->user, 'logout');
+		}
 	}
 }

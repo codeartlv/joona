@@ -2,6 +2,7 @@ import Handler from './../handler.js';
 import Modal from '../components/modal.js';
 import PerfectScrollbar from 'perfect-scrollbar';
 import ConfirmDialog from '../components/confirm-dialog.js';
+import BootstrapTooltip from 'bootstrap/js/dist/tooltip';
 import axios from 'axios';
 
 export default class Admin extends Handler {
@@ -39,6 +40,12 @@ export default class Admin extends Handler {
 			}
 
 			sidebar.classList.toggle('active');
+		});
+	}
+
+	tooltip(element, parameters) {
+		return new BootstrapTooltip(element, {
+			title: parameters.title,
 		});
 	}
 

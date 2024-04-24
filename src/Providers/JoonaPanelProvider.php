@@ -15,9 +15,10 @@ use Codeart\Joona\Panel;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Translation\Translator;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as ValidatorObject;
 
 abstract class JoonaPanelProvider extends ServiceProvider
@@ -99,6 +100,8 @@ abstract class JoonaPanelProvider extends ServiceProvider
 
 		// Add user guard facade
 		$this->app->singleton('joona.auth', fn ($app) => Auth::guard('admin'));
+
+		Config::set('auth.defaults.guard', 'admin');
 	}
 
 	/**

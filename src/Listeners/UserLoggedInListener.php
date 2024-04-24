@@ -5,6 +5,7 @@ namespace Codeart\Joona\Listeners;
 use Illuminate\Auth\Events\Login;
 use Codeart\Joona\Models\User\Log\Event\Login as LoginEvent;
 use Codeart\Joona\Models\User\AdminSession;
+use Codeart\Joona\Models\User\AdminUser;
 
 class UserLoggedInListener
 {
@@ -23,7 +24,9 @@ class UserLoggedInListener
 	{
 		$user = $event->user;
 
-		AdminSession::startSession($user);
-		$user->logEvent(new LoginEvent(), request()->ip());
+		if ($user instanceof AdminUser) {
+			AdminSession::startSession($user);
+			$user->logEvent(new LoginEvent(), request()->ip());
+		}
 	}
 }
