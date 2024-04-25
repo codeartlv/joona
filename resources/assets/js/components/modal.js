@@ -96,6 +96,15 @@ export default class Modal {
 					}
 
 					window.Joona.init(modalDialogEl);
+
+					let openEvent = new CustomEvent('joona:contentLoad', {
+						detail: {
+							source: 'modal',
+							element: modalDialogEl,
+						},
+					});
+
+					document.dispatchEvent(openEvent);
 				});
 
 				modalEl.addEventListener('hidden.bs.modal', () => {

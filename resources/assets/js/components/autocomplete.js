@@ -8,6 +8,7 @@ export default class Autocomplete {
 
 	constructor(element, data) {
 		this.element = $(element);
+		this.eventListeners = new Map();
 
 		data = $.extend(
 			{
@@ -105,16 +106,19 @@ export default class Autocomplete {
 		this.element.toggleClass('selected', this.id > 0);
 	}
 
-	bindEvent(event, callback) {
-		this.events[event].push(callback);
+	on(event, callback) {
+		if (!this.eventListeners.has(event)) {
+			this.eventListeners.set(event, []);
+		}
+
+		this.eventListeners.get(event).push(callback);
 	}
 
-	dispatchEvent(event, data) {
-		if (this.events[event].length) {
-			for (var i = 0; i < this.events[event].length; i++) {
-				var fn = this.events[event][i];
-				$.proxy(fn, this)(data);
-			}
+	trigger(event, ...args) {
+		const listeners = this.eventListeners.get(event);
+
+		if (listeners && listeners.length) {
+			listeners.forEach((listener) => listener(...args));
 		}
 	}
 
@@ -131,7 +135,7 @@ export default class Autocomplete {
 			this.clearToggle.prop('disabled', false);
 		}
 
-		this.dispatchEvent('select', suggestion);
+		this.trigger('select', suggestion);
 		this.change();
 	}
 

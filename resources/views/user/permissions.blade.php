@@ -34,7 +34,7 @@
 						</nav>
 					@else
 						<div class="card-body">
-							<div class="alert alert-info mb-0">@lang('joona::user.permissions.no_roles')</div>
+							<x-alert role="info" class="mb-0">{{__('joona::user.permissions.no_roles')}}</x-alert>
 						</div>
 					@endif
 				</div>
@@ -64,7 +64,7 @@
 						</div>
 					</x-form>
 				@else
-					<div class="alert alert-info">@lang('joona::user.permissions.no_role_selected')</div>
+					<x-alert role="info">{{__('joona::user.permissions.no_role_selected')}}</x-alert>
 				@endif
 			</div>
 		</div>

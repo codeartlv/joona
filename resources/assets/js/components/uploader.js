@@ -28,6 +28,8 @@ export default class Uploader {
 			...params,
 		};
 
+		this.eventListeners = new Map();
+
 		this.element = element;
 		this.fileSelector = this.element.querySelector('input[type="file"]');
 		this.submitButton = this.params.submitbtn
@@ -70,16 +72,19 @@ export default class Uploader {
 		}
 	}
 
-	// Event handling
-	bindEvent(event, callback) {
-		this.events[event].push(callback);
+	on(event, callback) {
+		if (!this.eventListeners.has(event)) {
+			this.eventListeners.set(event, []);
+		}
+
+		this.eventListeners.get(event).push(callback);
 	}
 
-	dispatchEvent(event, ...data) {
-		if (this.events[event] && this.events[event].length) {
-			for (let fn of this.events[event]) {
-				fn.apply(this, data);
-			}
+	trigger(event, ...args) {
+		const listeners = this.eventListeners.get(event);
+
+		if (listeners && listeners.length) {
+			listeners.forEach((listener) => listener(...args));
 		}
 	}
 
@@ -222,7 +227,7 @@ export default class Uploader {
 			file.remove();
 		});
 
-		this.dispatchEvent('queueChange');
+		this.trigger('queueChange');
 	}
 
 	// Gets called when file is selected via dialog
@@ -312,7 +317,7 @@ export default class Uploader {
 
 		thumbnail.remove();
 		this.syncIds();
-		this.dispatchEvent('queueChange');
+		this.trigger('queueChange');
 	}
 
 	setImages(images) {
@@ -477,6 +482,6 @@ export default class Uploader {
 		form.append('file', file);
 		ajax.send(form);
 
-		this.dispatchEvent('queueChange');
+		this.trigger('queueChange');
 	}
 }

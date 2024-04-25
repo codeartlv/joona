@@ -59,10 +59,10 @@
 				@endforeach
 			</div>
 		@else
-			<div class="alert alert-info">{{__('joona::user.report_no_sessions')}}</div>
+			<x-alert role="info">{{__('joona::user.report_no_sessions')}}</x-alert>
 		@endif
 	@else
-		<div class="alert alert-info">{{__('joona::user.report_choose_user_and_date_range')}}</div>
+		<x-alert role="info">{{__('joona::user.report_choose_user_and_date_range')}}</x-alert>
 	@endif
 
 	<x-slot name="footer">

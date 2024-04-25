@@ -7,10 +7,6 @@ export default class AjaxForm {
 	form = null;
 	submitButton = null;
 	settings = {};
-	events = {
-		success: [],
-		error: [],
-	};
 
 	constructor(formElement, settings) {
 		this.settings = {
@@ -20,6 +16,8 @@ export default class AjaxForm {
 		};
 
 		this.form = formElement;
+
+		this.eventListeners = new Map();
 
 		this.handler = new FormHandler(this.form, settings);
 
@@ -45,15 +43,19 @@ export default class AjaxForm {
 		}
 	}
 
-	bindEvent(event, callback) {
-		this.events[event].push(callback);
+	on(event, callback) {
+		if (!this.eventListeners.has(event)) {
+			this.eventListeners.set(event, []);
+		}
+
+		this.eventListeners.get(event).push(callback);
 	}
 
-	dispatchEvent(event, ...data) {
-		if (this.events[event] && this.events[event].length) {
-			for (let fn of this.events[event]) {
-				fn.apply(this, data);
-			}
+	trigger(event, ...args) {
+		const listeners = this.eventListeners.get(event);
+
+		if (listeners && listeners.length) {
+			listeners.forEach((listener) => listener(...args));
 		}
 	}
 
@@ -90,12 +92,12 @@ export default class AjaxForm {
 
 		if (response.status == 'error') {
 			this.showError(response);
-			this.dispatchEvent('error', response);
+			this.trigger('error', response);
 		}
 
 		if (response.status == 'success') {
 			this.showSuccess(response);
-			this.dispatchEvent('success', response);
+			this.trigger('success', response);
 		}
 	}
 

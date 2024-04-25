@@ -10,6 +10,7 @@ export default class Datepicker {
 	constructor(element, params) {
 		this.input = element.querySelector('input[data-role="datepicker"]');
 		this.valueField = element.querySelector('input[data-role="value"]');
+		this.eventListeners = new Map();
 
 		this.params = {
 			name: 'date',
@@ -29,15 +30,19 @@ export default class Datepicker {
 		this.init();
 	}
 
-	bindEvent(event, callback) {
-		this.events[event].push(callback);
+	on(event, callback) {
+		if (!this.eventListeners.has(event)) {
+			this.eventListeners.set(event, []);
+		}
+
+		this.eventListeners.get(event).push(callback);
 	}
 
-	dispatchEvent(event, ...data) {
-		if (this.events[event] && this.events[event].length) {
-			for (let fn of this.events[event]) {
-				fn.apply(this, data);
-			}
+	trigger(event, ...args) {
+		const listeners = this.eventListeners.get(event);
+
+		if (listeners && listeners.length) {
+			listeners.forEach((listener) => listener(...args));
 		}
 	}
 
@@ -112,7 +117,7 @@ export default class Datepicker {
 			altFieldDateFormat: 'yyyy-MM-dd' + (this.params.timepicker ? ' hh:ii:00' : ''),
 			altField: this.valueField,
 			onSelect: (date, formattedDate, datepicker) => {
-				this.dispatchEvent('select', date.date);
+				this.trigger('select', date.date);
 			},
 		};
 
