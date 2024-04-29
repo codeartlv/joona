@@ -1,4 +1,8 @@
 .offcanvas {
+	width: 100%;
+	--bs-offcanvas-width:100%;
+	max-width: 40rem;
+
 	&.offcanvas-mobile-menu {
 		--bs-offcanvas-width:100%;
 		--bs-offcanvas-bg:transparent;
@@ -43,9 +47,41 @@
 			text-align: center;
 		}
 	}
+
+	.offcanvas-header {
+		background: var(--bs-gray-100);
+	}
+
+	.offcanvas-footer {
+		background: var(--bs-modal-footer-bg);
+		padding: $spacer $spacer;
+	}
+
+	&.offcanvas-loading {
+		.offcanvas-body {
+			position: relative;
+
+			.spinner {
+				position: absolute;
+				left:50%;
+				top:50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		max-width: 100% !important;
+	}
 }
 
 @include color-mode(dark) {
+	.offcanvas {
+		.offcanvas-header {
+			background: var(--bs-gray-800);
+		}
+	}
+
 	.offcanvas.offcanvas-mobile-menu {
 		.offcanvas-footer,
 		.offcanvas-body {

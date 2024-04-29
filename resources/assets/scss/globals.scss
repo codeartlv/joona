@@ -3,7 +3,6 @@
 }
 
 html {
-	/*
 	font-size: max(8px, 0.833333vw);
 
 	@include media-breakpoint-down(xl) {
@@ -21,9 +20,6 @@ html {
 	@include media-breakpoint-down(sm) {
 		font-size: max(16px, 4.33vw);
 	}
-	*/
-
-	font-size: 16px;
 }
 
 body {
@@ -84,10 +80,16 @@ h1, .h1 {
 
 :root {
 	--bs-gray-950:#{$gray-950};
+	--bs-modal-footer-bg:var(--bs-gray-200);
+}
+
+.modal {
+	--bs-modal-footer-bg:var(--bs-gray-200);
 }
 
 @include color-mode(dark) {
 	--bs-primary:#{$primary-dark};
+	--bs-modal-footer-bg:var(--bs-gray-950);
 
 	.btn-primary {
 		--bs-btn-bg:var(--bs-primary);
@@ -98,5 +100,9 @@ h1, .h1 {
 		--bs-btn-disabled-border-color:#{shade-color($primary-dark, 40%)};
 		--bs-btn-active-bg:#{shade-color($primary-dark, 20%)};
 		--bs-btn-active-border-color:#{shade-color($primary-dark, 20%)};
+	}
+
+	.modal {
+		--bs-modal-footer-bg:var(--bs-gray-950);
 	}
 }

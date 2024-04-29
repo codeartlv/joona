@@ -112,3 +112,10 @@
 		}
 	}
 }
+
+.nav-tabs-content {
+	border:solid 1px var(--bs-gray-300);
+	margin-top: 0 !important;
+    border-top: none;
+    padding: $spacer;
+}

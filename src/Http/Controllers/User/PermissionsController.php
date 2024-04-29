@@ -90,6 +90,11 @@ class PermissionsController
 		$role->permissions()->delete();
 
 		foreach ($permissions as $permission_id) {
+			if (!$permission_id) {
+				$form->setError(__('joona::user.permissions.permission_id_not_registered'));
+				return response()->json($form);
+			}
+
 			$role->addPermission($permission_id);
 		}
 

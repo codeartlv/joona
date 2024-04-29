@@ -202,6 +202,7 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			'range' => \Codeart\Joona\View\Components\Range::class,
 			'accordion' => \Codeart\Joona\View\Components\Accordion::class,
 			'content' => \Codeart\Joona\View\Components\Layout\Content::class,
+			'offcanvas' => \Codeart\Joona\View\Components\Offcanvas::class,
 		];
 
 		foreach ($components as $name => $class) {

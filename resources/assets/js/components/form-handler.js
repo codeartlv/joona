@@ -75,9 +75,7 @@ export default class FormHandler {
 			this.request.onload = () => {
 				if (this.request.status >= 200 && this.request.status < 300) {
 					try {
-						const jsonResponse = JSON.parse(
-							this.request.responseText
-						);
+						const jsonResponse = JSON.parse(this.request.responseText);
 						resolve(jsonResponse);
 					} catch (e) {
 						reject(`Failed to parse JSON response: ${e}`);
@@ -87,8 +85,7 @@ export default class FormHandler {
 				}
 			};
 
-			this.request.onerror = () =>
-				reject(this.request.statusText || 'Unknown error');
+			this.request.onerror = () => reject(this.request.statusText || 'Unknown error');
 			this.request.ontimeout = () => reject('Timeout');
 			this.request.onabort = () => reject('Aborted');
 

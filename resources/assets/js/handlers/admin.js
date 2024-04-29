@@ -109,37 +109,38 @@ export default class Admin extends Handler {
 	}
 
 	sidebar(el) {
-		new PerfectScrollbar(el, {
+		return new PerfectScrollbar(el, {
 			wheelPropagation: false,
 			suppressScrollX: true,
 		});
 	}
 
 	confirm(el, parameters) {
+		let confirmDialog = new ConfirmDialog(parameters.caption, parameters.message, [
+			{
+				caption: trans('joona::common.cancel'),
+				role: 'secondary',
+				callback: () => {
+					return false;
+				},
+			},
+			{
+				caption: trans('joona::common.ok'),
+				role: 'primary',
+				callback: () => {
+					document.location = el.href;
+					return true;
+				},
+			},
+		]);
+
 		el.addEventListener('click', (event) => {
-			let confirmDialog = new ConfirmDialog(parameters.caption, parameters.message, [
-				{
-					caption: trans('joona::common.cancel'),
-					role: 'secondary',
-					callback: () => {
-						return false;
-					},
-				},
-				{
-					caption: trans('joona::common.ok'),
-					role: 'primary',
-					callback: () => {
-						document.location = el.href;
-						return true;
-					},
-				},
-			]);
-
 			confirmDialog.open();
-
 			event.preventDefault();
 			return false;
 		});
+
+		return confirmDialog;
 	}
 
 	colorThemeSwitch(el) {

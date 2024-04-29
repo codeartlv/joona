@@ -54,6 +54,7 @@ return [
 		'role_not_found' => 'Role not found.',
 		'role_permissions_saved' => 'Permissions saved.',
 		'user_roles' => 'User roles',
+		'permission_id_not_registered' => 'Permission ID not specified.',
 	],
 	'report_choose_user_and_date_range' => 'Please select user and date range.',
 	'report_no_sessions' => 'No sessions found.',

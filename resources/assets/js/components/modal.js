@@ -95,16 +95,18 @@ export default class Modal {
 						modalDialogEl.innerHTML = modalDialogContent;
 					}
 
-					window.Joona.init(modalDialogEl);
+					window.Joona.init(modalEl);
 
 					let openEvent = new CustomEvent('joona:contentLoad', {
 						detail: {
 							source: 'modal',
-							element: modalDialogEl,
+							element: modalEl,
 						},
 					});
 
 					document.dispatchEvent(openEvent);
+
+					resolve(modalEl);
 				});
 
 				modalEl.addEventListener('hidden.bs.modal', () => {
@@ -122,7 +124,6 @@ export default class Modal {
 							modalDialogContent = response.data;
 
 							this.modalInstance.show();
-							resolve(modalEl);
 						})
 						.catch((e) => {
 							let message =

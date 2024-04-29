@@ -25,6 +25,7 @@
 		border-radius: 0px 0px $border-radius-lg $border-radius-lg;
 		padding-top: $spacer * 0.65;
 		padding-bottom: $spacer * 0.65;
+		background: var(--bs-modal-footer-bg);
 
 		> section:nth-child(2n) {
 			margin-left: auto;
@@ -120,10 +121,6 @@
 			background: var(--bs-gray-800);
 		}
 
-		.modal-footer {
-			background: var(--bs-gray-950);
-		}
-
 		.modal-body {
 			border-color: var(--bs-gray-800);
 		}
@@ -132,10 +129,6 @@
 
 @include color-mode(light) {
 	.modal-dialog {
-		.modal-footer {
-			background: var(--bs-gray-200);
-		}
-
 		.modal-header {
 			background: var(--bs-gray-100);
 		}

@@ -54,6 +54,7 @@ return [
 		'role_not_found' => 'Loma nav atrasta.',
 		'role_permissions_saved' => 'Tiesības saglabātas.',
 		'user_roles' => 'Lomas',
+		'permission_id_not_registered' => 'Nav reģistrēts tiesības ID',
 	],
 	'report_choose_user_and_date_range' => 'Izvēlieties lietotāju un datuma diapazonu.',
 	'report_no_sessions' => 'Nav atrasta neviena sessija.',
