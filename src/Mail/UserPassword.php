@@ -4,7 +4,6 @@ namespace Codeart\Joona\Mail;
 
 use Codeart\Joona\Models\User\AdminUser;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -18,7 +17,7 @@ class UserPassword extends Mailable
 	/**
 	 * Create a new message instance.
 	 */
-	public function __construct(public AdminUser $user, public string $password)
+	public function __construct(public AdminUser $user, public string $password, public bool $isCreateNew)
 	{
 		//
 	}
@@ -28,11 +27,25 @@ class UserPassword extends Mailable
 	 */
 	public function envelope(): Envelope
 	{
-		$default_locale = (string) config('app.locale');
+
 
 		return new Envelope(
-			subject: Lang::get('joona::user.mail_subject_new_password', [], $default_locale),
+			subject: $this->getSubject(),
 		);
+	}
+
+	/**
+	 * Return subject of the message
+	 *
+	 * @return string
+	 */
+	private function getSubject(): string
+	{
+		$defaultLocale = (string) config('app.locale');
+
+		$keyword = $this->isCreateNew ? 'joona::user.mail_subject_new_user':'joona::user.mail_subject_new_password';
+
+		return Lang::get($keyword, [], $defaultLocale);
 	}
 
 	/**
@@ -42,7 +55,9 @@ class UserPassword extends Mailable
 	{
 		return new Content(
 			view: 'joona::mail.user_password',
-			with: $this->user->toArray()
+			with: $this->user->toArray() + [
+				'subject' => $this->getSubject(),
+			]
 		);
 	}
 

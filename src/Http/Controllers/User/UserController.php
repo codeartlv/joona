@@ -6,12 +6,9 @@ use Codeart\Joona\View\Components\Form\FormResponse;
 use Codeart\Joona\Models\User\AdminUser;
 use Illuminate\Http\Request;
 use Codeart\Joona\Facades\Auth;
-use Codeart\Joona\Helpers\FloodCheck;
 use Codeart\Joona\Mail\UserPassword;
 use Codeart\Joona\Models\User\Access\Role;
 use Codeart\Joona\Models\User\AdminSession;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -133,7 +130,7 @@ class UserController
 			];
 		})->toArray();
 
-		$levels = array_map(function($level) use ($fields) {
+		$levels = array_map(function ($level) use ($fields) {
 			return new Option($level->value, $level->getLabel(), $level->value == $fields['level']);
 		}, $admin->canManageLevels());
 
@@ -166,6 +163,7 @@ class UserController
 		$password_setup = $request->post('password_setup');
 		$user_id = $request->post('id');
 		$available_roles = $admin->canManageRoles();
+		$isCreateNew = (bool) !$user_id;
 
 		if (!Joona::usesRolesAndPermissions()) {
 			$level = UserLevel::Admin->value;
@@ -229,7 +227,7 @@ class UserController
 			$user = $form->getData('user');
 
 			if ($password_setup == 'generate') {
-				Mail::to($user)->send(new UserPassword($user, $fields['password']));
+				Mail::to($user)->send(new UserPassword($user, $fields['password'], $isCreateNew));
 			}
 
 			$user->setRoles($roles);
@@ -252,7 +250,7 @@ class UserController
 
 		$can_display = false;
 		$sessions = [];
-		$users = AdminUser::orderBy('email', 'ASC')->get()->map(function($user) use ($userid) {
+		$users = AdminUser::orderBy('email', 'ASC')->get()->map(function ($user) use ($userid) {
 			return new Option($user->id, $user->email, $userid == $user->id);
 		})->all();
 

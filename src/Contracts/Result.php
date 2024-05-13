@@ -19,13 +19,6 @@ class Result implements Arrayable
 	protected $errors = [];
 
 	/**
-	 * Required JS actions
-	 *
-	 * @var mixed[]
-	 */
-	protected $actions = [];
-
-	/**
 	 * Response global result
 	 *
 	 * @var bool
@@ -51,9 +44,9 @@ class Result implements Arrayable
 	 *
 	 * @param string $message Error message
 	 * @param string $field Field name
-	 * @return Result
+	 * @return static
 	 */
-	public function setError($message, $field = null): self
+	public function setError($message, $field = null): static
 	{
 		if (!is_array($this->errors)) {
 			$this->errors = [];
@@ -80,9 +73,9 @@ class Result implements Arrayable
 	 * Attach additional data
 	 *
 	 * @param mixed[] $data
-	 * @return Result
+	 * @return static
 	 */
-	public function setData(array $data): self
+	public function setData(array $data): static
 	{
 		$this->data = $data;
 		return $this;
@@ -93,7 +86,7 @@ class Result implements Arrayable
 	 *
 	 * @param string $key
 	 * @param mixed $value
-	 * @return Result
+	 * @return static
 	 */
 	public function addData(string $key, $value)
 	{
@@ -162,25 +155,7 @@ class Result implements Arrayable
 	}
 
 	/**
-	 * Sets required action
-	 *
-	 * @param string $action
-	 * @param mixed $value
-	 * @return boolean
-	 */
-	public function setAction(string $action, $value): bool
-	{
-		$actions = explode(',', $action);
-
-		foreach ($actions as $action) {
-			$this->actions[$action] = $value;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Returns form result
+	 * Returns results as array
 	 *
 	 * @return mixed[]
 	 */
@@ -190,7 +165,6 @@ class Result implements Arrayable
 			'success' => $this->result,
 			'fields' => $this->errors,
 			'message' => $this->message,
-			'actions' => $this->actions,
 			'data' => $this->data,
 		];
 	}
@@ -233,5 +207,33 @@ class Result implements Arrayable
 	{
 		$this->errors = $errors;
 		$this->result = empty($errors);
+	}
+
+	/**
+	 * Get all error messages as string
+	 *
+	 * @return string
+	 */
+	public function getMessages(): string
+	{
+		if ($this->message) {
+			return $this->message;
+		}
+
+		$messages = [];
+
+		foreach ($this-> errors as $field => $errorMessages) {
+			$messages[] = implode("\n", $errorMessages);
+		}
+
+		return implode("\n", $messages);
+	}
+
+	public function from(Result $source): static
+	{
+		$this->setErrors($source->getErrors());
+		$this->setData($source->getAllData());
+
+		return $this;
 	}
 }

@@ -4,7 +4,6 @@ namespace Codeart\Joona\Http\Controllers\User;
 
 use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\View\Components\Form\FormResponse;
-use Codeart\Joona\Facades\AdminAuth;
 use Codeart\Joona\Facades\Permission;
 use Codeart\Joona\Models\User\Access\Role;
 use Illuminate\Http\Request;

@@ -27,6 +27,7 @@ return [
 	'activity_log_page_title' => 'Notikumu žurnāls',
 	'user_not_found' => 'Lietotāja konts nav atrasts.',
 	'mail_subject_new_password' => 'Jūsu kontam iestatīta parole',
+	'mail_subject_new_user' => 'Jums izveidots jauns konts',
 	'edit_user_label_basic_data' => 'Pamatdati',
 	'edit_user_label_permissions' => 'Tiesības',
 	'edit_user_label_password' => 'Parole',

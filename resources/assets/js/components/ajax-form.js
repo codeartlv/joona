@@ -208,6 +208,8 @@ export default class AjaxForm {
 			if (input.control) {
 				input.control.classList.add('is-invalid');
 				input.messages.innerHTML = messages.join('<br />');
+			} else {
+				globalMessages.push(messages.join('<br />'));
 			}
 		}
 

@@ -7,6 +7,13 @@ use Codeart\Joona\Contracts\Result;
 class FormResponse extends Result
 {
 	/**
+	 * Required JS actions
+	 *
+	 * @var mixed[]
+	 */
+	protected $actions = [];
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getResult(): array
@@ -23,8 +30,26 @@ class FormResponse extends Result
 	/**
 	 * @inheritDoc
 	 */
-	public function setError($message, $field = null): Result
+	public function setError($message, $field = null): static
 	{
 		return parent::setError($message, $field ?? '*');
+	}
+
+	/**
+	 * Sets required action
+	 *
+	 * @param string $action
+	 * @param mixed $value
+	 * @return boolean
+	 */
+	public function setAction(string $action, $value): bool
+	{
+		$actions = explode(',', $action);
+
+		foreach ($actions as $action) {
+			$this->actions[$action] = $value;
+		}
+
+		return true;
 	}
 }

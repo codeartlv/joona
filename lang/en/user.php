@@ -27,6 +27,7 @@ return [
 	'activity_log_page_title' => 'Activity log',
 	'user_not_found' => 'User not found.',
 	'mail_subject_new_password' => 'A password has been set for you account',
+	'mail_subject_new_user' => 'An account is created for you',
 	'edit_user_label_basic_data' => 'Basic data',
 	'edit_user_label_permissions' => 'Permissions',
 	'edit_user_label_password' => 'Password',
