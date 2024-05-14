@@ -18,6 +18,7 @@ return [
 		'settings' => 'Settings',
 		'settings_users' => 'User access',
 		'settings_permissions' => 'Permissions',
+		'settings_users_activities' => 'User activity',
 	],
 	'date_from' => 'Date from',
 	'date_to' => 'Date to',

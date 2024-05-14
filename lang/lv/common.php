@@ -18,6 +18,7 @@ return [
 		'settings' => 'Iestatījumi',
 		'settings_users' => 'Lietotāju piekļuve',
 		'settings_permissions' => 'Tiesības',
+		'settings_users_activities' => 'Lietotāju aktivitāte',
 	],
 	'date_from' => 'Datums no',
 	'date_to' => 'Datums līdz',

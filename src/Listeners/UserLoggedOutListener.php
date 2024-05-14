@@ -3,8 +3,6 @@
 namespace Codeart\Joona\Listeners;
 
 use Illuminate\Auth\Events\Logout;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Codeart\Joona\Models\User\Log\Event\Logout as LogoutEvent;
 use Codeart\Joona\Models\User\AdminSession;
 use Codeart\Joona\Models\User\AdminUser;

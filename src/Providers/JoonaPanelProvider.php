@@ -284,8 +284,13 @@ abstract class JoonaPanelProvider extends ServiceProvider
 			Page::make('settings.users')
 				->route('joona.user.list')
 				->caption('joona::common.menu.settings_users')
-				->activeOn(['joona.user.activities'])
 				->icon('person');
+
+		$default_menu[] =
+			Page::make('settings.users')
+				->route('joona.user.activities')
+				->caption('joona::common.menu.settings_users_activities')
+				->icon('ballot');
 
 		if (Joona::usesRolesAndPermissions()) {
 			$default_menu[] =

@@ -36,6 +36,8 @@ return [
 	'generate_pass_new' => 'Generate new password and send via e-mail',
 	'change_pass' => 'Change password',
 	'set_pass' => 'Set password',
+	'delete_user' => 'Delete user',
+	'delete_confirm' => 'Do you really intend to delete this user?',
 	'profile_data' => 'Profile data',
 	'auth' => [
 		'caption' => 'Backend authentication',
@@ -57,7 +59,7 @@ return [
 		'user_roles' => 'User roles',
 		'permission_id_not_registered' => 'Permission ID not specified.',
 	],
-	'report_choose_user_and_date_range' => 'Please select user and date range.',
+	'report_choose_user_and_date_range' => 'Please select date range.',
 	'report_no_sessions' => 'No sessions found.',
 	'user' => 'User',
 	'activity_log' => 'Activity log',

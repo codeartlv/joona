@@ -12,6 +12,11 @@ class Logout implements LogEvent
 		return __('joona::user.log_entries.logout');
 	}
 
+	public function getCategory(): string
+	{
+		return 'admin_user';
+	}
+
 	public function getDescription(LogEntry $entry): string
 	{
 		return (string) $entry->object_id;

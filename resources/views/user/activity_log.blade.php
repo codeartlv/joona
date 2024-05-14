@@ -29,7 +29,13 @@
 					<div class="card card-admin-user-session block">
 						<div class="card-header">
 							<section>
-								<h6>{{$session['started_date']}}</h6>
+								<h6>
+									@if (!$user_id)
+										{{$session['user']['first_name']}} {{$session['user']['last_name']}} &ndash;
+									@endif
+
+									{{$session['started_date']}}
+								</h6>
 								<time>
 									{{$session['duration_str']}}
 									<span class="badge rounded-pill text-bg-light">{{$session['end_reason']}}</span>

@@ -18,6 +18,7 @@ use Codeart\Joona\Enums\UserLevel;
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\View\Components\Select\Option;
+use Illuminate\Http\RedirectResponse;
 use Jenssegers\Agent\Agent;
 
 class UserController
@@ -146,6 +147,30 @@ class UserController
 	}
 
 	/**
+	 * Delete user call
+	 *
+	 * @param string $userId
+	 * @return RedirectResponse
+	 */
+	public function deleteUser(string $userId): RedirectResponse
+	{
+		$admin = Auth::user();
+		$user = AdminUser::find($userId);
+
+		if (!$user) {
+			abort(404);
+		}
+
+		if (!$user->canBeManagedBy($admin)) {
+			abort(403);
+		}
+
+		$user->delete();
+
+		return redirect()->back();
+	}
+
+	/**
 	 * Saves the user details from the edit form.
 	 *
 	 * @param \Illuminate\Http\Request $request The request containing the user details.
@@ -254,18 +279,23 @@ class UserController
 			return new Option($user->id, $user->email, $userid == $user->id);
 		})->all();
 
-		if ($userid && $date_from && $date_to) {
+		if ($date_from && $date_to) {
 			$d_from = \DateTime::createFromFormat('Y-m-d', $date_from);
 			$d_to = \DateTime::createFromFormat('Y-m-d', $date_to);
 
 			if ($d_to->getTimestamp() - $d_from->getTimestamp() > 0) {
 				$can_display = true;
 
-				$rows = AdminSession::whereRaw("user_id = ? AND started <= ? AND ended >= ? AND ended IS NOT NULL", [
-					$userid,
-					$d_to->format('Y-m-d 23:59:59'),
-					$d_from->format('Y-m-d 00:00:00'),
-				])->get();
+				$params = [];
+
+				if ($userid) {
+					$params[] = $userid;
+				}
+
+				$params[] = $d_to->format('Y-m-d 23:59:59');
+				$params[] = $d_from->format('Y-m-d 00:00:00');
+
+				$rows = AdminSession::whereRaw(($userid ? "user_id = ? AND":"")." started <= ? AND ended >= ? AND ended IS NOT NULL ORDER BY id ASC", $params)->get();
 
 				foreach ($rows as $row) {
 					$duration = strtotime($row->ended) - strtotime($row->started);
@@ -306,6 +336,7 @@ class UserController
 						'ip' => $row->login_ip,
 						'end_reason' => __('joona::user.session_end_reason_' . $row->end_reason),
 						'entries' => $log_rows,
+						'user' => $row->user->toArray(),
 						'agent' => [
 							'platform' => $agentParser->platform(),
 							'browser' => $agentParser->browser().' '.$version,

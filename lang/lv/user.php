@@ -36,6 +36,8 @@ return [
 	'generate_pass_new' => 'Nomainīt paroli un nosūtīt e-pastā',
 	'change_pass' => 'Ievadīt jaunu paroli',
 	'set_pass' => 'Iestatīt paroli',
+	'delete_user' => 'Dzēst lietotāju',
+	'delete_confirm' => 'Vai tiešām vēlaties dzēst šo lietotāju?',
 	'profile_data' => 'Profila dati',
 	'auth' => [
 		'caption' => 'Autorizācija sistēmā',
@@ -57,7 +59,7 @@ return [
 		'user_roles' => 'Lomas',
 		'permission_id_not_registered' => 'Nav reģistrēts tiesības ID',
 	],
-	'report_choose_user_and_date_range' => 'Izvēlieties lietotāju un datuma diapazonu.',
+	'report_choose_user_and_date_range' => 'Izvēlieties datuma diapazonu.',
 	'report_no_sessions' => 'Nav atrasta neviena sessija.',
 	'user' => 'Lietotājs',
 	'activity_log' => 'Notikumu žurnāls',

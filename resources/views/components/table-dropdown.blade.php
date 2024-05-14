@@ -6,6 +6,12 @@
 		<div class="dropdown-menu dropdown-menu-right">
 			@foreach ($options as $option)
 				@php
+
+				if ($option == '-') {
+					echo '<li><hr class="dropdown-divider"></li>';
+					continue;
+				}
+
 				$option += [
 					'caption' => '',
 					'icon' => null,

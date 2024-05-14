@@ -44,6 +44,7 @@ Route::prefix(Joona::getBasePath())->middleware(['web', 'admin.web'])->name('joo
 				Route::get('/my-password', [UserController::class, 'setMyPasswordForm'])->name('my-password');
 				Route::post('/my-password', [UserController::class, 'setMyPassword'])->name('my-password-save');
 				Route::get('edit/{id}', [UserController::class, 'editUser'])->name('edit');
+				Route::get('delete/{user_id}', [UserController::class, 'deleteUser'])->name('delete');
 				Route::post('edit', [UserController::class, 'saveUser'])->name('save');
 
 				Route::get('/permissions', [PermissionsController::class, 'groups'])->name('permission-groups');

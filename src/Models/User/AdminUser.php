@@ -72,6 +72,7 @@ class AdminUser extends Authenticatable
 			'session_id' => $session->id,
 			'ua' => request()->header('User-Agent'),
 			'action' => LogEntry::getCategoryFromEvent($event),
+			'category' => $event->getCategory(),
 			'object_id' => $object_id,
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s'),

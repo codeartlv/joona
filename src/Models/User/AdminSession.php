@@ -3,6 +3,7 @@
 namespace Codeart\Joona\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * User session model. Holds information about when user logged in, and when logged out or actions ended.
@@ -127,5 +128,15 @@ class AdminSession extends Model
 		}
 
 		return $session_id->first();
+	}
+
+	/**
+	 * Get session user
+	 *
+	 * @return HasOne
+	 */
+	public function user(): HasOne
+	{
+		return $this->hasOne(AdminUser::class, 'id', 'user_id');
 	}
 }

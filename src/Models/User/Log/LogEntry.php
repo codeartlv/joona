@@ -2,7 +2,9 @@
 
 namespace Codeart\Joona\Models\User\Log;
 
+use Codeart\Joona\Models\User\AdminUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * User journal entry.
@@ -25,6 +27,7 @@ class LogEntry extends Model
 		'user_id',
 		'session_id',
 		'action',
+		'category',
 		'object_id',
 		'parameters',
 		'ua',
@@ -38,5 +41,10 @@ class LogEntry extends Model
 	public static function getEventFromCategory(string $class): ?LogEvent
 	{
 		return new $class;
+	}
+
+	public function user(): HasOne
+	{
+		return $this->hasOne(AdminUser::class, 'id', 'user_id');
 	}
 }
