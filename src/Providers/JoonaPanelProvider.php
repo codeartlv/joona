@@ -14,10 +14,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Validator as ValidatorObject;
 
-abstract class JoonaPanelProvider extends ServiceProvider
+abstract class JoonaPanelProvider extends JoonaProvider
 {
 	/**
 	 * Configure the admin panel settings.
@@ -48,15 +47,11 @@ abstract class JoonaPanelProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->offerPublish();
-
 		$this->setupMigrations();
 
 		$this->setupTranslations();
 
 		$this->setupViews();
-
-		$this->addConsoleCommands();
 
 		$this->registerEventListeners();
 
@@ -109,46 +104,6 @@ abstract class JoonaPanelProvider extends ServiceProvider
 	{
 		if ($this->app->runningInConsole()) {
 			$this->loadMigrationsFrom($this->getPackageMigrationsPath());
-		}
-	}
-
-	/**
-	 * Static asset publishing
-	 *
-	 * @return void
-	 */
-	private function offerPublish(): void
-	{
-		if ($this->app->runningInConsole()) {
-			// Provide an application config
-			$this->publishes([
-				$this->getPackageConfigPath() . 'joona.php' => config_path('joona.php'),
-			], 'joona-config');
-
-			// Publish assets
-			$this->publishes([
-				$this->getPackageDistAssetPath() => public_path('vendor/joona/images'),
-			], 'joona-assets');
-
-			// Publish provider
-			$this->publishes([
-				$this->getPackageExportPath() . 'JoonaServiceProvider.php' => app_path('Providers/JoonaServiceProvider.php'),
-			], 'joona-provider');
-		}
-	}
-
-	/**
-	 * Configure package commands
-	 *
-	 * @return void
-	 */
-	private function addConsoleCommands(): void
-	{
-		if ($this->app->runningInConsole()) {
-			$this->commands([
-				\Codeart\Joona\Commands\Seed::class,
-				\Codeart\Joona\Commands\PublishAssets::class,
-			]);
 		}
 	}
 
@@ -396,85 +351,5 @@ abstract class JoonaPanelProvider extends ServiceProvider
 
 		$panel = resolve('joona.panel');
 		$panel->setJavascriptTranslations($translationKeys);
-	}
-
-	/**
-	 * Returns package root directory
-	 *
-	 * @return string
-	 */
-	private function getPackageRoot(): string
-	{
-		return __DIR__.'/../../';
-	}
-
-	/**
-	 * Returns path to package routes directory
-	 *
-	 * @return string
-	 */
-	private function getPackageRoutesPath(): string
-	{
-		return $this->getPackageRoot().'routes/';
-	}
-
-	/**
-	 * Returns path to package migrations directory
-	 *
-	 * @return string
-	 */
-	private function getPackageMigrationsPath(): string
-	{
-		return $this->getPackageRoot().'database/migrations/';
-	}
-
-	/**
-	 * Returns path to package transations directory
-	 *
-	 * @return string
-	 */
-	private function getPackageTranslationsPath(): string
-	{
-		return $this->getPackageRoot().'lang/';
-	}
-
-	/**
-	 * Returns path to package views directory
-	 *
-	 * @return string
-	 */
-	private function getPackageViewsPath(): string
-	{
-		return $this->getPackageRoot().'resources/views/';
-	}
-
-	/**
-	 * Returns path to package config directory
-	 *
-	 * @return string
-	 */
-	private function getPackageConfigPath(): string
-	{
-		return $this->getPackageRoot().'config/';
-	}
-
-	/**
-	 * Asset directory
-	 *
-	 * @return string
-	 */
-	private function getPackageDistAssetPath(): string
-	{
-		return $this->getPackageRoot().'resources/assets/images/';
-	}
-
-	/**
-	 * Export directory
-	 *
-	 * @return string
-	 */
-	private function getPackageExportPath(): string
-	{
-		return $this->getPackageRoot().'export/';
 	}
 }
