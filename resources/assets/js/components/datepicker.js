@@ -8,7 +8,9 @@ export default class Datepicker {
 	};
 
 	constructor(element, params) {
+		this.container = element;
 		this.input = element.querySelector('input[data-role="datepicker"]');
+		this.clearDate = element.querySelector('[data-role="clear"]');
 		this.valueField = element.querySelector('input[data-role="value"]');
 		this.eventListeners = new Map();
 
@@ -116,8 +118,9 @@ export default class Datepicker {
 			timepicker: this.params.timepicker,
 			altFieldDateFormat: 'yyyy-MM-dd' + (this.params.timepicker ? ' hh:ii:00' : ''),
 			altField: this.valueField,
-			onSelect: (date, formattedDate, datepicker) => {
-				this.trigger('select', date.date);
+			onSelect: ({ date }) => {
+				this.trigger('select', date);
+				this.container.classList.toggle('has-date', date);
 			},
 		};
 
@@ -164,5 +167,9 @@ export default class Datepicker {
 				}
 			}
 		}
+
+		this.clearDate.addEventListener('click', () => {
+			this.clear();
+		});
 	}
 }
