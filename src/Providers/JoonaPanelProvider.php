@@ -7,18 +7,14 @@ use Codeart\Joona\Auth\AdminUserProvider;
 use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\Auth\Permissions\RoutePermission;
 use Codeart\Joona\Auth\Permissions\PermissionLoader;
-use Codeart\Joona\Auth\Permissions\SimplePermission;
 use Codeart\Joona\Facades\Joona;
-use Codeart\Joona\Facades\Permission;
 use Codeart\Joona\MetaData\Page;
 use Codeart\Joona\Panel;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Translation\Translator;
 use Illuminate\Validation\Validator as ValidatorObject;
 
 abstract class JoonaPanelProvider extends ServiceProvider

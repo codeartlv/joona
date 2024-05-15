@@ -1,6 +1,6 @@
 {
 	"name": "codeartlv/joona",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"license": "MIT",
 	"description": "A simple backend template for Laravel projects",
 	"type": "library",
@@ -23,5 +23,12 @@
 		"php": "^8.2",
 		"tightenco/ziggy": "^2.0",
 		"jenssegers/agent": "^2.6"
-	}
+	},
+	"extra": {
+        "laravel": {
+            "providers": [
+                "Codeart\\Joona\\Providers\\JoonaProvider"
+            ]
+        }
+    }
 }
