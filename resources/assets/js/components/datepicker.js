@@ -168,8 +168,10 @@ export default class Datepicker {
 			}
 		}
 
-		this.clearDate.addEventListener('click', () => {
-			this.clear();
-		});
+		if (this.clearDate) {
+			this.clearDate.addEventListener('click', () => {
+				this.clear();
+			});
+		}
 	}
 }
