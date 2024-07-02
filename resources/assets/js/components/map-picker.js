@@ -54,9 +54,17 @@ export default class MapPicker {
 	}
 
 	onMapClick(e) {
+		const customIcon = L.icon({
+			iconUrl: '/vendor/joona/images/map/marker-icon.png',
+			iconSize: [25, 41],
+			iconAnchor: [12, 41],
+			popupAnchor: [-3, -76],
+		});
+
 		if (this.marker === null) {
 			this.marker = L.marker(e.latlng, {
 				draggable: true,
+				icon: customIcon,
 			}).addTo(this.map);
 
 			this.marker.on('drag', this.updateLocation.bind(this));
