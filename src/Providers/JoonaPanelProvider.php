@@ -154,6 +154,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'accordion' => \Codeart\Joona\View\Components\Accordion::class,
 			'content' => \Codeart\Joona\View\Components\Layout\Content::class,
 			'offcanvas' => \Codeart\Joona\View\Components\Offcanvas::class,
+			'map-picker' => \Codeart\Joona\View\Components\MapPicker::class,
 		];
 
 		foreach ($components as $name => $class) {

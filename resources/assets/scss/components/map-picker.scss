@@ -1,0 +1,11 @@
+.map-picker {
+	aspect-ratio: 16/10;
+	display: flex;
+	flex-direction: column;
+
+	.leaflet-container {
+		height: 100%;
+		flex: 1;
+		z-index: 0;
+	}
+}

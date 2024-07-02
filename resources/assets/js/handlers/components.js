@@ -5,6 +5,7 @@ import PasswordValidator from '../components/password-validator.js';
 import Datepicker from '../components/datepicker.js';
 import Uploader from '../components/uploader.js';
 import Autocomplete from '../components/autocomplete.js';
+import MapPicker from '../components/map-picker.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -29,5 +30,9 @@ export default class Components extends Handler {
 
 	datepicker(el, params) {
 		return new Datepicker(el, params);
+	}
+
+	mapPicker(el, params) {
+		return new MapPicker(el, params);
 	}
 }
