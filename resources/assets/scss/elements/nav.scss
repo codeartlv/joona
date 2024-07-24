@@ -58,7 +58,7 @@
 					transition: color 50ms ease-in;
 					margin-left: 0.35rem;
 					position: relative;
-    				top: 0.05rem;
+					top: 0.05rem;
 				}
 			}
 		}
@@ -105,8 +105,8 @@
 				}
 
 				> i {
-					font-size:1rem;
-					margin-right: $spacer*0.5;
+					font-size: 1rem;
+					margin-right: $spacer * 0.5;
 				}
 			}
 		}
@@ -114,8 +114,8 @@
 }
 
 .nav-tabs-content {
-	border:solid 1px var(--bs-gray-300);
+	border: solid 1px var(--bs-gray-300);
 	margin-top: 0 !important;
-    border-top: none;
-    padding: $spacer;
+	border-top: none;
+	padding: $spacer;
 }

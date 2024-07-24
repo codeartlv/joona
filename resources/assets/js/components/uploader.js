@@ -1,5 +1,5 @@
 import Sortable from 'sortablejs';
-import { addSpinner, removeSpinner, parseJsonLd } from './../helpers';
+import { addSpinner, removeSpinner, parseJsonLd, parseRoute } from './../helpers';
 
 export default class Uploader {
 	uploadCounter = 0;
@@ -53,7 +53,7 @@ export default class Uploader {
 			this.list = this.element;
 		}
 
-		this.trigger = element.querySelector('[data-role="trigger"]');
+		this.triggerEl = element.querySelector('[data-role="trigger"]');
 
 		this.dataField = document.createElement('input');
 		this.dataField.type = 'hidden';
@@ -69,6 +69,7 @@ export default class Uploader {
 
 		if (images.length) {
 			this.setImages(images);
+			this.syncIds();
 		}
 	}
 
@@ -202,7 +203,7 @@ export default class Uploader {
 	// Copies file ID attributes to hidden input field
 	syncIds() {
 		let ids = [];
-		let files = document.querySelectorAll('.upload-file');
+		let files = this.element.querySelectorAll('.upload-file');
 
 		if (files.length) {
 			files.forEach(function (file) {
@@ -249,9 +250,9 @@ export default class Uploader {
 		}
 
 		if (this.uploadCounter >= this.params.limit) {
-			this.trigger.classList.add('hidden');
+			this.triggerEl.classList.add('hidden');
 		} else {
-			this.trigger.classList.remove('hidden');
+			this.triggerEl.classList.remove('hidden');
 		}
 	}
 
@@ -294,7 +295,7 @@ export default class Uploader {
 
 	deleteFile(id, thumbnail) {
 		if (id) {
-			let url = route(this.params.deleteroute);
+			let url = parseRoute(this.params.deleteroute);
 
 			let csrfToken = document
 				.querySelector('meta[name="csrf-token"]')
@@ -320,6 +321,57 @@ export default class Uploader {
 		this.trigger('queueChange');
 	}
 
+	updateThumbnail(thumbnail, file) {
+		if ('id' in file) {
+			thumbnail.dataset.id = file.id;
+		}
+
+		if ('filename' in file) {
+			const extension = file.filename.split('.').pop().toLowerCase();
+
+			if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
+			}
+
+			let icon = thumbnail.querySelector('[data-role="file-icon"]');
+			icon.classList.add(`fiv-icon-${extension}`);
+
+			thumbnail.querySelector('[data-role="filename"]').innerText = file.filename;
+			this.setThumbnailType(thumbnail, extension);
+		}
+
+		if ('message' in file) {
+			thumbnail.querySelector('[data-role="message"]').innerText = file.message;
+		}
+
+		if ('locked' in file) {
+			thumbnail.dataset.locked = file.locked;
+
+			if (file.locked) {
+				thumbnail.classList.add('locked');
+			}
+		}
+
+		if ('thumbnail' in file) {
+			if (file.thumbnail) {
+				thumbnail.classList.add('has-thumb');
+				thumbnail.classList.remove('no-preview');
+
+				thumbnail.querySelector(
+					'[data-role="thumbnail"]'
+				).style.backgroundImage = `url('${file.thumbnail}')`;
+			} else {
+				thumbnail.classList.add('no-preview');
+			}
+		}
+		/*
+
+
+
+
+		thumbnail.dataset.type = file.type;
+		*/
+	}
+
 	setImages(images) {
 		this.clear();
 
@@ -337,19 +389,9 @@ export default class Uploader {
 			let file = images[i];
 
 			let thumbnail = this.createThumbnail();
-			thumbnail.dataset.id = file.id;
-			thumbnail.dataset.type = file.type;
-			thumbnail.dataset.locked = file.locked;
-
-			if (file.locked) {
-				thumbnail.classList.add('locked');
-			}
-
-			thumbnail.querySelector(
-				'[data-role="thumbnail"]'
-			).style.backgroundImage = `url('${file.url}')`;
 			thumbnail.classList.add('completed', 'success');
 
+			this.updateThumbnail(thumbnail, file);
 			this.appendThumbnailToList(thumbnail, true);
 			this.bindEvents(thumbnail);
 			this.uploadCounter++;
@@ -363,8 +405,8 @@ export default class Uploader {
 		append = append || false;
 
 		if (append) {
-			if (this.trigger) {
-				this.trigger.before(thumbnail);
+			if (this.triggerEl) {
+				this.triggerEl.before(thumbnail);
 			} else {
 				this.list.appendChild(thumbnail);
 			}
@@ -393,7 +435,6 @@ export default class Uploader {
 	uploadFile(file) {
 		const thumbnail = this.createThumbnail();
 		const progress = thumbnail.querySelector('[data-role="progress"]');
-		const extension = file.name.split('.').pop();
 
 		this.uploadCounter++;
 		this.checkLimits();
@@ -407,27 +448,27 @@ export default class Uploader {
 		if (['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
 			var reader = new FileReader();
 
-			reader.onload = function (e) {
-				thumbnail.querySelector(
-					'[data-role="thumbnail"]'
-				).style.backgroundImage = `url('${e.target.result}')`;
-
-				thumbnail.classList.add('has-thumb');
+			reader.onload = (e) => {
+				this.updateThumbnail(thumbnail, {
+					thumbnail: e.target.result,
+				});
 			};
 
 			reader.readAsDataURL(file);
 		} else {
 			thumbnail.classList.add('no-preview');
-			this.setThumbnailType(thumbnail, extension);
 		}
 
-		thumbnail.querySelector('[data-role="filename"]').innerText = file.name;
+		this.updateThumbnail(thumbnail, {
+			id: null,
+			filename: file.name,
+		});
 
 		this.appendThumbnailToList(thumbnail);
 
 		this.bindEvents(thumbnail);
 
-		let url = route(this.params.uploadroute);
+		let url = parseRoute(this.params.uploadroute);
 
 		let ajax = new XMLHttpRequest();
 		ajax.open('POST', url);
@@ -450,19 +491,11 @@ export default class Uploader {
 
 			if (response.error) {
 				thumbnail.classList.add('error');
-				thumbnail.querySelector('[data-role="message"]').innerText = response.message;
 			} else {
 				thumbnail.classList.add('success');
-				thumbnail.dataset.id = response.id;
-
-				if (response.type == 'image' && response.url) {
-					thumbnail.querySelector(
-						'[data-role="thumbnail"]'
-					).style.backgroundImage = `url('${response.url}')`;
-				}
-
-				this.setThumbnailType(thumbnail, response.type);
 			}
+
+			this.updateThumbnail(thumbnail, response);
 
 			this.onComplete();
 			this.syncIds();

@@ -1,11 +1,16 @@
 .form-label {
+	font-size: 0.875rem;
+	display: block;
+	line-height: 1;
+	margin-bottom: $spacer * 0.5;
+
 	&.required {
 		&::after {
-			content: " *";
-			color:$danger;
+			content: ' *';
+			color: $danger;
 			font-size: 0.9375em;
 			position: relative;
-			top:-0.125em;
+			top: -0.125em;
 		}
 	}
 }
