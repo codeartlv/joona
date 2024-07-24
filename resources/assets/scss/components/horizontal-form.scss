@@ -3,6 +3,10 @@
 		> section {
 			display: flex;
 
+			> * {
+				flex: 1;
+			}
+
 			> label {
 				flex: 0 0 35%;
 				margin: 0;
