@@ -52,3 +52,31 @@ export function parseJsonLd(element) {
 
 	return data;
 }
+
+export function parseRoute(arg) {
+	// Use a regular expression to extract the route and the parameters part
+	const routePattern = /^([^\[]+)/;
+	const paramsPattern = /\[([^\]]+)\]/;
+
+	const routeMatch = arg.match(routePattern);
+	const paramsMatch = arg.match(paramsPattern);
+
+	// Extract route
+	let route = routeMatch ? routeMatch[0] : '';
+
+	// Initialize parameters object
+	let params = {};
+
+	// Extract and process parameters string if it exists
+	if (paramsMatch) {
+		let paramsString = paramsMatch[1];
+		let paramsArray = paramsString.split(',');
+
+		paramsArray.forEach((param) => {
+			let [key, value] = param.split('=');
+			params[key] = value;
+		});
+	}
+
+	return window.route(route, params);
+}

@@ -1,0 +1,17 @@
+.horizontal-form {
+	@include media-breakpoint-up(md) {
+		> section {
+			display: flex;
+
+			> label {
+				flex: 0 0 35%;
+				margin: 0;
+				padding-top: 0.75rem;
+			}
+		}
+	}
+
+	> section + section {
+		margin-top: $spacer;
+	}
+}

@@ -5,6 +5,7 @@
 @import '../../../node_modules/perfect-scrollbar/css/perfect-scrollbar.css';
 @import '../../../node_modules/air-datepicker/air-datepicker.css';
 @import '../../../node_modules/leaflet/dist/leaflet.css';
+@import '../../../node_modules/file-icon-vectors/src/scss/file-icon-square-o';
 
 @import 'globals';
 
@@ -31,6 +32,7 @@
 @import 'elements/offcanvas';
 @import 'elements/pagination';
 @import 'elements/table';
+@import 'elements/tabs';
 @import 'elements/toast';
 
 @import 'components/datepicker';
@@ -43,6 +45,7 @@
 @import 'components/uploader';
 @import 'components/autocomplete';
 @import 'components/map-picker';
+@import 'components/horizontal-form';
 
 @import 'layouts/block';
 @import 'layouts/page';

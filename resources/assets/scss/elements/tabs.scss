@@ -1,0 +1,12 @@
+.tab-content {
+	background: $nav-tabs-link-active-bg;
+	border: solid 1px $nav-tabs-border-color;
+	border-top: none;
+	padding: $spacer;
+}
+
+.tab-pane {
+	> .form-group:last-child {
+		margin-bottom: 0;
+	}
+}
