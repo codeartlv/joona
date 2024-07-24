@@ -28,7 +28,7 @@ export default class Offcanvas {
 				offcanvasEl.dataset.bsScroll = 'true';
 			}
 
-			if (options.backdropClose) {
+			if (!options.backdropClose) {
 				offcanvasEl.dataset.bsBackdrop = 'static';
 			}
 
