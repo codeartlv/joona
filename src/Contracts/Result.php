@@ -198,6 +198,15 @@ class Result implements Arrayable
 	}
 
 	/**
+	 * Whether there is no error
+	 * @return boolean
+	 */
+	public function isOk(): bool
+	{
+		return !$this->hasError();
+	}
+
+	/**
 	 * Set bulk errors
 	 *
 	 * @param mixed[] $errors
