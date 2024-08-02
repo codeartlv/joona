@@ -12,28 +12,49 @@
 	}
 
 	.card-footer {
-		border-top:none;
+		border-top: none;
+	}
+
+	> table {
+		margin-bottom: 0;
+
+		thead > tr > th:first-child,
+		tbody > tr > td:first-child {
+			padding-left: $spacer;
+		}
+
+		thead > tr > td:last-child,
+		tbody > tr > td:last-child {
+			padding-right: $spacer;
+		}
+	}
+
+	@include media-breakpoint-up(md) {
+		> table {
+			margin-bottom: 0;
+			margin-top: $spacer * 0.5;
+		}
 	}
 
 	&.card-admin-user-session {
 		.card-header {
 			border-radius: 0;
-			background:var(--bs-body-bg);
+			background: var(--bs-body-bg);
 			align-items: center;
 			border-bottom: solid 1px var(--bs-gray-300);
 
 			section {
-				padding-top: $spacer*0.25;
+				padding-top: $spacer * 0.25;
 
 				h6 {
 					text-transform: none;
-					margin:0;
+					margin: 0;
 				}
 
 				time {
 					text-transform: none;
 					font-weight: $font-weight-normal;
-					color:var(--bs-gray-500);
+					color: var(--bs-gray-500);
 					display: flex;
 					align-items: center;
 					gap: $spacer;
@@ -48,31 +69,31 @@
 				> div {
 					display: flex;
 					align-items: center;
-					font-size: .75rem;
-					gap:$spacer*0.5;
+					font-size: 0.75rem;
+					gap: $spacer * 0.5;
 				}
 
 				i {
-					font-size: .875rem;
+					font-size: 0.875rem;
 				}
 			}
 		}
 
 		.card-body {
-			background:var(--bs-body-bg);
-			padding:0;
-			flex:0;
-			margin:0;
+			background: var(--bs-body-bg);
+			padding: 0;
+			flex: 0;
+			margin: 0;
 			font-size: 0.875em;
 
 			td.card-admin-user-session__action {
-				width:15%;
+				width: 15%;
 			}
 
 			td.card-admin-user-session__date {
-				width:1px;
+				width: 1px;
 				white-space: nowrap;
-				color:var(--bs-gray-600);
+				color: var(--bs-gray-600);
 			}
 
 			tr:last-child td {
@@ -82,17 +103,17 @@
 	}
 
 	&.card-auth {
-		flex:0 1 25rem;
+		flex: 0 1 25rem;
 		background: var(--bs-body-bg);
-		border:none;
-		padding:$spacer*2;
+		border: none;
+		padding: $spacer * 2;
 
 		.card-header {
 			flex-direction: column;
 			align-items: center;
 			background: none !important;
 			text-transform: none;
-			border:none;
+			border: none;
 
 			img {
 				display: block;
@@ -103,8 +124,8 @@
 			}
 
 			p {
-				margin:0;
-				color:$text-muted;
+				margin: 0;
+				color: $text-muted;
 				font-size: 0.875rem;
 				font-weight: $font-weight-normal;
 			}
@@ -117,13 +138,13 @@
 		}
 
 		.card-body {
-			padding:$spacer*2 0;
-			border:none;
+			padding: $spacer * 2 0;
+			border: none;
 		}
 
 		.card-footer {
-			padding:0;
-			border:none;
+			padding: 0;
+			border: none;
 			background: none !important;
 		}
 
@@ -152,7 +173,7 @@
 @include color-mode(dark) {
 	.card {
 		box-shadow: none;
-		border-color:var(--bs-gray-800);
+		border-color: var(--bs-gray-800);
 
 		.card-header {
 			background-color: var(--bs-gray-800);

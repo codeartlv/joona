@@ -1,8 +1,12 @@
-.tab-content {
+.nav-tabs + .tab-content {
 	background: $nav-tabs-link-active-bg;
 	border: solid 1px $nav-tabs-border-color;
 	border-top: none;
 	padding: $spacer;
+}
+
+.nav-pills + .tab-content {
+	margin-top: $spacer;
 }
 
 .tab-pane {
