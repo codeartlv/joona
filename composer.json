@@ -1,6 +1,6 @@
 {
 	"name": "codeartlv/joona",
-	"version": "1.0.16",
+	"version": "1.0.17",
 	"license": "MIT",
 	"description": "A simple backend template for Laravel projects",
 	"type": "library",
