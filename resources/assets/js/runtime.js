@@ -43,7 +43,7 @@ export default class Runtime {
 		};
 
 		window.choice = function (keyword, count, args, locale) {
-			return lang.get(keyword, count, args, locale);
+			return lang.transChoice(keyword, count, args, locale);
 		};
 
 		window.locale = this.locale;

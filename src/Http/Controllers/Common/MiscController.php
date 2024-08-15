@@ -4,7 +4,6 @@ namespace Codeart\Joona\Http\Controllers\Common;
 
 use Codeart\Joona\Facades\Joona;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 class MiscController

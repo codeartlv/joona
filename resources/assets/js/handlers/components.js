@@ -6,6 +6,7 @@ import Datepicker from '../components/datepicker.js';
 import Uploader from '../components/uploader.js';
 import Autocomplete from '../components/autocomplete.js';
 import MapPicker from '../components/map-picker.js';
+import MultiSelect from '../components/multi-select.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -34,5 +35,9 @@ export default class Components extends Handler {
 
 	mapPicker(el, params) {
 		return new MapPicker(el, params);
+	}
+
+	multiSelect(el, params) {
+		return new MultiSelect(el, params);
 	}
 }

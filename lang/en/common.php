@@ -27,4 +27,5 @@ return [
 	'close' => 'Close',
 	'select_files' => 'Select files',
 	'no_results_found' => 'No results found.',
+	'selected' => ':count selected|:count selected',
 ];

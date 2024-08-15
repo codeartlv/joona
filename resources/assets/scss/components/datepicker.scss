@@ -1,5 +1,5 @@
 .datepicker {
-	a[data-role="clear"] {
+	a[data-role='clear'] {
 		position: absolute;
 		right: 0.5rem;
 		top: 50%;
@@ -11,8 +11,13 @@
 	}
 
 	&.has-date {
-		a[data-role="clear"] {
+		a[data-role='clear'] {
 			display: block;
 		}
+	}
+
+	.form-control {
+		border-top-right-radius: var(--bs-border-radius) !important;
+		border-bottom-right-radius: var(--bs-border-radius) !important;
 	}
 }

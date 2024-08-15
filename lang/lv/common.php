@@ -27,4 +27,5 @@ return [
 	'close' => 'Aizvērt',
 	'select_files' => 'Izvēlēties failus',
 	'no_results_found' => 'Nekas netika atrasts.',
+	'selected' => ':count izvēlēti|:count izvēlēts|:count izvēlēti',
 ];
