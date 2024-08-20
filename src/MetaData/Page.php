@@ -21,6 +21,7 @@ class Page
 	public ?string $caption = null;
 	public ?string $icon = null;
 	public ?string $route = null;
+	public ?int $badge = 0;
 	public array $activeRoutes = [];
 
 	/**
@@ -54,6 +55,18 @@ class Page
 	public function icon(?string $icon): self
 	{
 		$this->icon = $icon;
+		return $this;
+	}
+
+	/**
+	 * Sets the badge for the page.
+	 *
+	 * @param int $badge Badge number.
+	 * @return self Returns the instance of this Page for method chaining.
+	 */
+	public function badge(int $badge): self
+	{
+		$this->badge = $badge;
 		return $this;
 	}
 

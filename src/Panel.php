@@ -397,6 +397,7 @@ class Panel
 					'url' => $page->route ? route($page->route) : null,
 					'active' => $is_active_route || $has_active_child,
 					'icon' => $page->icon,
+					'badge' => $page->badge,
 					'childs' => $item['children'],
 				];
 			}
