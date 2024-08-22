@@ -1,0 +1,20 @@
+.gallery-thumbnails {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	gap: $spacer * 0.5;
+
+	li {
+		figure {
+			background-color: $gray-200;
+			aspect-ratio: 1/1;
+			margin: 0;
+			height: 1rem;
+			cursor: pointer;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	}
+}

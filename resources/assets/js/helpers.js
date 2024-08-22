@@ -11,6 +11,12 @@ export function addSpinner(context, color) {
 	);
 }
 
+export function createElementFromHTML(htmlString) {
+	const tempContainer = document.createElement('div');
+	tempContainer.innerHTML = htmlString.trim();
+	return tempContainer.firstElementChild;
+}
+
 export function removeSpinner(context) {
 	context.querySelectorAll('.spinner').forEach((e) => {
 		e.remove();

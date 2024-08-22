@@ -6,6 +6,9 @@
 @import '../../../node_modules/air-datepicker/air-datepicker.css';
 @import '../../../node_modules/leaflet/dist/leaflet.css';
 @import '../../../node_modules/file-icon-vectors/src/scss/file-icon-square-o';
+@import '../../../node_modules/swiper/swiper';
+@import '../../../node_modules/swiper/modules/navigation';
+@import '../../../node_modules/swiper/modules/effect-fade';
 
 @import 'globals';
 
@@ -47,6 +50,7 @@
 @import 'components/map-picker';
 @import 'components/horizontal-form';
 @import 'components/multiselect';
+@import 'components/gallery';
 
 @import 'layouts/block';
 @import 'layouts/page';
@@ -54,3 +58,4 @@
 
 @import 'vendor/datepicker';
 @import 'vendor/autocomplete';
+@import 'vendor/swiper';

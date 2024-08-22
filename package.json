@@ -27,7 +27,8 @@
 		"material-symbols": "^0.14",
 		"moment": "^2.30",
 		"perfect-scrollbar": "^1.5",
-		"sortablejs": "1.15"
+		"sortablejs": "1.15",
+		"swiper": "^11.1.10"
 	},
 	"devDependencies": {
 		"rollup-plugin-copy": "^3.5.0",

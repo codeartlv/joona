@@ -39,7 +39,8 @@ a {
 	text-decoration: none;
 }
 
-b, strong {
+b,
+strong {
 	font-weight: $font-weight-bold;
 }
 
@@ -52,8 +53,8 @@ p {
 }
 
 ul {
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 	list-style: none;
 }
 
@@ -74,35 +75,41 @@ legend {
 	color: var(--bs-gray-700);
 }
 
-h1, .h1 {
+h1,
+.h1 {
 	font-weight: $font-weight-thin;
 }
 
 :root {
-	--bs-gray-950:#{$gray-950};
-	--bs-modal-footer-bg:var(--bs-gray-200);
+	--bs-gray-950: #{$gray-950};
+	--bs-modal-footer-bg: var(--bs-gray-200);
 }
 
 .modal {
-	--bs-modal-footer-bg:var(--bs-gray-200);
+	--bs-modal-footer-bg: var(--bs-gray-200);
 }
 
 @include color-mode(dark) {
-	--bs-primary:#{$primary-dark};
-	--bs-modal-footer-bg:var(--bs-gray-950);
+	--bs-primary: #{$primary-dark};
+	--bs-modal-footer-bg: var(--bs-gray-950);
 
 	.btn-primary {
-		--bs-btn-bg:var(--bs-primary);
-		--bs-btn-border-color:var(--bs-primary);
-		--bs-btn-hover-bg:#{tint-color($primary-dark, 10%)};
-		--bs-btn-hover-border-color:#{tint-color($primary-dark, 10%)};
-		--bs-btn-disabled-bg:#{shade-color($primary-dark, 40%)};
-		--bs-btn-disabled-border-color:#{shade-color($primary-dark, 40%)};
-		--bs-btn-active-bg:#{shade-color($primary-dark, 20%)};
-		--bs-btn-active-border-color:#{shade-color($primary-dark, 20%)};
+		--bs-btn-bg: var(--bs-primary);
+		--bs-btn-border-color: var(--bs-primary);
+		--bs-btn-hover-bg: #{tint-color($primary-dark, 10%)};
+		--bs-btn-hover-border-color: #{tint-color($primary-dark, 10%)};
+		--bs-btn-disabled-bg: #{shade-color($primary-dark, 40%)};
+		--bs-btn-disabled-border-color: #{shade-color($primary-dark, 40%)};
+		--bs-btn-active-bg: #{shade-color($primary-dark, 20%)};
+		--bs-btn-active-border-color: #{shade-color($primary-dark, 20%)};
 	}
 
 	.modal {
-		--bs-modal-footer-bg:var(--bs-gray-950);
+		--bs-modal-footer-bg: var(--bs-gray-950);
 	}
+}
+
+.fullscreen-button {
+	font-size: 3rem !important;
+	color: $gray-100;
 }

@@ -156,6 +156,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'offcanvas' => \Codeart\Joona\View\Components\Offcanvas::class,
 			'map-picker' => \Codeart\Joona\View\Components\MapPicker::class,
 			'multiselect' => \Codeart\Joona\View\Components\Multiselect::class,
+			'gallery' => \Codeart\Joona\View\Components\Gallery\Gallery::class,
 		];
 
 		foreach ($components as $name => $class) {

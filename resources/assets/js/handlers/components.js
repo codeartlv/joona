@@ -7,6 +7,7 @@ import Uploader from '../components/uploader.js';
 import Autocomplete from '../components/autocomplete.js';
 import MapPicker from '../components/map-picker.js';
 import MultiSelect from '../components/multi-select.js';
+import Gallery from '../components/gallery.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -39,5 +40,9 @@ export default class Components extends Handler {
 
 	multiSelect(el, params) {
 		return new MultiSelect(el, params);
+	}
+
+	gallery(el, params) {
+		return new Gallery(el, params);
 	}
 }
