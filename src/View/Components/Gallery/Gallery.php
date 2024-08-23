@@ -20,6 +20,8 @@ class Gallery extends Component
 	 */
 	public function render()
 	{
+		$this->images = array_values($this->images);
+
 		return view('joona::components.gallery');
 	}
 }
