@@ -157,6 +157,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'map-picker' => \Codeart\Joona\View\Components\MapPicker::class,
 			'multiselect' => \Codeart\Joona\View\Components\Multiselect::class,
 			'gallery' => \Codeart\Joona\View\Components\Gallery\Gallery::class,
+			'copy' => \Codeart\Joona\View\Components\Copy::class,
 		];
 
 		foreach ($components as $name => $class) {
@@ -351,6 +352,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::common.delete',
 			'joona::common.no_results_found',
 			'joona::common.selected',
+			'joona::common.copied',
 		], $userKeys);
 
 		$panel = resolve('joona.panel');

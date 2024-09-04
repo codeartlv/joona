@@ -8,6 +8,7 @@ import Autocomplete from '../components/autocomplete.js';
 import MapPicker from '../components/map-picker.js';
 import MultiSelect from '../components/multi-select.js';
 import Gallery from '../components/gallery.js';
+import CopyText from '../components/copy-text.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -44,5 +45,9 @@ export default class Components extends Handler {
 
 	gallery(el, params) {
 		return new Gallery(el, params);
+	}
+
+	copyText(el, params) {
+		return new CopyText(el, params);
 	}
 }
