@@ -24,6 +24,21 @@
 			}
 		}
 
+		.form-multiselect__group-label {
+			padding: $spacer * 0.5 $spacer;
+			background: $gray-200;
+			font-weight: $font-weight-bold;
+		}
+
+		.form-multiselect__group {
+			padding-left: 0 !important;
+			font-weight: $font-weight-bold;
+		}
+
+		.form-multiselect__group ~ li {
+			padding-left: $spacer;
+		}
+
 		.form-check {
 			margin: 0 0 0 calc(#{$spacer} - 3px);
 			display: flex;
