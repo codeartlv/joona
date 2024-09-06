@@ -158,6 +158,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'multiselect' => \Codeart\Joona\View\Components\Multiselect::class,
 			'gallery' => \Codeart\Joona\View\Components\Gallery\Gallery::class,
 			'copy' => \Codeart\Joona\View\Components\Copy::class,
+			'chart' => \Codeart\Joona\View\Components\Chart::class,
 		];
 
 		foreach ($components as $name => $class) {

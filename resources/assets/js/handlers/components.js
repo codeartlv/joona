@@ -9,6 +9,7 @@ import MapPicker from '../components/map-picker.js';
 import MultiSelect from '../components/multi-select.js';
 import Gallery from '../components/gallery.js';
 import CopyText from '../components/copy-text.js';
+import ChartComponent from '../components/chart.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -49,5 +50,9 @@ export default class Components extends Handler {
 
 	copyText(el, params) {
 		return new CopyText(el, params);
+	}
+
+	chart(el, params) {
+		return new ChartComponent(el, params);
 	}
 }

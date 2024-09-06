@@ -19,6 +19,7 @@
 		"air-datepicker": "^3.4.0",
 		"axios": "^1.6.1",
 		"bootstrap": "^5.3",
+		"chart.js": "^4.4.4",
 		"devbridge-autocomplete": "1.4.11",
 		"file-icon-vectors": "^1.0.0",
 		"jquery": "3.7.1",
