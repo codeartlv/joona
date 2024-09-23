@@ -81,6 +81,18 @@ export default class Runtime {
 			);
 		});
 		window.dispatchEvent(new Event('scroll'));
+
+		document.addEventListener('htmx:afterRequest', (e) => {
+			window.Joona.init(e.target);
+		});
+
+		document.addEventListener('htmx:oobAfterSwap', (e) => {
+			window.Joona.init(e.detail.target);
+		});
+
+		document.body.addEventListener('htmx:afterSwap', (e) => {
+			window.Joona.init(e.detail.target);
+		});
 	}
 
 	// Add module handlers
