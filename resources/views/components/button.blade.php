@@ -1,4 +1,7 @@
-<button {{ $attributes->merge(['class' => 'btn btn-'.$role, 'type' => 'submit']) }}>
+<button {{ $attributes->merge([
+		'class' => 'btn btn-'.$role.(!$caption ? ' captionless':''),
+		'type' => 'submit'
+	]) }}>
 	@if ($icon)
 		@icon($icon)
 	@endif
