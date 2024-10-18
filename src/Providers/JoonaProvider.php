@@ -4,6 +4,7 @@ namespace Codeart\Joona\Providers;
 
 use Codeart\Joona\Facades\Joona;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
 
 class JoonaProvider extends ServiceProvider
 {
@@ -18,6 +19,11 @@ class JoonaProvider extends ServiceProvider
 		$this->offerPublish();
 
 		$this->addConsoleCommands();
+
+		$this->app->booted(function () {
+            $schedule = app(Schedule::class);
+			$schedule->command('joona:update-session')->everyTenMinutes();
+        });
 	}
 
 	/**
