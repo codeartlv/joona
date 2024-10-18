@@ -2,7 +2,9 @@
 
 namespace Codeart\Joona\Commands;
 
+use Codeart\Joona\Providers\JoonaProvider;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class PublishAssets extends Command
 {
@@ -44,5 +46,11 @@ class PublishAssets extends Command
 		$this->call('vendor:publish', [
 			'--tag' => 'joona-provider',
 		]);
+
+		$namespace = Str::replaceLast('\\', '', $this->getLaravel()->getNamespace());
+
+		if (method_exists(JoonaProvider::class, 'addProviderToBootstrapFile')) {
+			JoonaProvider::addProviderToBootstrapFile("{$namespace}\\Providers\\JoonaServiceProvider");
+		}
 	}
 }
