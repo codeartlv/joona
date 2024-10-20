@@ -7,14 +7,14 @@
 
 	&.bottom {
 		bottom: 0;
-		border-top:solid 1px transparent;
+		border-top: solid 1px transparent;
 	}
 
 	.navbar-nav {
 		display: flex;
 		flex-direction: row;
-		font-size: .875rem;
-		color:var(--bs-gray-600);
+		font-size: 0.875rem;
+		color: var(--bs-gray-600);
 
 		.nav-item + .nav-item {
 			margin-left: $spacer * 0.5;
@@ -27,7 +27,7 @@
 
 		.navbar-inline__content {
 			display: flex;
-			gap:$spacer;
+			gap: $spacer;
 			width: 100%;
 			align-items: center;
 		}
@@ -37,9 +37,10 @@
 		&.navbar-inline {
 			.navbar-inline__content {
 				flex-direction: column;
+				gap: $spacer * 0.5;
 
 				> section {
-					flex:1;
+					flex: 1;
 					width: 100%;
 				}
 			}
@@ -58,9 +59,8 @@
 @include color-mode(dark) {
 	.navbar {
 		&.bottom {
-			background-color:var(--bs-gray-900);
-			border-top:solid 1px $gray-800;
+			background-color: var(--bs-gray-900);
+			border-top: solid 1px $gray-800;
 		}
 	}
 }
-

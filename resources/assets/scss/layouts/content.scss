@@ -5,7 +5,7 @@
 
 	.content__panel {
 		background: var(--bs-body-bg);
-		padding:$spacer $content-padding-x;
+		padding: $spacer $content-padding-x;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -13,7 +13,7 @@
 
 		h1 {
 			font-size: 1.5rem;
-			margin:0;
+			margin: 0;
 		}
 
 		nav:empty {
@@ -24,7 +24,7 @@
 	.content__inner {
 		display: flex;
 		flex-direction: column;
-		flex:1;
+		flex: 1;
 	}
 
 	.content__main {
@@ -49,13 +49,13 @@
 			.card {
 				box-shadow: none;
 				background: none;
-				border:none;
+				border: none;
 				border-radius: 0;
 
 				.card-header {
 					border-radius: 0;
 					font-size: 0.75rem;
-					padding: $spacer*0.5 $spacer;
+					padding: $spacer * 0.5 $spacer;
 				}
 
 				.card-footer {
@@ -88,11 +88,21 @@
 
 		.content__panel {
 			flex-direction: column;
-			min-height:auto;
+			min-height: auto;
 			align-items: flex-start;
 
 			nav {
-				padding-top: $spacer*0.5;
+				padding-top: $spacer * 0.5;
+				display: flex;
+				flex-direction: column;
+				gap: $spacer * 0.5;
+				width: 100%;
+
+				> * {
+					flex: 1;
+					width: 100%;
+					max-width: 100%;
+				}
 			}
 		}
 
@@ -134,13 +144,13 @@
 		background: var(--bs-gray-950);
 
 		.content__panel {
-			background:transparent;
+			background: transparent;
 			background: var(--bs-gray-900);
 		}
 
 		&.with-sidebar {
 			.content__sidebar {
-				border-color:var(--bs-gray-800);
+				border-color: var(--bs-gray-800);
 			}
 
 			@include media-breakpoint-down(md) {

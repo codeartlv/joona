@@ -134,7 +134,7 @@ table.table {
 	}
 
 	.badge + .badge {
-		margin-left: $spacer*0.25;
+		margin-left: $spacer * 0.25;
 	}
 
 	.alert {
@@ -204,6 +204,46 @@ table.table {
 							strong {
 								display: inline;
 								margin-right: 0.333rem;
+							}
+						}
+
+						&.table__options {
+							.table__mcaption {
+								display: none;
+							}
+
+							.dropdown {
+								width: 100%;
+
+								> [data-bs-toggle='dropdown'] {
+									display: none !important;
+								}
+							}
+
+							.dropdown-menu {
+								display: flex;
+								flex-direction: column;
+								gap: $spacer * 0.5;
+								position: static;
+								width: 100%;
+								max-width: 100%;
+								border: none;
+								outline: none;
+								box-shadow: none;
+								background: none;
+
+								.dropdown-item {
+									background: $gray-100;
+									justify-content: center;
+
+									&:active {
+										color: $primary;
+
+										i {
+											color: $primary;
+										}
+									}
+								}
 							}
 						}
 					}
