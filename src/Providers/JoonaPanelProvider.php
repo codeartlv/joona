@@ -153,6 +153,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'range' => \Codeart\Joona\View\Components\Range::class,
 			'accordion' => \Codeart\Joona\View\Components\Accordion::class,
 			'content' => \Codeart\Joona\View\Components\Layout\Content::class,
+			'container' => \Codeart\Joona\View\Components\Layout\Container::class,
 			'offcanvas' => \Codeart\Joona\View\Components\Offcanvas::class,
 			'map-picker' => \Codeart\Joona\View\Components\MapPicker::class,
 			'multiselect' => \Codeart\Joona\View\Components\Multiselect::class,
