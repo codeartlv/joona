@@ -37,6 +37,7 @@ class JoonaProvider extends ServiceProvider
 			$this->commands([
 				\Codeart\Joona\Commands\Seed::class,
 				\Codeart\Joona\Commands\PublishAssets::class,
+				\Codeart\Joona\Commands\UpdateSession::class,
 			]);
 		}
 	}

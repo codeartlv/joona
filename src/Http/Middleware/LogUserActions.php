@@ -5,7 +5,6 @@ namespace Codeart\Joona\Http\Middleware;
 use Closure;
 use Codeart\Joona\Facades\Auth;
 use Codeart\Joona\Models\User\AdminSession;
-use PDO;
 
 class LogUserActions
 {
