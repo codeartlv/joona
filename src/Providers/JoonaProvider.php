@@ -34,6 +34,7 @@ class JoonaProvider extends ServiceProvider
 	private function addConsoleCommands(): void
 	{
 		if ($this->app->runningInConsole()) {
+		
 			$this->commands([
 				\Codeart\Joona\Commands\Seed::class,
 				\Codeart\Joona\Commands\PublishAssets::class,
