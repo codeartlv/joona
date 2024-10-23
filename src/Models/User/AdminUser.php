@@ -4,6 +4,7 @@ namespace Codeart\Joona\Models\User;
 
 use Codeart\Joona\Contracts\Result;
 use Codeart\Joona\Enums\UserLevel;
+use Codeart\Joona\Models\User\Access\CustomPermission;
 use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\Models\User\Log\LogEvent;
 use Codeart\Joona\Models\User\Access\Role;
@@ -109,11 +110,9 @@ class AdminUser extends Authenticatable
 			$rules['email'] = ['required', 'string', 'email', 'max:128'];
 
 			if ($user) {
-				$rules['email'][] = Rule::unique('admin_users')->ignore($user->id);
-			}
-
-			if (!$user) {
-				$rules['email'][] = 'unique:admin_users';
+				$rules['email'][] = Rule::unique('admin_users')->ignore($user->id)->whereNull('deleted_at');
+			} else {
+				$rules['email'][] = 'unique:admin_users,email,NULL,id,deleted_at,NULL';
 			}
 
 			$attributes['email'] = strtolower($attributes['email']);
@@ -123,7 +122,10 @@ class AdminUser extends Authenticatable
 			$rules['password'] = ['required', 'string'];
 		}
 
-		$validator = Validator::make($attributes, $rules);
+		$validator = Validator::make($attributes, $rules, [], [
+			'email' => __('joona::user.email'),
+			'password' => __('joona::user.password'),
+		]);
 
 		if ($validator->fails()) {
 			$messages = $validator->errors()->messages();
@@ -163,9 +165,28 @@ class AdminUser extends Authenticatable
 		return $this->belongsToMany(Role::class)->using(UserRole::class);
 	}
 
+	public function customPermissions()
+	{
+		return $this->hasMany(CustomPermission::class, 'admin_user_id', 'id');
+	}
+
 	public function setRoles(array $roles)
 	{
 		$this->roles()->sync($roles);
+	}
+
+	public function setCustomPermissions(array $permissions)
+	{
+		$this->customPermissions()->delete();
+
+		foreach ($permissions as $permission) {
+			$this->customPermissions()->save(
+				new CustomPermission([
+					'admin_user_id' => $this->id,
+					'permission' => $permission,
+				])
+			);
+		}
 	}
 
 	public function permissions(): array
@@ -175,6 +196,9 @@ class AdminUser extends Authenticatable
 		foreach ($this->roles as $role) {
 			$permissions = $permissions->merge($role->permissions()->pluck('permission'));
 		}
+
+		$custom = $this->customPermissions->pluck('permission')->all();
+		$permissions = $permissions->merge($custom);
 
 		return $permissions->unique()->all();
 	}
@@ -289,5 +313,10 @@ class AdminUser extends Authenticatable
 		}
 
 		return true;
+	}
+
+	public function isRoot(): bool
+	{
+		return $this->level == UserLevel::Admin->value;
 	}
 }

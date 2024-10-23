@@ -53,7 +53,7 @@
 
 									<div class="form-group">
 										@foreach ($group['permissions'] as $permission)
-											<x-checkbox :value="$role['id']" :checked="in_array($permission['id'], $selected)" name="permissions[]" :value="$permission['id']" :label="$permission['label']"  />
+											<x-checkbox :checked="in_array($permission['id'], $selected)" name="permissions[]" :value="$permission['id']" :label="$permission['label']"  />
 										@endforeach
 									</div>
 								@endforeach

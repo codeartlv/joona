@@ -76,4 +76,5 @@ return [
 	'permission_user_activities' => 'View user journal',
 	'permission_manage_admin_users' => 'Manage admin users',
 	'permission_view_admin_users' => 'View admin users',
+	'edit_user_custom_permissions' => 'Custom permissions',
 ];

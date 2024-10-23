@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Codeart\Joona\Auth\Permissions\CustomPermission;
+use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\Enums\UserLevel;
 use Codeart\Joona\Facades\Joona;
+use Codeart\Joona\Facades\Permission;
 use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\View\Components\Select\Option;
 use Illuminate\Http\RedirectResponse;
@@ -135,6 +138,48 @@ class UserController
 			return new Option($level->value, $level->getLabel(), $level->value == $fields['level']);
 		}, $admin->canManageLevels());
 
+		// Fetch all permissions
+		$permissions = Permission::getPermissions();
+		$customPermissions = [];
+		$ungrouppedPermissions = [];
+		$userCustomPerm = $user->customPermissions->pluck('permission');
+
+		foreach ($permissions as $permissionEntry) {
+			if (!$permissionEntry instanceof PermissionGroup || $permissionEntry instanceof CustomPermission) {
+				continue;
+			}
+
+			if ($permissionEntry instanceof CustomPermission) {
+				$ungrouppedPermissions[] = new Option($permissionEntry->getId(), __($permissionEntry->getLabel()), $userCustomPerm->contains($permissionEntry->getId()));
+			}
+
+			if ($permissionEntry instanceof PermissionGroup) {
+				$groupPermissions = [];
+
+				foreach ($permissionEntry->getItems() as $permission) {
+					if (!$permission instanceof CustomPermission) {
+						continue;
+					}
+
+					$groupPermissions[] = new Option($permission->getId(), __($permission->getLabel()), $userCustomPerm->contains($permission->getId()));
+				}
+
+				if (!empty($groupPermissions)) {
+					$customPermissions[] = [
+						'label' => __($permissionEntry->getLabel()),
+						'permissions' => $groupPermissions,
+					];
+				}
+			}
+		}
+
+		if (!empty($ungrouppedPermissions)) {
+			array_unshift($customPermissions, [
+				'label' => __('joona::user.custom_permissions'),
+				'permissions' => $ungrouppedPermissions,
+			]);
+		}
+
 		return view('joona::user.edit', [
 			'fields' => $fields,
 			'roles' => $roles,
@@ -143,6 +188,7 @@ class UserController
 			'available_levels' => $levels,
 			'available_roles' => $available_roles,
 			'uses_permissions' => Joona::usesRolesAndPermissions(),
+			'customPermissions' => $customPermissions,
 		]);
 	}
 
@@ -188,6 +234,7 @@ class UserController
 		$password_setup = $request->post('password_setup');
 		$user_id = $request->post('id');
 		$available_roles = $admin->canManageRoles();
+		$permissions = (array) $request->post('permissions');
 		$isCreateNew = (bool) !$user_id;
 
 		if (!Joona::usesRolesAndPermissions()) {
@@ -256,6 +303,7 @@ class UserController
 			}
 
 			$user->setRoles($roles);
+			$user->setCustomPermissions($permissions);
 		}
 
 		return response()->json($form);

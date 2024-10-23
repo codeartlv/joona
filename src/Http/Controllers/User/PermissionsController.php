@@ -2,6 +2,7 @@
 
 namespace Codeart\Joona\Http\Controllers\User;
 
+use Codeart\Joona\Auth\Permissions\CustomPermission;
 use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\View\Components\Form\FormResponse;
 use Codeart\Joona\Facades\Permission;
@@ -43,6 +44,10 @@ class PermissionsController
 					];
 				}
 			} else {
+				if ($permission instanceof CustomPermission) {
+					continue;
+				}
+
 				// Handle ungrouped permissions
 				$ungroupedPermissions[] = $this->formatPermission($permission);
 			}
@@ -184,6 +189,10 @@ class PermissionsController
 		$permissions = [];
 
 		foreach ($group->getItems() as $permission) {
+			if ($permission instanceof CustomPermission) {
+				continue;
+			}
+
 			if (!$permission->isElevated()) {
 				$permissions[] = $this->formatPermission($permission);
 			}

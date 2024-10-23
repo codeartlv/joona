@@ -3,7 +3,7 @@
 @endif
 
 <div class="dropdown form-multiselect" data-bind="components.multi-select">
-	<div class="form-control" data-bs-toggle="dropdown" aria-expanded="false">
+	<div class="form-control" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
 		<em data-role="selected-text"></em>
 	</div>
 	<ul class="dropdown-menu">

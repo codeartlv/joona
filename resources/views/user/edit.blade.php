@@ -44,6 +44,18 @@
 				</div>
 			</div>
 
+			@if (!empty($customPermissions))
+				<div class="block">
+					<x-form-section-heading :label="__('joona::user.edit_user_custom_permissions')"/>
+
+					@foreach ($customPermissions as $group)
+						<div class="form-group">
+							<x-multiselect :label="$group['label']" name="permissions[]" :options="$group['permissions']" />
+						</div>
+					@endforeach
+				</div>
+			@endif
+
 			<div class="block">
 				<x-form-section-heading :label="__('joona::user.edit_user_label_password')"/>
 

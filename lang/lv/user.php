@@ -76,4 +76,5 @@ return [
 	'permission_user_activities' => 'Skatīt lietotāju darbības žurnālu',
 	'permission_manage_admin_users' => 'Pārvaldīt administrācijas lietotājus',
 	'permission_view_admin_users' => 'Skatīt administrācijas lietotāju sarakstu',
+	'edit_user_custom_permissions' => 'Papildus tiesības',
 ];
