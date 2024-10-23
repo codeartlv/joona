@@ -13,6 +13,7 @@ use Codeart\Joona\Panel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as ValidatorObject;
 
@@ -174,7 +175,9 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	 */
 	private function setupRoutes(): void
 	{
-		$this->loadRoutesFrom($this->getPackageRoutesPath() . 'web.php');
+		Route::domain(Joona::getBaseDomain())->group(function () {
+			$this->loadRoutesFrom($this->getPackageRoutesPath() . 'web.php');
+		});
 	}
 
 	/**

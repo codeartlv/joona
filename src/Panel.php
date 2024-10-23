@@ -22,6 +22,13 @@ class Panel
 	private $basePath = '/admin';
 
 	/**
+	 * Panel base domain
+	 *
+	 * @var string
+	 */
+	private $baseDomain = null;
+
+	/**
 	 * Uses roles and permission checks
 	 *
 	 * @var true
@@ -79,6 +86,29 @@ class Panel
 	public function setBasePath(string $path): self
 	{
 		$this->basePath = '/' . ltrim($path, '/');
+
+		return $this;
+	}
+
+	/**
+	 * Return base domain
+	 *
+	 * @return null|string
+	 */
+	public function getBaseDomain(): ?string
+	{
+		return $this->baseDomain;
+	}
+
+	/**
+	 * Set base domain where panel resides
+	 *
+	 * @param string $domain
+	 * @return Panel
+	 */
+	public function setBaseDomain(string $domain): self
+	{
+		$this->baseDomain = $domain;
 
 		return $this;
 	}
