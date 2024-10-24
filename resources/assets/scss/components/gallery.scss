@@ -4,6 +4,7 @@
 	list-style: none;
 	display: flex;
 	gap: $spacer * 0.5;
+	flex-wrap: wrap;
 
 	li {
 		figure {
