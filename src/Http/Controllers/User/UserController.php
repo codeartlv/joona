@@ -109,6 +109,7 @@ class UserController
 		];
 
 		$user_roles = [];
+		$user = null;
 
 		if ($user_id) {
 			$user = AdminUser::find($user_id);
@@ -142,7 +143,7 @@ class UserController
 		$permissions = Permission::getPermissions();
 		$customPermissions = [];
 		$ungrouppedPermissions = [];
-		$userCustomPerm = $user->customPermissions->pluck('permission');
+		$userCustomPerm = $user ? $user->customPermissions->pluck('permission') : [];
 
 		foreach ($permissions as $permissionEntry) {
 			if (!$permissionEntry instanceof PermissionGroup || $permissionEntry instanceof CustomPermission) {
