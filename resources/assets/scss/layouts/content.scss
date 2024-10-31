@@ -1,10 +1,9 @@
 .content {
 	flex: 1;
 	display: flex;
-	background: var(--bs-gray-200);
 
 	.content__panel {
-		background: var(--bs-body-bg);
+		background: var(--bs-gray-200);
 		padding: $spacer $content-padding-x;
 		display: flex;
 		justify-content: space-between;
@@ -133,29 +132,6 @@
 				.content__sidebar-inner {
 					height: 100%;
 					overflow-y: scroll;
-				}
-			}
-		}
-	}
-}
-
-@include color-mode(dark) {
-	.content {
-		background: var(--bs-gray-950);
-
-		.content__panel {
-			background: transparent;
-			background: var(--bs-gray-900);
-		}
-
-		&.with-sidebar {
-			.content__sidebar {
-				border-color: var(--bs-gray-800);
-			}
-
-			@include media-breakpoint-down(md) {
-				.content__sidebar {
-					background-color: var(--bs-gray-800);
 				}
 			}
 		}

@@ -1,11 +1,13 @@
 .form-control {
-	&.is-invalid {
-		&:focus {
-			box-shadow: none;
-		}
-	}
-}
+	background: var(--bs-input-bg);
 
-textarea.form-control {
-	min-height: 10rem;
+	&:focus {
+		border-color: var(--bs-input-focus-border-color);
+		background: var(--bs-input-bg);
+	}
+
+	&[disabled],
+	&[readonly] {
+		cursor: not-allowed;
+	}
 }

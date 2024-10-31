@@ -52,7 +52,7 @@
 									<span class="badge bg-danger">@lang('joona::user.level_names.admin')</span>
 								@else
 									@foreach ($user['roles'] as $role)
-										<span class="badge rounded-pill text-bg-light">{{ $role['title'] }}</span>
+										<span class="badge text-bg-light">{{ $role['title'] }}</span>
 									@endforeach
 								@endif
 							</td>
@@ -104,6 +104,7 @@
 				@endforeach
 			</tbody>
 		</table>
+
 	</div>
 
 	<x-slot name="footer">

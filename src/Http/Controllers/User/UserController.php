@@ -12,6 +12,7 @@ use Codeart\Joona\Models\User\AdminSession;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Codeart\Joona\Auth\Permissions\CustomPermission;
@@ -23,7 +24,6 @@ use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\View\Components\Select\Option;
 use Illuminate\Http\RedirectResponse;
 use Jenssegers\Agent\Agent;
-use Illuminate\Support\Collection;
 
 class UserController
 {

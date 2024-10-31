@@ -1,23 +1,25 @@
 @keyframes dropdownSlideIn {
 	0% {
-		top: 0.5rem;
+		margin-top: 0.5rem;
 		opacity: 0;
 	}
 
 	100% {
-		top: 0;
+		margin-top: 0;
 		opacity: 1;
 	}
 
 	0% {
-		top:0.5rem;
+		margin-top: 0.5rem;
 		opacity: 0;
 	}
 }
 
 .dropdown-menu {
 	animation-name: dropdownSlideIn;
-	animation-duration: 0.3s;
-    animation-fill-mode: both;
+	animation-duration: 0.15s;
+	animation-fill-mode: both;
 	min-height: 1.9375rem;
+	box-shadow: $box-shadow-sm;
+	border: none;
 }

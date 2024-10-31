@@ -116,23 +116,27 @@ export default class Admin extends Handler {
 	}
 
 	confirm(el, parameters) {
-		let confirmDialog = new ConfirmDialog(parameters.caption, parameters.message, [
-			{
-				caption: trans('joona::common.cancel'),
-				role: 'secondary',
-				callback: () => {
-					return false;
+		let confirmDialog = new ConfirmDialog(
+			parameters.caption ? parameters.caption : trans('joona::common.confirm'),
+			parameters.message,
+			[
+				{
+					caption: trans('joona::common.cancel'),
+					role: 'secondary',
+					callback: () => {
+						return false;
+					},
 				},
-			},
-			{
-				caption: trans('joona::common.ok'),
-				role: 'primary',
-				callback: () => {
-					document.location = el.href;
-					return true;
+				{
+					caption: trans('joona::common.ok'),
+					role: 'primary',
+					callback: () => {
+						document.location = el.href;
+						return true;
+					},
 				},
-			},
-		]);
+			]
+		);
 
 		el.addEventListener('click', (event) => {
 			confirmDialog.open();

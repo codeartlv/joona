@@ -1,74 +1,103 @@
-/*
-|--------------------------------------------------------------------------
-| CONFIG
-|--------------------------------------------------------------------------
-*/
-$primary: #213555;
-$primary-dark: #517bb3;
-$secondary: #9da5b1;
-
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #6c757d;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
-$gray-950: #12181a;
-
-$success: #367e18;
-$danger: #b80000;
-$warning: #ea580c;
-$info: #1391aa;
-
-$spacer: 1rem;
-
-$card-box-shadow: 0px 0px 6px -1px rgba(154, 161, 171, 0.65);
-$card-cap-bg: $gray-100;
-
-$table-bg: transparent;
-
-$input-btn-focus-box-shadow: none;
-
-$alert-padding-y: $spacer * 0.5;
-$alert-border-width: 0;
-
-$border-radius: 0.25rem;
-
-$dropdown-padding-y: 0;
-$dropdown-font-size: 0.875rem;
-
-$modal-backdrop-opacity: 1;
-$modal-backdrop-bg: rgba(0, 0, 0, 0.5);
-
-$box-shadow-xs: 0px 2px 3px -2px rgba(0, 0, 0, 0.38);
-$box-shadow-sm-top: 0px -2px 7px -4px rgba(0, 0, 0, 0.25);
-
-$font-family-sans-serif: 'IBM Plex Sans', sans-serif;
+// Fonts
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+$font-family-sans-serif: 'Noto Sans', sans-serif;
 
 $font-weight-thin: 200;
 $font-weight-normal: 400;
 $font-weight-bold: 600;
 
+// Colors
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Light theme colors
+$primary: #235bad;
+$secondary: #9da5b1;
+
+$success: #107457;
+$info: #62b7e5;
+$danger: #e22d2d;
+$warning: #eb9d59;
+
+$gray-100: #ffffff;
+$gray-200: #f0f4f7;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #4a5a6b;
+$gray-800: #343a40;
+$gray-900: #181818;
+
+$body-bg-light: #f8f9fa;
+
+// Dark theme colors
+$primary-dark: #5f7bcf;
+
+$danger-dark: #ef7777;
+$danger-dark-subtle: darken($danger-dark, 40%);
+
+$gray-100-dark: #f8f9fa;
+$gray-200-dark: #e0e0e0;
+$gray-300-dark: #bebebe;
+$gray-400-dark: #999999;
+$gray-500-dark: #717171;
+$gray-600-dark: #575757;
+$gray-700-dark: #3f3f3f;
+$gray-800-dark: #242424;
+$gray-900-dark: #141414;
+
+// Box shadows
+$box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.13);
+$box-shadow-sm-top: 0px -2px 7px -4px rgba(0, 0, 0, 0.25);
+
+// Component settings
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Spacing
+$spacer: 1rem;
+
+// Border radius
+$border-radius: 0.1875rem;
+$border-radius-sm: 0.25rem;
+$border-radius-lg: 0.25rem;
+
+// Form inputs
+$input-focus-box-shadow: none;
+$focus-ring-width: 0;
+$input-box-shadow: none;
+
+// Alerts
+$alert-padding-x: $spacer;
+$alert-padding-y: $spacer * 0.5;
+$alert-border-width: 0;
+
+// Dropdowns
+$dropdown-padding-y: 0.5rem;
+$dropdown-font-size: 0.875rem;
+
+// Modal
+$modal-backdrop-opacity: 1;
+$modal-backdrop-bg: rgba(0, 0, 0, 0.5);
+
+// Tables
+$table-bg: transparent;
+
+// Cards
+$card-box-shadow: 0px 0px 6px -1px rgb(175, 175, 175, 0.65);
+
+// Title bar
 $title-bar-font-size: 1rem;
 $title-bar-font-weight: $font-weight-bold;
 $title-bar-font-transform: none;
 $title-bar-padding-y: $spacer;
 $title-bar-padding-x: $spacer;
 
+// Sidebar
 $sidebar-width: 16rem;
 $desktop-header-height: 3.8rem;
+$desktop-header-box-shadow: $box-shadow-sm;
 
+// Content
 $content-padding-x: $spacer * 1.5;
 
-/*
-|--------------------------------------------------------------------------
-| VENDOR SETTINGS
-|--------------------------------------------------------------------------
-*/
-
-// Material Symbols
-$material-symbols-font-path: '@joona-modules/material-symbols/';
-$file-icon-css-path: '@joona-modules/file-icon-vectors/dist/icons/';
+$transition-collapse: height 120ms ease-in;

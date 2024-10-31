@@ -125,6 +125,8 @@ class AdminUser extends Authenticatable
 		$validator = Validator::make($attributes, $rules, [], [
 			'email' => __('joona::user.email'),
 			'password' => __('joona::user.password'),
+			'first_name' => __('joona::user.first_name'),
+			'last_name' => __('joona::user.last_name'),
 		]);
 
 		if ($validator->fails()) {
@@ -162,7 +164,7 @@ class AdminUser extends Authenticatable
 
 	public function roles()
 	{
-		return $this->belongsToMany(Role::class)->using(UserRole::class);
+		return $this->belongsToMany(Role::class, 'admin_users_role')->using(UserRole::class);
 	}
 
 	public function customPermissions()

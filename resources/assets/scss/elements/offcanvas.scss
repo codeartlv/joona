@@ -1,14 +1,14 @@
 .offcanvas {
 	width: 100%;
-	--bs-offcanvas-width:100%;
+	--bs-offcanvas-width: 100%;
 	max-width: 40rem;
 
 	&.offcanvas-mobile-menu {
-		--bs-offcanvas-width:100%;
-		--bs-offcanvas-bg:transparent;
+		--bs-offcanvas-width: 100%;
+		--bs-offcanvas-bg: transparent;
 		height: 100svh;
 
-		border:none;
+		border: none;
 		pointer-events: none;
 
 		& ~ .offcanvas-backdrop {
@@ -21,28 +21,28 @@
 
 		.offcanvas-inner {
 			position: absolute;
-			left:0;
-			top:0;
-			width:100%;
-			height:100%;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
 			overflow-y: auto;
 			overscroll-behavior: none;
-			padding:$spacer 0 0 0;
+			padding: $spacer 0 0 0;
 		}
 
 		.offcanvas-body {
-			padding:0;
+			padding: 0;
 			position: relative;
 			background: var(--bs-body-bg);
-			color:var(--bs-body-color);
+			color: var(--bs-body-color);
 			pointer-events: all;
 			overflow: hidden;
 		}
 
 		.offcanvas-footer {
 			background: var(--bs-gray-900);
-			color:var(--bs-gray-600);
-			padding:$spacer;
+			color: var(--bs-gray-600);
+			padding: $spacer;
 			font-size: 0.75rem;
 			text-align: center;
 		}
@@ -63,8 +63,8 @@
 
 			.spinner {
 				position: absolute;
-				left:50%;
-				top:50%;
+				left: 50%;
+				top: 50%;
 				transform: translate(-50%, -50%);
 			}
 		}
@@ -72,20 +72,5 @@
 
 	@include media-breakpoint-down(md) {
 		max-width: 100% !important;
-	}
-}
-
-@include color-mode(dark) {
-	.offcanvas {
-		.offcanvas-header {
-			background: var(--bs-gray-800);
-		}
-	}
-
-	.offcanvas.offcanvas-mobile-menu {
-		.offcanvas-footer,
-		.offcanvas-body {
-			background: var(--bs-gray-950);
-		}
 	}
 }

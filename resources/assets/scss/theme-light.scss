@@ -1,0 +1,25 @@
+:root {
+	--bs-input-focus-border-color: #{$input-focus-border-color};
+	--bs-border-color: #{$gray-400};
+	--bs-input-bg: #{$input-bg};
+	--bs-modal-footer-bg: #{$gray-200};
+}
+
+.dropdown-menu {
+	--bs-dropdown-link-hover-bg: #{$gray-200};
+}
+
+.card {
+	--bs-card-cap-bg: transparent;
+	--bs-card-bg: var(--bs-gray-100);
+	--bs-card-border-color: var(--bs-gray-300);
+	--bs-card-border-width: 0px;
+}
+
+html {
+	&.page-blank {
+		body {
+			background: radial-gradient(#4467b5, var(--bs-primary)) bottom center;
+		}
+	}
+}

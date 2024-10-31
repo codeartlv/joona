@@ -48,8 +48,6 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	 */
 	public function boot()
 	{
-		$this->setupMigrations();
-
 		$this->setupTranslations();
 
 		$this->setupViews();
@@ -97,18 +95,6 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	}
 
 	/**
-	 * Configure package migrations
-	 *
-	 * @return void
-	 */
-	private function setupMigrations(): void
-	{
-		if ($this->app->runningInConsole()) {
-			$this->loadMigrationsFrom($this->getPackageMigrationsPath());
-		}
-	}
-
-	/**
 	 * Configure package views
 	 *
 	 * @return void
@@ -146,7 +132,6 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'select' => \Codeart\Joona\View\Components\Select\Select::class,
 			'textarea' => \Codeart\Joona\View\Components\Textarea::class,
 			'input' => \Codeart\Joona\View\Components\Input::class,
-			'input-icon' => \Codeart\Joona\View\Components\InputIcon::class,
 			'checkbox' => \Codeart\Joona\View\Components\Checkbox::class,
 			'form-section-heading' => \Codeart\Joona\View\Components\FormSectionHeading::class,
 			'navbar' => \Codeart\Joona\View\Components\Navbar::class,
@@ -358,6 +343,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::common.no_results_found',
 			'joona::common.selected',
 			'joona::common.copied',
+			'joona::common.confirm',
 		], $userKeys);
 
 		$panel = resolve('joona.panel');

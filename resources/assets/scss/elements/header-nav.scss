@@ -11,7 +11,7 @@
 
 		> a {
 			display: flex;
-			padding: 0 $spacer*0.5;
+			padding: 0 $spacer * 0.5;
 			transition: all 80ms ease-in-out;
 			align-items: center;
 			position: relative;
@@ -44,13 +44,13 @@
 			justify-content: center;
 			align-items: flex-end;
 			line-height: 1;
-			font-size: .875rem;
+			font-size: 0.875rem;
 
 			strong {
 				display: block;
 				line-height: 1;
-				color:var(--bs-body-color);
-				margin-bottom: .25rem;
+				color: var(--bs-body-color);
+				margin-bottom: 0.25rem;
 			}
 		}
 
@@ -58,17 +58,17 @@
 			> a {
 				> figure {
 					display: flex;
-					margin:0;
+					margin: 0;
 					line-height: 1;
 					font-size: 0;
 					border-radius: 100%;
 					overflow: hidden;
 					aspect-ratio: 1/1;
-					padding:$spacer*0.25;
+					padding: $spacer * 0.25;
 					transition: backgroundColor 80ms ease-in-out;
 					align-items: center;
 					background: transparent;
-					height: $spacer*2;
+					height: $spacer * 2;
 					justify-content: center;
 
 					i {
@@ -93,7 +93,6 @@
 		}
 	}
 
-
 	@include media-breakpoint-up(md) {
 		> li {
 			&.header-nav__sidebar-trigger {
@@ -105,31 +104,11 @@
 	@include media-breakpoint-down(md) {
 		> li {
 			> a {
-				padding: 0 $spacer*0.5;
+				padding: 0 $spacer * 0.5;
 			}
 
 			&.header-nav__mobile-menu {
 				display: flex;
-			}
-		}
-	}
-}
-
-@include color-mode(dark) {
-	.header-nav {
-		> li {
-			> a {
-				color:var(--bs-gray-500);
-			}
-
-			&.header-nav__rounded {
-				> a {
-					&:hover {
-						> figure {
-							background: var(--bs-gray-800);
-						}
-					}
-				}
 			}
 		}
 	}

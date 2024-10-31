@@ -71,6 +71,7 @@ return [
 	'ungrouped_permissions' => 'No group',
 	'session_end_reason_logout' => 'Session ended by user',
 	'session_end_reason_auto' => 'Session timed out',
+	'session_end_reason_stopped' => 'Session stopped',
 	'role_saved' => 'Role saved.',
 	'admin-users-permissions' => 'Administration access',
 	'permission_user_activities' => 'View user journal',

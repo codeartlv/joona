@@ -37,8 +37,7 @@
 									{{$session['started_date']}}
 								</h6>
 								<time>
-									{{$session['duration_str']}}
-									<span class="badge rounded-pill text-bg-light">{{$session['end_reason']}}</span>
+									{{$session['duration_str']}}, {{$session['end_reason']}}
 								</time>
 							</section>
 							<div>

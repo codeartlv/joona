@@ -1,7 +1,7 @@
 .main-header {
 	height: $desktop-header-height;
 	background: var(--bs-body-bg);
-	box-shadow: $box-shadow-sm;
+	box-shadow: $desktop-header-box-shadow;
 	position: relative;
 	z-index: 6;
 	border-bottom: solid 1px var(--bs-body-bg);
@@ -53,17 +53,17 @@
 		}
 
 		> section:first-child {
-			padding-left: $spacer*0.5;
+			padding-left: $spacer * 0.5;
 		}
 
 		> section + section {
-			margin-left: $spacer*2;
+			margin-left: $spacer * 2;
 		}
 	}
 
 	.main-header__first-sec {
 		padding: $spacer * 0.5 0;
-		padding-left: $spacer*0.5;
+		padding-left: $spacer * 0.5;
 		display: none;
 	}
 
@@ -94,13 +94,5 @@
 			display: flex;
 			align-items: center;
 		}
-	}
-}
-
-@include color-mode(dark) {
-	.main-header {
-		box-shadow: none;
-		border-bottom: solid 1px $gray-800;
-		background-color: var(--bs-gray-950);
 	}
 }

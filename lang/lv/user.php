@@ -71,6 +71,7 @@ return [
 	'ungrouped_permissions' => 'Bez grupas',
 	'session_end_reason_logout' => 'Lietotājs pabeidza sessiju',
 	'session_end_reason_auto' => 'Iestājās nobeigums',
+	'session_end_reason_stopped' => 'Apturēta',
 	'role_saved' => 'Loma saglabāta.',
 	'admin-users-permissions' => 'Administrācijas lietotāju tiesības',
 	'permission_user_activities' => 'Skatīt lietotāju darbības žurnālu',

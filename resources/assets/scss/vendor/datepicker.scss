@@ -3,157 +3,98 @@
 }
 
 .air-datepicker {
-	border-radius:0;
-	font-family:$font-family-base;
-	background:var(--bs-body-bg);
+	border-radius: 0;
+	font-family: $font-family-base;
+	background: var(--bs-body-bg);
 
 	.air-datepicker-nav {
-		border-bottom:none;
+		border-bottom: none;
 	}
 
 	.air-datepicker-nav--title {
-		color:var(--bs-primary);
-		border-radius:$border-radius-sm;
+		color: var(--bs-primary);
+		border-radius: $border-radius-sm;
 
 		&:hover {
-			background:var(--bs-gray-100);
+			background: var(--bs-gray-100);
 		}
 
 		> i {
-			color:var(--bs-primary);
+			color: var(--bs-primary);
 		}
 	}
 
 	.air-datepicker-body--day-names {
-		font-size:1.063em;
+		font-size: 1.063em;
 	}
 
 	.air-datepicker-body--day-name {
-		color:var(--bs-gray-600);
+		color: var(--bs-gray-600);
 
 		&.-weekend- {
-			color:var(--bs-danger);
+			color: var(--bs-danger);
 		}
 	}
 
 	.air-datepicker-cell {
-		border-radius:0 !important;
+		border-radius: 0 !important;
 
 		&.-in-range- {
-			background:lighten($primary,45%);
+			background: lighten($primary, 45%);
 		}
 
 		&.-day- {
 			&.-other-month- {
-				color:var(--bs-gray-400);
-				background:none;
+				color: var(--bs-gray-400);
+				background: none;
 			}
 		}
 
 		&.-other-month- {
-			color:var(--bs-gray-200);
+			color: var(--bs-gray-200);
 		}
 
 		&.-other-month-.-focus- {
-			background:none;
+			background: none;
 		}
 
 		&.-selected- {
-			background:var(--bs-primary);
-			color:var(--bs-body-bg);
+			background: var(--bs-primary);
+			color: var(--bs-body-bg);
 		}
 
 		&.-range-to-,
 		&.-focus- {
-			border-color:var(--bs-primary);
-			background:lighten($primary,45%);
+			border-color: var(--bs-primary);
+			background: lighten($primary, 45%);
 		}
 
 		&.-range-to-.-selected- {
-			background:var(--bs-primary);
+			background: var(--bs-primary);
 		}
 
 		&.-current- {
-			color:var(--bs-primary);
-			font-weight:$font-weight-bold;
+			color: var(--bs-primary);
+			font-weight: $font-weight-bold;
 		}
 
 		&.-current-.-selected- {
-			color:var(--bs-body-bg);
+			color: var(--bs-body-bg);
 		}
 
 		&.-current-.-selected-.-focus-,
 		&.-range-from-.-selected-.-focus- {
-			color:var(--bs-primary);
+			color: var(--bs-primary);
 		}
 	}
 
 	.air-datepicker-nav--action {
-		color:var(--bs-primary);
-		height:2.133em;
-		border-radius:$border-radius-sm;
+		color: var(--bs-primary);
+		height: 2.133em;
+		border-radius: $border-radius-sm;
 
 		&:hover {
-			background:var(--bs-gray-200);
-		}
-	}
-}
-
-@include color-mode(dark) {
-	.air-datepicker {
-		border-color:var(--bs-border-color) !important;
-		--adp-border-color-inline: var(--bs-border-color);
-
-		.air-datepicker--pointer {
-			&:after {
-				background: var(--bs-body-bg);
-			}
-		}
-
-		.air-datepicker-cell {
-			&.-day- {
-				color:var(--bs-body-color);
-
-				&.-other-month- {
-					color:var(--bs-gray-600);
-				}
-
-				&.-focus- {
-					border-color:var(--bs-gray-800);
-					background:var(--bs-gray-800);
-
-					&.-selected- {
-						background: var(--bs-primary);
-						color:var(--bs-body-color);
-					}
-				}
-
-				&.-in-range- {
-					background:var(--bs-gray-700);
-				}
-
-				&.-disabled- {
-					color:var(--bs-gray-600);
-
-					&.-focus- {
-						background: transparent;
-						border-color: transparent;
-						cursor: not-allowed;
-					}
-				}
-			}
-		}
-
-		.air-datepicker-nav--title {
-			&:hover {
-				background: var(--bs-gray-800);
-			}
-		}
-
-		.air-datepicker-nav--action {
-			&:hover {
-				background:var(--bs-gray-800);
-			}
+			background: var(--bs-gray-200);
 		}
 	}
 }

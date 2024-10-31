@@ -29,4 +29,5 @@ return [
 	'no_results_found' => 'No results found.',
 	'selected' => ':count selected|:count selected',
 	'copied' => 'Copied!',
+	'confirm' => 'Confirmation',
 ];

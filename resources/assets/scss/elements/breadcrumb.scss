@@ -1,17 +1,17 @@
 .breadcrumb {
-	margin:0;
+	margin: 0;
 
 	&.breadcrumb-languages {
-		--bs-breadcrumb-divider:'\2022';
+		--bs-breadcrumb-divider: '\2022';
 		justify-content: center;
-		font-size: .875rem;
+		font-size: 0.75rem;
 
 		.breadcrumb-item {
 			&.active {
 				a {
 					text-decoration: none;
 					pointer-events: none;
-					color:var(--bs-gray-600);
+					color: var(--bs-gray-600);
 				}
 			}
 		}

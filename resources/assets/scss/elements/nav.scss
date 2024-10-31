@@ -17,7 +17,6 @@
 			&:hover {
 				> a {
 					color: var(--bs-gray-100);
-					background: lighten($gray-900, 5);
 
 					> i {
 						color: var(--bs-gray-100);
@@ -29,7 +28,7 @@
 				display: flex;
 				align-items: center;
 				color: var(--bs-gray-400);
-				padding: $spacer * 0.65 $spacer * 1.5;
+				padding: $spacer * 0.65 $spacer;
 				padding-right: $spacer;
 				font-size: 0.875rem;
 				position: relative;
@@ -38,10 +37,12 @@
 				> span {
 					display: block;
 					line-height: 1;
+					font-weight: $font-weight-bold;
 				}
 
 				&.active {
 					color: var(--bs-gray-100);
+					background: darken($gray-800, 10%);
 
 					> i {
 						color: var(--bs-primary) !important;
@@ -90,7 +91,7 @@
 				display: flex;
 				color: var(--bs-gray-400);
 				padding: $spacer * 0.5 $spacer;
-				padding-left: $spacer * 4.5;
+				padding-left: $spacer * 4;
 				align-items: center;
 				font-size: 0.8125rem;
 				position: relative;
@@ -105,17 +106,9 @@
 				}
 
 				> i {
-					font-size: 1rem;
-					margin-right: $spacer * 0.5;
+					display: none;
 				}
 			}
 		}
 	}
-}
-
-.nav-tabs-content {
-	border: solid 1px var(--bs-gray-300);
-	margin-top: 0 !important;
-	border-top: none;
-	padding: $spacer;
 }

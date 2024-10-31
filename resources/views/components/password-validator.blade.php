@@ -5,7 +5,7 @@
 <div class="password-validator" data-bind="components.passwordValidator" data-policy="{{$policy}}">
 	<div class="input-group">
 		<input class="form-control" type="password" data-role="password-validator.password-input" name="{{$name}}" value="{{$value}}" autocomplete="new-password" />
-		<a href="javascript:;" data-role="password-validator.toggle-visbility" class="input-group-icon">
+		<a href="javascript:;" data-role="password-validator.toggle-visbility" class="input-group-text">
 			@icon('visibility')
 			@icon('visibility_off')
 		</a>

@@ -5,26 +5,26 @@
 	text-transform: none;
 
 	> i {
-		margin-right:$spacer*0.5;
+		margin-right: $spacer * 0.5;
 		font-size: 1em;
 		display: inline-block;
 		transform: scale(1.25);
 	}
 
 	&.btn-block {
-		width:100%;
+		width: 100%;
 	}
 
 	&.captionless {
 		> i {
-			margin:0;
+			margin: 0;
 		}
 	}
 
 	&.btn-xs {
-		--bs-btn-padding-y: .125rem;
-		--bs-btn-padding-x: .5rem;
-		--bs-btn-font-size: .75rem;
+		--bs-btn-padding-y: 0.125rem;
+		--bs-btn-padding-x: 0.5rem;
+		--bs-btn-font-size: 0.75rem;
 	}
 }
 
@@ -53,11 +53,10 @@
 	&:active,
 	&:hover {
 		i {
-			color:$danger;
+			color: $danger;
 		}
 	}
 }
-
 
 @include color-mode(light) {
 	.btn.btn-outline-subtle {

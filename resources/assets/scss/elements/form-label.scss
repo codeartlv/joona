@@ -7,7 +7,7 @@
 	&.required {
 		&::after {
 			content: ' *';
-			color: $danger;
+			color: var(--bs-danger);
 			font-size: 0.9375em;
 			position: relative;
 			top: -0.125em;

@@ -11,7 +11,7 @@ return new class extends Migration
 	 */
 	public function up(): void
 	{
-		Schema::create('admin_user_role', function (Blueprint $table) {
+		Schema::create('admin_users_role', function (Blueprint $table) {
 			$table->unsignedBigInteger('admin_user_id');
 			$table->unsignedBigInteger('role_id');
 			$table->foreign('admin_user_id')->references('id')->on('admin_users')->onDelete('cascade');
@@ -25,6 +25,6 @@ return new class extends Migration
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('admin_user_role');
+		Schema::dropIfExists('admin_users_role');
 	}
 };

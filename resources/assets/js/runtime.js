@@ -57,13 +57,6 @@ export default class Runtime {
 
 	setupEventListeners() {
 		window.addEventListener('resize', () => {
-			// Add viewport height variable to document. This property allows to
-			// precisely set viewport height, accounting for virtual keyboards on
-			// mobile devices.
-
-			var vh = window.innerHeight * 0.01;
-			document.documentElement.style.setProperty('--vh', `${vh}px`);
-
 			// Save window scrollbar width to be used in CSS.
 			var scrollWidth = Math.ceil(
 				(window.innerWidth - document.documentElement.clientWidth) / 2
@@ -102,7 +95,7 @@ export default class Runtime {
 		});
 	}
 
-	// Convert data- attributes with additional type conversion
+	// Convert data-* attributes with additional type conversion
 	convertValue(value) {
 		if (value === 'true') {
 			return true;
@@ -119,7 +112,7 @@ export default class Runtime {
 		return value;
 	}
 
-	// Collects data- attributes from element
+	// Collects data-* attributes from element
 	getParams(context, tag) {
 		let parameters = {};
 		tag = tag || 'bind';

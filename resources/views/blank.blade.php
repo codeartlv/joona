@@ -1,5 +1,7 @@
 @extends('joona::global')
 
+@section('html_class', 'page-blank')
+
 @section('html_body')
 	<main class="layout layout-blank">
 		<aside>

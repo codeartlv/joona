@@ -7,13 +7,9 @@ export default class PasswordValidator {
 
 		this.container = el;
 
-		this.passwordInput = el.querySelector(
-			'[data-role="password-validator.password-input"]'
-		);
+		this.passwordInput = el.querySelector('[data-role="password-validator.password-input"]');
 
-		this.passwordProgress = el.querySelector(
-			'[data-role="password-validator.progress"]'
-		);
+		this.passwordProgress = el.querySelector('[data-role="password-validator.progress"]');
 
 		this.passwordSteps = el.querySelectorAll('[data-step]');
 
@@ -98,8 +94,7 @@ export default class PasswordValidator {
 	init() {
 		this.visbilityToggle.addEventListener('click', () => {
 			this.container.classList.toggle('revealed');
-			this.passwordInput.type =
-				this.passwordInput.type === 'text' ? 'password' : 'text';
+			this.passwordInput.type = this.passwordInput.type === 'text' ? 'password' : 'text';
 		});
 
 		this.passwordInput.addEventListener('keyup', () => {
@@ -116,10 +111,7 @@ export default class PasswordValidator {
 		const length = Array.from(password).length;
 
 		// Initialize state with policy keys and set all to false
-		const state = Object.keys(this.policy).reduce(
-			(acc, key) => ({ ...acc, [key]: false }),
-			{}
-		);
+		const state = Object.keys(this.policy).reduce((acc, key) => ({ ...acc, [key]: false }), {});
 
 		// Check each policy condition
 		if (this.policy.min && length >= this.policy.min) {
@@ -168,16 +160,16 @@ export default class PasswordValidator {
 		perc = (progress / total) * 100;
 
 		this.passwordSteps.forEach((element) => {
-			element.classList.toggle(
-				'complete',
-				state[element.getAttribute('data-step')]
-			);
+			element.classList.toggle('complete', state[element.getAttribute('data-step')]);
 		});
 
-		this.container.classList.toggle(
-			'long-password',
-			password.length >= this.policy.max
-		);
+		let isLong = password.length >= this.policy.max;
+
+		this.container.classList.toggle('long-password', isLong);
+
+		if (isLong) {
+			perc = 100;
+		}
 
 		this.passwordProgress.style.width = `${perc}%`;
 		this.updateProgressClass(perc);
@@ -185,13 +177,7 @@ export default class PasswordValidator {
 
 	updateProgressClass(perc) {
 		const progressClass =
-			perc >= 100
-				? 'success'
-				: perc >= 66
-				? 'warning'
-				: perc >= 33
-				? 'danger'
-				: '';
+			perc >= 100 ? 'success' : perc >= 66 ? 'warning' : perc >= 33 ? 'danger' : 'danger';
 		this.passwordProgress.classList.remove('danger', 'warning', 'success');
 
 		if (progressClass) {

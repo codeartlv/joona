@@ -1,3 +1,4 @@
+import 'material-symbols';
 import 'bootstrap';
 import Runtime from './runtime.js';
 

@@ -2,12 +2,14 @@
 	position: sticky;
 	padding-left: $content-padding-x;
 	padding-right: $content-padding-x;
-	background: var(--bs-body-bg);
+	background: var(--bs-gray-200);
 	min-height: calc(4.5rem - #{$spacer});
 
 	&.bottom {
 		bottom: 0;
 		border-top: solid 1px transparent;
+		box-shadow: $box-shadow-sm-top;
+		background: var(--bs-body-bg);
 	}
 
 	.navbar-nav {
@@ -44,23 +46,6 @@
 					width: 100%;
 				}
 			}
-		}
-	}
-}
-
-@include color-mode(light) {
-	.navbar {
-		&.bottom {
-			box-shadow: $box-shadow-sm-top;
-		}
-	}
-}
-
-@include color-mode(dark) {
-	.navbar {
-		&.bottom {
-			background-color: var(--bs-gray-900);
-			border-top: solid 1px $gray-800;
 		}
 	}
 }

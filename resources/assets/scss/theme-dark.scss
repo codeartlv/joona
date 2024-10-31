@@ -1,0 +1,233 @@
+@include color-mode(dark) {
+	--bs-primary: #{$primary-dark};
+	--bs-gray-100: #{$gray-100-dark};
+	--bs-gray-200: #{$gray-200-dark};
+	--bs-gray-300: #{$gray-300-dark};
+	--bs-gray-400: #{$gray-400-dark};
+	--bs-gray-500: #{$gray-500-dark};
+	--bs-gray-600: #{$gray-600-dark};
+	--bs-gray-700: #{$gray-700-dark};
+	--bs-gray-800: #{$gray-800-dark};
+	--bs-gray-900: #{$gray-900-dark};
+	--bs-body-color: var(--bs-gray-300);
+
+	--bs-border-color: #{$gray-600-dark};
+	--bs-danger: #{$danger-dark};
+	--bs-danger-bg-subtle: #{$danger-dark-subtle};
+	--bs-input-bg: var(--bs-gray-900);
+	--bs-input-focus-border-color: var(--bs-gray-400);
+	--bs-modal-footer-bg: var(--bs-gray-900);
+
+	table.table {
+		--bs-table-border-color: var(--bs-gray-700);
+
+		thead {
+			tr {
+				th {
+					color: var(--bs-gray-500);
+				}
+			}
+		}
+	}
+
+	.dropdown-menu {
+		--bs-dropdown-link-hover-bg: var(--bs-gray-800);
+	}
+
+	&.page-blank {
+		body {
+			background: radial-gradient(var(--bs-gray-800), var(--bs-gray-900)) bottom center;
+		}
+	}
+
+	.card {
+		--bs-card-bg: var(--bs-gray-800);
+		--bs-card-cap-bg: transparent;
+		--bs-card-border-color: var(--bs-gray-700);
+		--bs-card-border-width: 1px;
+		box-shadow: none;
+
+		&.card-admin-user-session {
+			.card-header {
+				border-bottom-color: var(--bs-gray-700);
+			}
+
+			.card-body {
+				td.card-admin-user-session__date {
+					color: var(--bs-gray-400);
+				}
+			}
+		}
+	}
+
+	.btn-primary {
+		--bs-btn-bg: var(--bs-primary);
+		--bs-btn-border-color: var(--bs-primary);
+		--bs-btn-hover-bg: #{tint-color($primary-dark, 10%)};
+		--bs-btn-hover-border-color: #{tint-color($primary-dark, 10%)};
+		--bs-btn-disabled-bg: #{shade-color($primary-dark, 40%)};
+		--bs-btn-disabled-border-color: #{shade-color($primary-dark, 40%)};
+		--bs-btn-active-bg: #{shade-color($primary-dark, 20%)};
+		--bs-btn-active-border-color: #{shade-color($primary-dark, 20%)};
+	}
+
+	.main-menu {
+		border-right: solid 1px var(--bs-gray-800);
+
+		.main-menu__logo {
+			box-shadow: none;
+			background: var(--bs-body-bg);
+		}
+	}
+
+	.main-header {
+		box-shadow: none;
+		border-bottom: solid 1px var(--bs-gray-800);
+	}
+
+	.header-nav {
+		> li {
+			> a {
+				color: var(--bs-gray-500);
+			}
+
+			&.header-nav__rounded {
+				> a {
+					&:hover {
+						> figure {
+							background: var(--bs-gray-800);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.content.with-sidebar .content__sidebar {
+		border-right-color: var(--bs-gray-800);
+	}
+
+	.content {
+		.content__panel {
+			background: var(--bs-gray-900);
+		}
+
+		&.with-sidebar {
+			.content__sidebar {
+				.card {
+					.card-header {
+						border-color: var(--bs-gray-800);
+					}
+				}
+			}
+		}
+	}
+
+	.dropdown-menu {
+		box-shadow: none;
+		border: solid 1px var(--bs-gray-800);
+	}
+
+	.content {
+		background: var(--bs-gray-900);
+	}
+
+	.offcanvas {
+		.offcanvas-header {
+			background: var(--bs-gray-800);
+		}
+	}
+
+	.offcanvas.offcanvas-mobile-menu {
+		.offcanvas-footer,
+		.offcanvas-body {
+			background: var(--bs-gray-900);
+		}
+	}
+
+	.modal-dialog {
+		--bs-modal-footer-bg: var(--bs-gray-900);
+
+		.modal-content {
+			border: solid 1px var(--bs-modal-border-color);
+		}
+	}
+
+	.form-split {
+		span {
+			color: var(--bs-gray-600);
+		}
+
+		span:before,
+		span:after {
+			background-color: var(--bs-gray-700);
+		}
+	}
+
+	.navbar {
+		background-color: var(--bs-gray-800);
+
+		&.bottom {
+			background-color: var(--bs-gray-900);
+			border-top: solid 1px $gray-800;
+			box-shadow: none;
+		}
+	}
+
+	.air-datepicker {
+		border-color: var(--bs-border-color) !important;
+		--adp-border-color-inline: var(--bs-border-color);
+
+		.air-datepicker--pointer {
+			&:after {
+				background: var(--bs-body-bg);
+			}
+		}
+
+		.air-datepicker-cell {
+			&.-day- {
+				color: var(--bs-body-color);
+
+				&.-other-month- {
+					color: var(--bs-gray-600);
+				}
+
+				&.-focus- {
+					border-color: var(--bs-gray-800);
+					background: var(--bs-gray-800);
+
+					&.-selected- {
+						background: var(--bs-primary);
+						color: var(--bs-body-color);
+					}
+				}
+
+				&.-in-range- {
+					background: var(--bs-gray-700);
+				}
+
+				&.-disabled- {
+					color: var(--bs-gray-600);
+
+					&.-focus- {
+						background: transparent;
+						border-color: transparent;
+						cursor: not-allowed;
+					}
+				}
+			}
+		}
+
+		.air-datepicker-nav--title {
+			&:hover {
+				background: var(--bs-gray-800);
+			}
+		}
+
+		.air-datepicker-nav--action {
+			&:hover {
+				background: var(--bs-gray-800);
+			}
+		}
+	}
+}

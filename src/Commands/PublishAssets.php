@@ -30,7 +30,7 @@ class PublishAssets extends Command
 	public function handle(): void
 	{
 		$this->info('Installing dependencies...');
-		shell_exec('npm --prefix vendor/codeartlv/joona install');
+		shell_exec('npm --prefix vendor/codeartlv/joona/resources/assets install');
 
 		$this->info('Publishing assets...');
 

@@ -29,4 +29,5 @@ return [
 	'no_results_found' => 'Nekas netika atrasts.',
 	'selected' => ':count izvēlēti|:count izvēlēts|:count izvēlēti',
 	'copied' => 'Nokopēts!',
+	'confirm' => 'Apstiprinājums',
 ];

@@ -12,7 +12,7 @@ export default class ConfirmDialog {
 			case 'primary':
 				return 'btn-primary';
 			case 'secondary':
-				return 'btn-outline-secondary';
+				return 'btn-outline-subtle';
 			default:
 				return '';
 		}
@@ -28,7 +28,7 @@ export default class ConfirmDialog {
 		modalEl.setAttribute('aria-modal', 'true');
 
 		let modalCaption = this.caption
-			? `<div class="modal-header">${this.caption}</div>`
+			? `<div class="modal-header"><h5 class="modal-title">${this.caption}</h5></div>`
 			: '';
 
 		let modalHtml = `
@@ -51,9 +51,7 @@ export default class ConfirmDialog {
 		document.body.appendChild(modalEl);
 
 		if (this.buttons && this.buttons.length) {
-			let buttonContainer = modalEl.querySelector(
-				'.modal-footer > section'
-			);
+			let buttonContainer = modalEl.querySelector('.modal-footer > section');
 
 			this.buttons.forEach((buttonConfig) => {
 				let button = {

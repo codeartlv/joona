@@ -1,5 +1,6 @@
 .modal-dialog {
 	background: none;
+	--bs-modal-footer-bg: var(--bs-gray-200);
 
 	.modal-footer,
 	.modal-header {
@@ -19,6 +20,7 @@
 		border-radius: $border-radius-lg $border-radius-lg 0 0;
 		display: flex;
 		justify-content: space-between;
+		border-bottom: solid 1px var(--bs-modal-border-color);
 	}
 
 	.modal-footer {
@@ -106,7 +108,7 @@
 	}
 
 	&.modal-dialog--admin-user-edit {
-		max-width: 35rem;
+		max-width: 45rem;
 	}
 
 	@include media-breakpoint-down(md) {
@@ -148,24 +150,4 @@
 
 .modal.modal-gallery ~ .modal-backdrop {
 	background: rgba(0, 0, 0, 0.8);
-}
-
-@include color-mode(dark) {
-	.modal-dialog {
-		.modal-header {
-			background: var(--bs-gray-800);
-		}
-
-		.modal-body {
-			border-color: var(--bs-gray-800);
-		}
-	}
-}
-
-@include color-mode(light) {
-	.modal-dialog {
-		.modal-header {
-			background: var(--bs-gray-100);
-		}
-	}
 }

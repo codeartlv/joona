@@ -10,7 +10,7 @@
 
 	.swiper-lazy-preloader {
 		@extend .spinner-border;
-		color: $gray-100;
+		color: var(--bs-gray-100);
 	}
 
 	&.swiper-fullscreen {

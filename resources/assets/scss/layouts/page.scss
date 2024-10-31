@@ -35,15 +35,15 @@
 		display: flex;
 
 		> figure {
-			flex:0 0 50%;
-			margin:0;
+			flex: 0 0 50%;
+			margin: 0;
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center;
 		}
 
 		> aside {
-			flex:1;
+			flex: 1;
 
 			> .container-fluid {
 				display: flex;
@@ -59,16 +59,8 @@
 			> aside {
 				display: flex;
 				align-items: center;
-				padding:$spacer 0;
+				padding: $spacer 0;
 			}
-		}
-	}
-}
-
-@include color-mode(light) {
-	.layout {
-		&.layout-blank {
-			background: var(--bs-gray-200);
 		}
 	}
 }

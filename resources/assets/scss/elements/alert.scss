@@ -1,30 +1,32 @@
 .alert {
-	font-size: .875rem;
+	font-size: 0.875rem;
 	align-items: center;
 	display: flex;
+	padding-top: calc(var(--bs-alert-padding-y) - 0.125rem);
 
 	&::before {
 		@extend .material-symbols-outlined;
-		margin-right: $spacer*0.5;
+		margin-right: $spacer * 0.5;
 		opacity: 0.5;
+		position: relative;
+		top: 0.0625rem;
 	}
 
 	&.alert-danger {
 		&::before {
-			content: "error";
+			content: 'error';
 		}
 	}
 
 	&.alert-success {
 		&::before {
-			content: "check_circle";
+			content: 'check_circle';
 		}
 	}
 
 	&.alert-info {
 		&::before {
-			content: "info";
+			content: 'info';
 		}
 	}
-
 }

@@ -49,12 +49,14 @@
 								<div data-role="form.response"></div>
 
 								@foreach ($permissions as $group)
-									<x-form-section-heading :label="$group['label']"/>
+									<div class="block">
+										<x-form-section-heading :label="$group['label']"/>
 
-									<div class="form-group">
-										@foreach ($group['permissions'] as $permission)
-											<x-checkbox :checked="in_array($permission['id'], $selected)" name="permissions[]" :value="$permission['id']" :label="$permission['label']"  />
-										@endforeach
+										<div class="form-group mb-0">
+											@foreach ($group['permissions'] as $permission)
+												<x-checkbox :checked="in_array($permission['id'], $selected)" name="permissions[]" :value="$permission['id']" :label="$permission['label']"  />
+											@endforeach
+										</div>
 									</div>
 								@endforeach
 							</div>

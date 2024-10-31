@@ -11,6 +11,10 @@ class Input extends Component
 		public ?string $value = '',
 		public ?string $label = '',
 		public ?string $size = 'md',
+		public ?string $iconPrepend = '',
+		public ?string $textPrepend = '',
+		public ?string $iconAppend = '',
+		public ?string $textAppend = '',
 		public bool $required = false,
 	) {
 	}
@@ -20,6 +24,14 @@ class Input extends Component
 	 */
 	public function render()
 	{
+		if ($this->iconPrepend && $this->textPrepend) {
+			$this->iconPrepend = '';
+		}
+
+		if ($this->iconAppend && $this->textAppend) {
+			$this->iconAppend = '';
+		}
+
 		return view('joona::components.input');
 	}
 }

@@ -18,5 +18,5 @@ class UserRole extends Pivot
 	 *
 	 * @var string
 	 */
-	protected $table = 'admin_user_role';
+	protected $table = 'admin_users_role';
 }

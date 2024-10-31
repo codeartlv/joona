@@ -3,8 +3,11 @@
 namespace Codeart\Joona\Providers;
 
 use Codeart\Joona\Facades\Joona;
-use Illuminate\Support\ServiceProvider;
+use Codeart\Joona\Listeners\AddProviderToBootstrapListener;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Events\VendorTagPublished;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 
 class JoonaProvider extends ServiceProvider
 {
@@ -16,14 +19,15 @@ class JoonaProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+		if (!$this->app->runningInConsole()) {
+			return;
+		}
+
+		$this->setupMigrations();
+
 		$this->offerPublish();
 
 		$this->addConsoleCommands();
-
-		$this->app->booted(function () {
-            $schedule = app(Schedule::class);
-			$schedule->command('joona:update-session')->everyTenMinutes();
-        });
 	}
 
 	/**
@@ -33,14 +37,18 @@ class JoonaProvider extends ServiceProvider
 	 */
 	private function addConsoleCommands(): void
 	{
-		if ($this->app->runningInConsole()) {
-		
-			$this->commands([
-				\Codeart\Joona\Commands\Seed::class,
-				\Codeart\Joona\Commands\PublishAssets::class,
-				\Codeart\Joona\Commands\UpdateSession::class,
-			]);
-		}
+		// Register commands
+		$this->commands([
+			\Codeart\Joona\Commands\Seed::class,
+			\Codeart\Joona\Commands\PublishAssets::class,
+			\Codeart\Joona\Commands\UpdateSession::class,
+		]);
+
+		// Schedule commands
+		$this->app->booted(function () {
+            $schedule = app(Schedule::class);
+			$schedule->command('joona:update-session')->everyTenMinutes();
+        });
 	}
 
 	/**
@@ -50,21 +58,34 @@ class JoonaProvider extends ServiceProvider
 	 */
 	private function offerPublish(): void
 	{
+		// Provide an application config
+		$this->publishes([
+			$this->getPackageConfigPath() . 'joona.php' => config_path('joona.php'),
+		], 'joona-config');
+
+		// Publish assets
+		$this->publishes([
+			$this->getPackageDistAssetPath() => public_path('vendor/joona/images'),
+		], 'joona-assets');
+
+		// Publish provider
+		$this->publishes([
+			$this->getPackageExportPath() . 'JoonaServiceProvider.php' => app_path('Providers/JoonaServiceProvider.php'),
+		], 'joona-provider');
+
+		// Register the listener for when vendor:publish runs
+		Event::listen(VendorTagPublished::class, AddProviderToBootstrapListener::class);
+	}
+
+	/**
+	 * Configure package migrations
+	 *
+	 * @return void
+	 */
+	private function setupMigrations(): void
+	{
 		if ($this->app->runningInConsole()) {
-			// Provide an application config
-			$this->publishes([
-				$this->getPackageConfigPath() . 'joona.php' => config_path('joona.php'),
-			], 'joona-config');
-
-			// Publish assets
-			$this->publishes([
-				$this->getPackageDistAssetPath() => public_path('vendor/joona/images'),
-			], 'joona-assets');
-
-			// Publish provider
-			$this->publishes([
-				$this->getPackageExportPath() . 'JoonaServiceProvider.php' => app_path('Providers/JoonaServiceProvider.php'),
-			], 'joona-provider');
+			$this->loadMigrationsFrom($this->getPackageMigrationsPath());
 		}
 	}
 

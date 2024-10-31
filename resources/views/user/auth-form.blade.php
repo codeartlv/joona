@@ -15,12 +15,12 @@
 
 				<div class="block">
 					<div class="form-group">
-						<x-input-icon :label="__('joona::user.email')" icon="person" autocomplete="email" name="email" required="true" />
+						<x-input :label="__('joona::user.email')" icon="person" textPrepend="@" autocomplete="email" name="email" required="true" />
 						<div data-field-message="email"></div>
 					</div>
 
 					<div class="form-group">
-						<x-input-icon :label="__('joona::user.password')" icon="key" type="password" autocomplete="current-password" name="password" required="true" />
+						<x-input :label="__('joona::user.password')" icon="key" iconPrepend="password" type="password" autocomplete="current-password" name="password" required="true" />
 						<div data-field-message="password"></div>
 					</div>
 				</div>
@@ -59,5 +59,4 @@
 		</x-form>
 	</div>
 </div>
-
 @endsection

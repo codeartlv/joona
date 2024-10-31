@@ -1,7 +1,0 @@
-@include color-mode(light) {
-	.badge {
-		&.text-bg-light {
-			background-color: var(--bs-gray-300) !important;
-		}
-	}
-}

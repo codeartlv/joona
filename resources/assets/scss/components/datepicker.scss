@@ -8,6 +8,10 @@
 		line-height: 1;
 		font-size: 0;
 		display: none;
+
+		i {
+			color: var(--bs-gray-600);
+		}
 	}
 
 	&.has-date {
