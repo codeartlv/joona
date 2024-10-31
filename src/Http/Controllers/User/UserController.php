@@ -23,6 +23,7 @@ use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\View\Components\Select\Option;
 use Illuminate\Http\RedirectResponse;
 use Jenssegers\Agent\Agent;
+use Illuminate\Support\Collection;
 
 class UserController
 {
@@ -143,7 +144,7 @@ class UserController
 		$permissions = Permission::getPermissions();
 		$customPermissions = [];
 		$ungrouppedPermissions = [];
-		$userCustomPerm = $user ? $user->customPermissions->pluck('permission') : [];
+		$userCustomPerm = $user ? $user->customPermissions->pluck('permission') : new Collection();
 
 		foreach ($permissions as $permissionEntry) {
 			if (!$permissionEntry instanceof PermissionGroup || $permissionEntry instanceof CustomPermission) {
