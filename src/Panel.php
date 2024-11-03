@@ -9,6 +9,7 @@ use Codeart\Joona\MetaData\Locale;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
+use PDO;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
 
@@ -260,8 +261,7 @@ class Panel
 				continue;
 			}
 
-			$path = explode('.', $page->id);
-			$this->insertPage($path, $page);
+			$this->pages[] = $page;
 		}
 
 		return $this;
@@ -270,17 +270,19 @@ class Panel
 	/**
 	 * Insert menu item at specified position
 	 *
-	 * @param array $path
 	 * @param Page $page
 	 * @return void
 	 */
-	private function insertPage(array $path, Page $page)
+	private function insertPage(Page $page, array &$pages = []): void
 	{
+		$path = explode('.', $page->id);
+
 		if (count($path) == 1) {
-			$this->insertAtDashboard($page);
-		} else {
-			$this->insertAtParent($path, $page);
+			$this->insertAtDashboard($page, $pages);
+			return;
 		}
+
+		$this->insertAtParent($page, $pages);
 	}
 
 	/**
@@ -289,63 +291,67 @@ class Panel
 	 * @param Page $page
 	 * @return void
 	 */
-	private function insertAtDashboard(Page $page)
+	private function insertAtDashboard(Page $page, array &$pages = []): void
 	{
-		$dashboardIndex = $this->findPageIndex('dashboard');
+		$dashboardIndex = $this->findPageIndex('dashboard', $pages);
 
 		if ($dashboardIndex !== -1) {
-			$this->pages = array_merge(
-				array_slice($this->pages, 0, $dashboardIndex + 1),
+			$pages = array_merge(
+				array_slice($pages, 0, $dashboardIndex + 1),
 				[
 					[
 						'page' => $page,
 						'children' => [],
 					]
 				],
-				array_slice($this->pages, $dashboardIndex + 1)
+				array_slice($pages, $dashboardIndex + 1)
 			);
-		} else {
-			array_unshift($this->pages, [
-				'page' => $page,
-				'children' => [],
-			]);
+
+			return;
 		}
+
+		array_unshift($pages, [
+			'page' => $page,
+			'children' => [],
+		]);
 	}
 
 	/**
 	 * Insert page at the parent page
 	 *
-	 * @param array $path
 	 * @param Page $page
 	 * @return void
 	 */
-	private function insertAtParent(array $path, Page $page)
+	private function insertAtParent(Page $page, array &$pages = []): void
 	{
-		$parentIndex = $this->findPageIndex($path[0]);
+		$path = explode('.', $page->id);
+		$parentIndex = $this->findPageIndex($path[0], $pages);
 
 		if ($parentIndex === -1) {
-			$this->pages[] = [
+			$pages[] = [
 				'page' => $page,
 				'children' => []
 			];
-		} else {
-			$this->pages[$parentIndex]['children'][] = [
-				'page' => $page,
-				'children' => [],
-			];
+
+			return;
 		}
+
+		$pages[$parentIndex]['children'][] = [
+			'page' => $page,
+			'children' => [],
+		];
 	}
 
 	/**
 	 * Returns page index by ID
 	 *
-	 * @param mixed $id
+	 * @param mixed $pageId
 	 * @return string|int
 	 */
-	private function findPageIndex($id)
+	private function findPageIndex($pageId, array $pages = [])
 	{
-		foreach ($this->pages as $index => $element) {
-			if ($element['page'] instanceof Page && $element['page']->id === $id) {
+		foreach ($pages as $index => $element) {
+			if ($element['page'] instanceof Page && $element['page']->id === $pageId) {
 				return $index;
 			}
 		}
@@ -360,7 +366,28 @@ class Panel
 	 */
 	public function getPages(): array
 	{
-		return $this->pages;
+		$pages = [];
+		$topPages = [];
+		$secondPages = [];
+
+		foreach ($this->pages as $i => $page) {
+			$path = $page->getPath();
+
+			if (count($path) == 1) {
+				$topPages[] = $page;
+				continue;
+			}
+
+			$secondPages[] = $page;
+		}
+
+		$cyclePages = array_merge($topPages, $secondPages);
+
+		foreach ($cyclePages as $page) {
+			$this->insertPage($page, $pages);
+		}
+
+		return $pages;
 	}
 
 	/**
@@ -495,3 +522,4 @@ class Panel
 		return $this;
 	}
 }
+

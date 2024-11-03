@@ -105,4 +105,15 @@ class Page
 
 		return $this;
 	}
+
+	/**
+	 * Return page path
+	 *
+	 * @return string[]
+	 */
+	public function getPath(): array
+	{
+		return explode('.', $this->id);
+	}
 }
+
