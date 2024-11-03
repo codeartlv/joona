@@ -30,4 +30,7 @@ return [
 	'selected' => ':count izvēlēti|:count izvēlēts|:count izvēlēti',
 	'copied' => 'Nokopēts!',
 	'confirm' => 'Apstiprinājums',
+	'add' => 'Pievienot',
+	'no_nodes_in_list' => 'Nav neviena ieraksta.',
+	'delete_node_confirm' => 'Vai tiešām vēlaties dzēst šo ierakstu?',
 ];

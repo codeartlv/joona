@@ -10,6 +10,7 @@ import MultiSelect from '../components/multi-select.js';
 import Gallery from '../components/gallery.js';
 import CopyText from '../components/copy-text.js';
 import ChartComponent from '../components/chart.js';
+import TreeEditor from '../components/tree-editor.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -54,5 +55,9 @@ export default class Components extends Handler {
 
 	chart(el, params) {
 		return new ChartComponent(el, params);
+	}
+
+	treeEditor(el, params) {
+		return new TreeEditor(el, params);
 	}
 }

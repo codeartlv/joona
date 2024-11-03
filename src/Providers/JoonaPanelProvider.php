@@ -146,6 +146,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'gallery' => \Codeart\Joona\View\Components\Gallery\Gallery::class,
 			'copy' => \Codeart\Joona\View\Components\Copy::class,
 			'chart' => \Codeart\Joona\View\Components\Chart::class,
+			'tree-editor' => \Codeart\Joona\View\Components\TreeEditor::class,
 		];
 
 		foreach ($components as $name => $class) {
@@ -344,6 +345,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::common.selected',
 			'joona::common.copied',
 			'joona::common.confirm',
+			'joona::common.delete_node_confirm',
 		], $userKeys);
 
 		$panel = resolve('joona.panel');

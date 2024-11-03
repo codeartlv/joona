@@ -222,7 +222,7 @@ export default class AjaxForm {
 
 	findControl(name) {
 		let messageContainer = null;
-		let inputControl = this.form.querySelector(`[name="${name}"]`);
+		let inputControl = this.form.querySelector(`[name="${name}"]:not([type="hidden"])`);
 
 		if (!inputControl) {
 			inputControl = this.form.querySelector(`[data-field="${name}"]`);
