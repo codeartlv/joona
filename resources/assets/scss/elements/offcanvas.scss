@@ -3,6 +3,10 @@
 	--bs-offcanvas-width: 100%;
 	max-width: 40rem;
 
+	.offcanvas-body {
+		padding-top: 0;
+	}
+
 	&.offcanvas-mobile-menu {
 		--bs-offcanvas-width: 100%;
 		--bs-offcanvas-bg: transparent;
