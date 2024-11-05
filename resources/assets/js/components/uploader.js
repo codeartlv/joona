@@ -326,17 +326,20 @@ export default class Uploader {
 			thumbnail.dataset.id = file.id;
 		}
 
-		if ('filename' in file) {
-			const extension = file.filename.split('.').pop().toLowerCase();
-
-			if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
-			}
+		if ('filename' in file && file.filename) {
+			const extension =
+				'filename' in file && file.filename
+					? file.filename.split('.').pop().toLowerCase()
+					: null;
 
 			let icon = thumbnail.querySelector('[data-role="file-icon"]');
-			icon.classList.add(`fiv-icon-${extension}`);
+
+			if (extension) {
+				icon.classList.add(`fiv-icon-${extension}`);
+				this.setThumbnailType(thumbnail, extension);
+			}
 
 			thumbnail.querySelector('[data-role="filename"]').innerText = file.filename;
-			this.setThumbnailType(thumbnail, extension);
 		}
 
 		if ('message' in file) {
@@ -363,13 +366,6 @@ export default class Uploader {
 				thumbnail.classList.add('no-preview');
 			}
 		}
-		/*
-
-
-
-
-		thumbnail.dataset.type = file.type;
-		*/
 	}
 
 	setImages(images) {
