@@ -19,7 +19,7 @@
 html {
 	&.page-blank {
 		body {
-			background: radial-gradient(#4467b5, var(--bs-primary)) bottom center;
+			background: radial-gradient(lighten($primary, 30%), darken($primary, 10%)) bottom center;
 		}
 	}
 }
