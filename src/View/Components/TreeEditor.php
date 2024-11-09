@@ -36,6 +36,7 @@ class TreeEditor extends Component
 				$result[] = [
 					'id' => (int) $row->id,
 					'title' => $row->title,
+					'class' => $row->class,
 					'parent_id' => (int) $row->parentId,
 					'childs' => $get_tree(!empty($groupped[$row->id]) ? $groupped[$row->id] : []),
 					'data' => $row->data,

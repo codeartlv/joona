@@ -315,6 +315,11 @@ export default class TreeEditor {
 			const newNodeEl = nav.lastElementChild;
 			newNodeEl.setAttribute('data-id', currentNode.id);
 			newNodeEl.setAttribute('data-role', 'node');
+
+			if (currentNode.class.length) {
+				newNodeEl.classList.add(...currentNode.class);
+			}
+
 			newNodeEl.dataset.id = currentNode.id;
 			newNodeEl.dataset.role = 'node';
 

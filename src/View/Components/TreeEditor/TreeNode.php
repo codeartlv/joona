@@ -8,6 +8,7 @@ readonly class TreeNode
 		public int $id,
 		public ?int $parentId,
 		public string $title,
+		public array $class = [],
 		public array $data = [],
 	) {
 
