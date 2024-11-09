@@ -297,6 +297,7 @@ export default class TreeEditor {
 		}
 
 		let section = this.getSectionByLevel(level);
+
 		if (!section) {
 			section = this.createSection(level);
 		}
@@ -321,10 +322,18 @@ export default class TreeEditor {
 				const fieldName = item.dataset.field;
 				const isAttr = item.dataset.attr;
 
+				let value = '';
+
+				if (currentNode[fieldName]) {
+					value = currentNode[fieldName];
+				} else if (currentNode.data[fieldName]) {
+					value = currentNode.data[fieldName];
+				}
+
 				if (isAttr) {
-					item.setAttribute(isAttr, currentNode[fieldName]);
+					item.setAttribute(isAttr, value);
 				} else {
-					item.textContent = currentNode[fieldName];
+					item.textContent = value;
 				}
 			});
 

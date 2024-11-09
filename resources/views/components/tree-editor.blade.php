@@ -1,9 +1,19 @@
-<div class="tree-editor" data-bind="components.tree-editor" data-selected="{{$selected}}" data-sortable="{{$sortable ? 'true':'false'}}" data-depth="{{$depth}}" data-editRoute="{{$editRoute}}" data-sortRoute="{{$sortRoute}}" data-delRoute="{{$deleteRoute}}">
+<div class="tree-editor {{$class}}" data-bind="components.tree-editor" data-selected="{{$selected}}" data-sortable="{{$sortable ? 'true':'false'}}" data-depth="{{$depth}}" data-editRoute="{{$editRoute}}" data-sortRoute="{{$sortRoute}}" data-delRoute="{{$deleteRoute}}">
 	<template data-role="node">
 		<li>
 			<a href="javascript:;">
-				{{-- <img class="tree-editor__icon" data-field="icon" data-attr="src" /> --}}
+				@isset($item_prepend)
+					{{$item_prepend}}
+				@endif
+
 				<em data-field="title"></em>
+
+				<div class="tree-editor__append">
+					@isset($item_append)
+						{{$item_append}}
+					@endif
+				</div>
+
 				<span class="tree-editor__edit">
 					<span data-action="edit-node">
 						@icon('edit')

@@ -12,6 +12,7 @@ class TreeEditor extends Component
 		public int $selected = 0,
 		public ?string $editRoute = '',
 		public ?string $sortRoute = '',
+		public ?string $class = '',
 		public ?string $deleteRoute = '',
 		public array $rows = [],
 	) {
