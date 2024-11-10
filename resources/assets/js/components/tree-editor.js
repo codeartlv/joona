@@ -18,6 +18,7 @@ export default class TreeEditor {
 				editroute: '',
 				delroute: '',
 				sortroute: '',
+				sortlevels: '',
 				selected: 0,
 				depth: 0,
 				sortable: 0,
@@ -25,6 +26,10 @@ export default class TreeEditor {
 			},
 			params
 		);
+
+		let sortLevels = String(this.params.sortlevels);
+
+		this.params.sortlevels = sortLevels.length > 0 ? sortLevels.split(',').map(Number) : [];
 
 		this.createNodeList();
 
@@ -377,7 +382,10 @@ export default class TreeEditor {
 				}
 			}
 
-			if (this.params.sortable) {
+			if (
+				this.params.sortable &&
+				(this.params.sortlevels.length == 0 || this.params.sortlevels.includes(level))
+			) {
 				const em = document.createElement('em');
 				em.setAttribute('data-role', 'sort-handle');
 				em.className = 'tree-editor__drag';

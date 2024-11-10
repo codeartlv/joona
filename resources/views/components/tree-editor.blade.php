@@ -1,4 +1,4 @@
-<div class="tree-editor {{$class}}" data-bind="components.tree-editor" data-selected="{{$selected}}" data-sortable="{{$sortable ? 'true':'false'}}" data-depth="{{$depth}}" data-editRoute="{{$editRoute}}" data-sortRoute="{{$sortRoute}}" data-delRoute="{{$deleteRoute}}">
+<div class="tree-editor {{$class}}" data-bind="components.tree-editor" data-selected="{{$selected}}" data-sortlevels="{{implode(',', $sortLevels)}}" data-sortable="{{$sortable ? 'true':'false'}}" data-depth="{{$depth}}" data-editRoute="{{$editRoute}}" data-sortRoute="{{$sortRoute}}" data-delRoute="{{$deleteRoute}}">
 	<template data-role="node">
 		<li>
 			<a href="javascript:;">
