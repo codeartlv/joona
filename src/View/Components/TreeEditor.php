@@ -8,6 +8,7 @@ class TreeEditor extends Component
 {
 	public function __construct(
 		public bool $sortable = true,
+		public array $sortLevels = [],
 		public int $depth = 3,
 		public int $selected = 0,
 		public ?string $editRoute = '',
