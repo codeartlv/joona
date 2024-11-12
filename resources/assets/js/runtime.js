@@ -52,6 +52,17 @@ export default class Runtime {
 
 		this.init(document.body);
 
+		let scrollPosition = localStorage.getItem('revertScrollPosition');
+
+		if (typeof scrollPosition == 'string') {
+			localStorage.removeItem('revertScrollPosition');
+			window.scrollTo({
+				top: scrollPosition,
+				left: 0,
+				behavior: 'instant',
+			});
+		}
+
 		resolve();
 	}
 

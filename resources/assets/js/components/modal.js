@@ -47,6 +47,8 @@ export default class Modal {
 				window.JoonaModalInstance = this;
 				this.trigger('open');
 
+				localStorage.setItem('revertScrollPosition', Number(window.scrollY));
+
 				let modalEl;
 				let modalDialogEl;
 				let modalDialogContent;
