@@ -7,7 +7,7 @@ import { Navigation, Pagination, EffectFade } from 'swiper/modules';
 export default class Gallery {
 	constructor(el, params) {
 		this.element = el;
-		this.images = parseJsonLd(el.querySelector('[data-role="gallery.images"]')).map((item) => ({
+		this.items = parseJsonLd(el.querySelector('[data-role="gallery.items"]')).map((item) => ({
 			...item,
 			loaded: false,
 		}));
@@ -67,7 +67,7 @@ export default class Gallery {
 	}
 
 	onImageChange(newIndex) {
-		let image = this.images[newIndex];
+		let image = this.items[newIndex];
 
 		let titleDisplay = this.modalElement.querySelector('[data-role="gallery.image-title"]');
 		titleDisplay.innerHTML = image.title ? image.title : '';
@@ -89,12 +89,28 @@ export default class Gallery {
 		this.imageContainer = this.carousel.querySelector('.swiper-wrapper');
 		this.modalElement.querySelector('.modal-body').appendChild(this.carousel);
 
-		this.images.forEach((image) => {
+		this.items.forEach((image) => {
+			let mediaHtml = '';
+
+			if (image.type == 'video') {
+				mediaHtml = `
+				<video controls>
+  					<source src="${image.url}" type="video/mp4">
+				</video>
+				`;
+			}
+
+			if (image.type == 'image') {
+				mediaHtml = `
+				<img src="${image.url}" loading="lazy" />
+				<div class="swiper-lazy-preloader"></div>
+				`;
+			}
+
 			const itemHtml = `
 				<div class="swiper-slide">
 					<div class="swiper-slide-content">
-						<img src="${image.image}" loading="lazy" />
-						<div class="swiper-lazy-preloader"></div>
+						${mediaHtml}
 					</div>
 				</div>`;
 			this.imageContainer.appendChild(createElementFromHTML(itemHtml));

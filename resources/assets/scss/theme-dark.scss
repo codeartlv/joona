@@ -250,4 +250,24 @@
 			}
 		}
 	}
+
+	.form-multiselect {
+		.dropdown-menu {
+			> li {
+				&.form-multiselect__toggle-all {
+					background: var(--bs-gray-800);
+
+					label {
+						color: var(--bs-gray-500);
+					}
+
+					&:hover {
+						label {
+							color: var(--bs-gray-300);
+						}
+					}
+				}
+			}
+		}
+	}
 }

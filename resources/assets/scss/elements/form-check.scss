@@ -17,4 +17,8 @@
 	.form-check-label[for] {
 		cursor: pointer;
 	}
+
+	.form-check-input[type='checkbox']:indeterminate {
+		background-position: 0 0;
+	}
 }

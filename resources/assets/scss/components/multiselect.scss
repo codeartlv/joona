@@ -21,6 +21,10 @@
 		> li {
 			&.form-multiselect__toggle-all {
 				background: var(--bs-gray-300);
+
+				label {
+					color: var(--bs-gray-600);
+				}
 			}
 
 			&.form-multiselect__option {
