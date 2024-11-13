@@ -7,36 +7,42 @@
 		<em data-role="selected-text"></em>
 	</div>
 	<ul class="dropdown-menu">
-		@foreach ($options as $item)
-			@if (method_exists($item, 'options'))
-				@if ($item->selectable)
-					<li class="form-multiselect__group">
-						<x-checkbox :checked="$item->selected" :disabled="$item->disabled" label="{{$item->label}}" value="{{$item->value}}" name="{{ $name }}"/>
-					</li>
+		@if (!empty($options))
+			<li class="form-multiselect__toggle-all">
+				<x-checkbox data-role="toggle" :label="__('joona::common.toggle_all')" />
+			</li>
+			@foreach ($options as $item)
+				@if (method_exists($item, 'options'))
+					@if ($item->selectable)
+						<li class="form-multiselect__group">
+							<x-checkbox data-role="option" :checked="$item->selected" :disabled="$item->disabled" label="{{$item->label}}" value="{{$item->value}}" name="{{ $name }}"/>
+						</li>
+					@else
+						<li class="form-multiselect__group-label">{{$item->label}}</li>
+					@endif
+
+					@php
+						$entries = $item->options();
+					@endphp
 				@else
-					<li class="form-multiselect__group-label">{{$item->label}}</li>
+					@php
+						$entries = [$item];
+					@endphp
 				@endif
 
-				@php
-					$entries = $item->options();
-				@endphp
-			@else
-				@php
-					$entries = [$item];
-				@endphp
-			@endif
-
-			@foreach ($entries as $option)
-				<li>
-					<x-checkbox
-					:checked="$option->selected"
-					:disabled="$option->disabled"
-					label="{{$option->label}}"
-					value="{{$option->value}}"
-					name="{{ $name }}"
-				/>
-				</li>
+				@foreach ($entries as $option)
+					<li class="form-multiselect__option">
+						<x-checkbox
+						data-role="option"
+						:checked="$option->selected"
+						:disabled="$option->disabled"
+						label="{{$option->label}}"
+						value="{{$option->value}}"
+						name="{{ $name }}"
+					/>
+					</li>
+				@endforeach
 			@endforeach
-		@endforeach
+		@endif
 	</ul>
 </div>

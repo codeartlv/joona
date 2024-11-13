@@ -33,4 +33,5 @@ return [
 	'add' => 'Pievienot',
 	'no_nodes_in_list' => 'Nav neviena ieraksta.',
 	'delete_node_confirm' => 'Vai tiešām vēlaties dzēst šo ierakstu?',
+	'toggle_all' => 'Atzīmēt/noņemt visus',
 ];

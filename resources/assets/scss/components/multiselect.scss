@@ -19,8 +19,14 @@
 		padding: $spacer * 0.5 0;
 
 		> li {
-			&:hover {
-				background: $gray-100;
+			&.form-multiselect__toggle-all {
+				background: var(--bs-gray-300);
+			}
+
+			&.form-multiselect__option {
+				&:hover {
+					background: var(--bs-gray-200);
+				}
 			}
 		}
 

@@ -33,4 +33,5 @@ return [
 	'add' => 'Add',
 	'no_nodes_in_list' => 'No records found.',
 	'delete_node_confirm' => 'Really delete this record?',
+	'toggle_all' => 'Toggle all',
 ];
