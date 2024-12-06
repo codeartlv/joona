@@ -270,4 +270,9 @@
 			}
 		}
 	}
+
+	.page-link.active,
+	.active > .page-link {
+		border-color: var(--bs-gray-600);
+	}
 }
