@@ -1,6 +1,5 @@
 <?php
 
-use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Http\Controllers\Common\DashboardController;
 use Codeart\Joona\Http\Controllers\Common\MiscController;
 use Codeart\Joona\Http\Controllers\User\AuthController;
@@ -13,7 +12,7 @@ use Codeart\Joona\Http\Controllers\User\PermissionsController;
 |--------------------------------------------------------------------------
 */
 
-Route::prefix(Joona::getBasePath())->middleware(['web', 'admin.web'])->name('joona.')->group(function () {
+Route::name('joona.')->group(function () {
 	/**
 	 * Unsecured routes
 	 */

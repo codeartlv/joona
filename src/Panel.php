@@ -9,6 +9,7 @@ use Codeart\Joona\MetaData\Locale;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
+use InvalidArgumentException;
 use PDO;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
@@ -77,6 +78,50 @@ class Panel
 	 * @var array
 	 */
 	private $jsTranslations = [];
+
+	/**
+	 * Cusrtom routes
+	 *
+	 * @var array
+	 */
+	protected $customRoutes = [
+		'secure' => null,
+		'free' => null,
+	];
+
+	/**
+	 * Add custom routes
+	 *
+	 * @param callable $routesCallback
+	 * @return void
+	 */
+	public function addRoutes(string $security, callable|string $routes): self
+    {
+		$security = in_array($security, ['secure', 'free']) ? $security : 'secure';
+
+		if (is_callable($routes)) {
+            $this->customRoutes[$security] = $routes;
+        } elseif (is_string($routes) && file_exists($routes)) {
+            $this->customRoutes[$security] = function () use ($routes) {
+                require $routes;
+            };
+        } else {
+            throw new InvalidArgumentException('Routes must be a callable or a valid file path.');
+        }
+
+		return $this;
+    }
+
+	/**
+	 * Return custom routes
+	 *
+	 * @param string $security
+	 * @return null|callable
+	 */
+	public function getCustomRoutes(string $security): ?callable
+	{
+		return $this->customRoutes[$security];
+	}
 
 	/**
 	 * Sets base path for application

@@ -161,9 +161,27 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	 */
 	private function setupRoutes(): void
 	{
-		Route::domain(Joona::getBaseDomain())->group(function () {
-			$this->loadRoutesFrom($this->getPackageRoutesPath() . 'web.php');
-		});
+		Route
+			::domain(Joona::getBaseDomain())
+			->prefix(Joona::getBasePath())
+			->middleware(['web', 'admin.web'])
+			->group(function () {
+				$this->loadRoutesFrom($this->getPackageRoutesPath() . 'web.php');
+
+				$setup = Joona::getCustomRoutes('free');
+
+				if ($setup) {
+					$setup();
+				}
+
+				Route::middleware(['admin.auth'])->group(function () {
+					$setup = Joona::getCustomRoutes('secure');
+
+					if ($setup) {
+						$setup();
+					}
+				});
+			});
 	}
 
 	/**
