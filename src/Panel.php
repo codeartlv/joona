@@ -56,7 +56,14 @@ class Panel
 	 *
 	 * @var string
 	 */
-	private $appLogo = '/vendor/joona/images/example_logo.png';
+	private ?string $appLogo = '/vendor/joona/images/example_logo.png';
+
+	/**
+	 * Dark mode app logo
+	 *
+	 * @var string
+	 */
+	private ?string $appLogoDark = '/vendor/joona/images/example_logo.png';
 
 	/**
 	 * Panel pages
@@ -273,12 +280,13 @@ class Panel
 	/**
 	 * Set custom logo to be used within the admin panel
 	 *
-	 * @param string $path URL to logo image file
+	 * @param string $light URL to logo image file
 	 * @return Panel
 	 */
-	public function setLogo(string $path): self
+	public function setLogo(string $light, ?string $dark = null): self
 	{
-		$this->appLogo = $path;
+		$this->appLogo = $light;
+		$this->appLogoDark = $dark;
 
 		return $this;
 	}
@@ -288,9 +296,15 @@ class Panel
 	 *
 	 * @return string
 	 */
-	public function getLogo(): string
+	public function getLogo(string $mode = 'light'): string
 	{
-		return $this->appLogo;
+		$key = 'appLogo';
+
+		if ($mode == 'dark' && $this->appLogoDark) {
+			$key = 'appLogoDark';
+		}
+
+		return $this->$key;
 	}
 
 	/**

@@ -4,8 +4,8 @@
 	<div class="card card-auth">
 		<x-form action="{{route('joona.user.auth-process')}}" data-focus="email">
 			<div class="card-header">
-				<span>
-					<img src="{{$logo}}" />
+				<span class="card-auth__logo">
+					<img src="{{$logo}}" alt="{{ config('app.name', 'Laravel') }}" />
 				</span>
 				<strong>{{ config('app.name', 'Laravel') }}</strong>
 				<p>@lang('joona::user.auth.caption')</p>

@@ -18,7 +18,8 @@ class GlobalViewComposer
 			'vite_resources' => Joona::getViteResources(),
 			'email' => $currentUser ? $currentUser->email : '',
 			'name' => $currentUser ? $currentUser->first_name.' '.$currentUser->last_name : '',
-			'logo' => Joona::getLogo(),
+			'logo' => Joona::getLogo('light'),
+			'logo_dark' => Joona::getLogo('dark'),
 			'menu' => Joona::getNavigation(),
 			'translations' => Joona::getJavascriptTranslations(),
 		]);
