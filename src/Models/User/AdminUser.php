@@ -4,6 +4,7 @@ namespace Codeart\Joona\Models\User;
 
 use Codeart\Joona\Contracts\Result;
 use Codeart\Joona\Enums\UserLevel;
+use Codeart\Joona\Enums\UserStatus;
 use Codeart\Joona\Models\User\Access\CustomPermission;
 use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\Models\User\Log\LogEvent;
@@ -14,6 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Enum;
 
 class AdminUser extends Authenticatable
 {
@@ -38,6 +40,8 @@ class AdminUser extends Authenticatable
 		'last_name',
 		'level',
 		'class',
+		'status',
+		'failed_attempts',
 		'logged_at',
 		'logged_ip',
 	];
@@ -52,13 +56,18 @@ class AdminUser extends Authenticatable
 	];
 
 	/**
-	 * The attributes that should be cast.
+	 * Get the attributes that should be cast.
 	 *
-	 * @var array<string, string>
+	 * @return array<string, string>
 	 */
-	protected $casts = [
-		'password' => 'hashed',
-	];
+	protected function casts(): array
+	{
+		return [
+			'password' => 'hashed',
+			'failed_attempts' => 'int',
+			'status' => UserStatus::class,
+		];
+	}
 
 	public function logEvent(LogEvent $event, string $object_id = null, array $parameters = []): ?LogEntry
 	{
@@ -87,6 +96,7 @@ class AdminUser extends Authenticatable
 
 	public static function createOrUpdate(array $attributes, AdminUser $user = null, Result $result = null)
 	{
+		$newStatus = null;
 		$result =  $result ?: new Result();
 
 		$rules = [
@@ -101,9 +111,12 @@ class AdminUser extends Authenticatable
 			$rules['level'] = ['required', 'string'];
 		}
 
-
 		if (!$user || array_key_exists('last_name', $attributes)) {
 			$rules['last_name'] = ['required', 'string', 'max:55'];
+		}
+
+		if (!$user || array_key_exists('status', $attributes)) {
+			$rules['status'] = ['required', new Enum(UserStatus::class)];
 		}
 
 		if (!$user || array_key_exists('email', $attributes)) {
@@ -127,11 +140,22 @@ class AdminUser extends Authenticatable
 			'password' => __('joona::user.password'),
 			'first_name' => __('joona::user.first_name'),
 			'last_name' => __('joona::user.last_name'),
+			'status' => __('joona::user.status'),
 		]);
 
 		if ($validator->fails()) {
 			$messages = $validator->errors()->messages();
 			$result->setErrors($messages);
+		}
+
+		if (array_key_exists('status', $attributes)) {
+			$status = UserStatus::from($attributes['status']);
+			$newStatus = $status;
+
+			if ($user && !$user->isStatusAvailable($status)) {
+				$result->setError(__('joona::validation.enum.invalid'), 'status');
+				return $result;
+			}
 		}
 
 		if (isset($attributes['password']) && !self::isSecurePassword($attributes['password'])) {
@@ -153,6 +177,10 @@ class AdminUser extends Authenticatable
 		} else {
 			if (isset($attributes['password'])) {
 				$user->setPassword($attributes['password']);
+			}
+
+			if ($user->status == UserStatus::BLOCKED && $newStatus == UserStatus::ACTIVE) {
+				$attributes['failed_attempts'] = 0;
 			}
 
 			$user->update($attributes);
@@ -320,5 +348,19 @@ class AdminUser extends Authenticatable
 	public function isRoot(): bool
 	{
 		return $this->level == UserLevel::Admin->value;
+	}
+
+	public function canAuthBeBlocked(): bool
+	{
+		return !$this->isRoot();
+	}
+
+	public function isStatusAvailable(UserStatus $status): bool
+	{
+		if (!$this->canAuthBeBlocked() && $status == UserStatus::BLOCKED) {
+			return false;
+		}
+
+		return true;
 	}
 }

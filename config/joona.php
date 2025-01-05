@@ -27,4 +27,9 @@ return [
 	'js_translations' => [
 
 	],
+
+	// Provides option to block non-admin accounts when invalid password is
+	// entered. The value signifies number of attempts. 0 means that this
+	// option is disabled.
+	'auto_block_user' => 0,
 ];

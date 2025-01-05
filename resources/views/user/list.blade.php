@@ -13,6 +13,7 @@
 					<th>@lang('joona::user.email')</th>
 					<th>@lang('joona::user.first_name')</th>
 					<th>@lang('joona::user.last_name')</th>
+					<th>@lang('joona::user.status')</th>
 					@if ($uses_permissions)
 						<th>@lang('joona::user.groups')</th>
 					@endif
@@ -44,6 +45,10 @@
 						<td>
 							<div class="table__mcaption">@lang('joona::user.last_name')</div>
 							{{$user['last_name']}}
+						</td>
+						<td>
+							<div class="table__mcaption">@lang('joona::user.status')</div>
+							<span class="badge bg-{{$user['status_class']}}">{{$user['status_label']}}</span>
 						</td>
 						@if ($uses_permissions)
 							<td>

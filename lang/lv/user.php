@@ -12,12 +12,17 @@ return [
 	'current_password' => 'Esošā parole',
 	'new_password' => 'Jaunā parole',
 	'level' => 'Līmenis',
+	'status' => 'Statuss',
 	'create_new' => 'Izveidot lietotāju',
 	'create_user_caption' => 'Izveidot lietotāju',
 	'edit_user_caption' => 'Rediģēt lietotāju',
 	'level_names' => [
 		'admin' => 'Administrators',
 		'user' => 'Lietotājs',
+	],
+	'status_names' => [
+		'active' => 'Aktīvs',
+		'blocked' => 'Bloķēts',
 	],
 	'groups' => 'Grupas',
 	'last_seen' => 'Manīts',
@@ -44,6 +49,7 @@ return [
 		'button' => 'Autorizēties',
 		'failed' => 'Nekorekts lietotājvārds vai parole.',
 		'success' => 'Uzgaidiet, notiek autorizācija...',
+		'blocked' => 'Jūsu lietotāja konts ir bloķēts',
 	],
 	'permissions' => [
 		'roles' => 'Lomas',

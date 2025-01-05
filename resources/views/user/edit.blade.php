@@ -26,6 +26,10 @@
 			<div class="block">
 				<x-form-section-heading :label="__('joona::user.edit_user_label_permissions')"/>
 
+				<div class="form-group">
+					<x-select :label="__('joona::user.status')" required="true" name="status" data-role="status-toggle" :options="$statuses" />
+				</div>
+
 				@if ($uses_permissions)
 					<div class="form-group">
 						<x-select :label="__('joona::user.level')" required="true" name="level" data-role="level-toggle" :options="$available_levels" />

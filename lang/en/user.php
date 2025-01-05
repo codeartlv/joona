@@ -12,12 +12,17 @@ return [
 	'current_password' => 'Current password',
 	'new_password' => 'New password',
 	'level' => 'Level',
+	'status' => 'Status',
 	'create_new' => 'Create new user',
 	'create_user_caption' => 'Create user',
 	'edit_user_caption' => 'Edit user',
 	'level_names' => [
 		'admin' => 'Administrator',
 		'user' => 'User',
+	],
+	'status_names' => [
+		'active' => 'Active',
+		'blocked' => 'Blocked',
 	],
 	'groups' => 'Groups',
 	'last_seen' => 'Last seen',
@@ -44,6 +49,7 @@ return [
 		'button' => 'Sign in',
 		'failed' => 'Invalid username or password.',
 		'success' => 'Please wait, logging in...',
+		'blocked' => 'Your account is blocked.',
 	],
 	'permissions' => [
 		'roles' => 'Roles',

@@ -158,6 +158,9 @@ return [
 	'ulid' => 'The :attribute field must be a valid ULID.',
 	'uuid' => 'The :attribute field must be a valid UUID.',
 
+	'enum' => [
+		'invalid' => 'Invalid value',
+	],
 	/*
 	|--------------------------------------------------------------------------
 	| Custom Validation Language Lines

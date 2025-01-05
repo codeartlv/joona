@@ -114,6 +114,9 @@ return [
 	'uploaded'             => ' :attribute netika augšuplādēts.',
 	'url'                  => ' :attribute formāts ir nederīgs.',
 
+	'enum' => [
+		'invalid' => 'Nekorekta vērtība',
+	],
 	/*
 	|--------------------------------------------------------------------------
 	| Custom Validation Language Lines

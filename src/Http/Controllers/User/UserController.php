@@ -18,6 +18,7 @@ use Carbon\CarbonInterval;
 use Codeart\Joona\Auth\Permissions\CustomPermission;
 use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\Enums\UserLevel;
+use Codeart\Joona\Enums\UserStatus;
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Facades\Permission;
 use Codeart\Joona\Models\User\Log\LogEntry;
@@ -82,6 +83,8 @@ class UserController
 		$users = $user_chunk->getCollection()->map(function ($user) use ($admin) {
 			return $user->toArray() + [
 				'can_manage' => $user->canBeManagedBy($admin),
+				'status_label' => $user->status->getLabel(),
+				'status_class' => $user->status->getClass(),
 			];
 		})->toArray();
 
@@ -107,6 +110,7 @@ class UserController
 		$fields = [
 			'id' => 0,
 			'level' => UserLevel::Admin->value,
+			'status' => UserStatus::ACTIVE,
 		];
 
 		$user_roles = [];
@@ -139,6 +143,20 @@ class UserController
 		$levels = array_map(function ($level) use ($fields) {
 			return new Option($level->value, $level->getLabel(), $level->value == $fields['level']);
 		}, $admin->canManageLevels());
+
+		$statuses = array_filter(array_map(function ($status) use ($fields, $user) {
+			// When creating new user, onyl active should be available
+			if (!$user && $status != UserStatus::ACTIVE) {
+				return false;
+			}
+
+			// For existing users, filter out statuses that are not available
+			if ($user && !$user->isStatusAvailable($status)) {
+				return false;
+			}
+
+			return new Option($status->value, $status->getLabel(), $status->value == $fields['status']);
+		}, UserStatus::cases()));
 
 		// Fetch all permissions
 		$permissions = Permission::getPermissions();
@@ -187,6 +205,7 @@ class UserController
 			'roles' => $roles,
 			'user_roles' => $user_roles,
 			'is_root' => $is_root,
+			'statuses' => $statuses,
 			'available_levels' => $levels,
 			'available_roles' => $available_roles,
 			'uses_permissions' => Joona::usesRolesAndPermissions(),
