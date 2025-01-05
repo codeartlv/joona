@@ -90,8 +90,6 @@ abstract class JoonaPanelProvider extends JoonaProvider
 
 		// Add user guard facade
 		$this->app->singleton('joona.auth', fn ($app) => Auth::guard('admin'));
-
-		Config::set('auth.defaults.guard', 'admin');
 	}
 
 	/**

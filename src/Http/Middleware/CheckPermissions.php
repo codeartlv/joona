@@ -3,15 +3,8 @@
 namespace Codeart\Joona\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Route;
-use Codeart\Joona\Facades\AdminAuth;
 use Codeart\Joona\Facades\Auth;
 use Codeart\Joona\Facades\Permission;
-use Codeart\Joona\Models\User\Access\PermissionLoader;
-use Codeart\Joona\Models\User\AdminUser;
 use Illuminate\Support\Facades\Gate;
 
 class CheckPermissions

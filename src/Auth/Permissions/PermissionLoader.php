@@ -51,7 +51,13 @@ class PermissionLoader
 			$keys = $permission->getAccessKeys();
 
 			foreach ($keys as $key) {
-				Gate::define($key, fn($user, ...$args) => $this->validate($user, $permission, $key, $args));
+				Gate::define($key, function($user, ...$args) use ($permission, $key) {
+					if (!$user instanceof AdminUser) {
+						return false;
+					}
+
+					return $this->validate($user, $permission, $key, $args);
+				});
 			}
 		}
 
