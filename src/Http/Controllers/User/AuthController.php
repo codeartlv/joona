@@ -68,6 +68,11 @@ class AuthController
 		$user = AdminUser::where('email', request()->post('email'))->first();
 		$maxLoginAttempts = (int) config('joona.auto_block_user');
 
+		if (!$user) {
+			$form -> setError(__('joona::user.auth.failed'));
+			return response()->json($form);
+		}
+
 		if (
 			$user && //User exists
 			$user->canAuthBeBlocked() && // Can be blocked
