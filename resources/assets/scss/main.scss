@@ -9,6 +9,7 @@
 @import '../node_modules/swiper/swiper';
 @import '../node_modules/swiper/modules/navigation';
 @import '../node_modules/swiper/modules/effect-fade';
+@import '../node_modules/pell/src/pell';
 
 @import 'globals';
 
@@ -40,6 +41,7 @@
 @import 'elements/pagination';
 @import 'elements/table';
 @import 'elements/tabs';
+@import 'elements/text-editor';
 @import 'elements/toast';
 
 @import 'components/autocomplete';
@@ -62,6 +64,7 @@
 
 @import 'vendor/datepicker';
 @import 'vendor/autocomplete';
+@import 'vendor/pell';
 @import 'vendor/swiper';
 
 @import 'theme-light';

@@ -12,7 +12,6 @@ use Codeart\Joona\MetaData\Page;
 use Codeart\Joona\Panel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as ValidatorObject;
@@ -145,6 +144,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'copy' => \Codeart\Joona\View\Components\Copy::class,
 			'chart' => \Codeart\Joona\View\Components\Chart::class,
 			'tree-editor' => \Codeart\Joona\View\Components\TreeEditor::class,
+			'text-editor' => \Codeart\Joona\View\Components\TextEditor::class,
 		];
 
 		foreach ($components as $name => $class) {

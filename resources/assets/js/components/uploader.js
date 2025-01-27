@@ -1,4 +1,3 @@
-import Sortable from 'sortablejs';
 import { addSpinner, removeSpinner, parseJsonLd, parseRoute } from './../helpers';
 
 export default class Uploader {
@@ -62,7 +61,6 @@ export default class Uploader {
 		this.fileSelector.setAttribute('name', '');
 		this.fileSelector.parentNode.insertBefore(this.dataField, this.fileSelector.nextSibling);
 
-		this.initSortable();
 		this.initUploader();
 
 		let images = parseJsonLd(this.element.querySelector('[data-role="data"]'));
@@ -133,60 +131,6 @@ export default class Uploader {
 		this.element.addEventListener('drop', handleDrop);
 
 		this.syncIds();
-	}
-
-	initSortable() {
-		var pid, freezed, positions;
-
-		new Sortable(this.element, {
-			animation: 150,
-			delay: 500,
-			delayOnTouchOnly: true,
-			filter: '.upload-area',
-			preventOnFilter: false,
-			onStart: () => {
-				freezed = [].slice.call(this.element.querySelectorAll('.upload-area'));
-				positions = freezed.map(function (el) {
-					return Sortable.utils.index(el);
-				});
-			},
-			onMove: function (evt) {
-				var vector,
-					freeze = false;
-				clearTimeout(pid);
-
-				pid = setTimeout(function () {
-					var list = evt.to;
-
-					freezed.forEach(function (el, i) {
-						var idx = positions[i];
-
-						if (list.children[idx] !== el) {
-							var realIdx = Sortable.utils.index(el);
-							list.insertBefore(el, list.children[idx + (realIdx < idx)]);
-						}
-					});
-				}, 0);
-
-				freezed.forEach(function (el, i) {
-					if (el === evt.related) {
-						freeze = true;
-					}
-
-					if (
-						evt.related.nextElementSibling === el &&
-						evt.relatedRect.top < evt.draggedRect.top
-					) {
-						vector = -1;
-					}
-				});
-
-				return freeze ? false : vector;
-			},
-			onEnd: () => {
-				this.syncIds();
-			},
-		});
 	}
 
 	getAllowedFileCount() {
