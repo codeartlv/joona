@@ -1,0 +1,21 @@
+.pell {
+	.pell-actionbar {
+		display: flex;
+		align-items: center;
+
+		.pell-button {
+			display: block;
+			height: auto;
+			padding: 0.3625rem 0.3rem 0px 0.3rem;
+			width: auto;
+		}
+	}
+
+	.pell-content {
+		ul {
+			list-style: initial;
+			list-style-position: outside;
+			margin-left: 1.5rem;
+		}
+	}
+}
