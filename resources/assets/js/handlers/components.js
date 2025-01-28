@@ -12,6 +12,7 @@ import CopyText from '../components/copy-text.js';
 import ChartComponent from '../components/chart.js';
 import TreeEditor from '../components/tree-editor.js';
 import TextEditor from '../components/text-editor.js';
+import BulkTableEditor from '../components/bulk-editor.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -64,5 +65,9 @@ export default class Components extends Handler {
 
 	textEditor(el, params) {
 		return new TextEditor(el, params);
+	}
+
+	tableBulkOptions(el, params) {
+		return new BulkTableEditor(el, params);
 	}
 }

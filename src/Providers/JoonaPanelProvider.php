@@ -145,6 +145,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'chart' => \Codeart\Joona\View\Components\Chart::class,
 			'tree-editor' => \Codeart\Joona\View\Components\TreeEditor::class,
 			'text-editor' => \Codeart\Joona\View\Components\TextEditor::class,
+			'table-bulk-options' => \Codeart\Joona\View\Components\TableBulkOptions::class,
 		];
 
 		foreach ($components as $name => $class) {

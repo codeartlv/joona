@@ -129,6 +129,12 @@ table.table {
 					text-align: center;
 				}
 			}
+
+			&.selected {
+				td {
+					background: var(--bs-warning-bg-subtle);
+				}
+			}
 		}
 	}
 

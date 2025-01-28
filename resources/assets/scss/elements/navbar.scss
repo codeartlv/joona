@@ -35,6 +35,10 @@
 		}
 	}
 
+	&.navbar-table-bulk {
+		margin-bottom: $spacer;
+	}
+
 	@include media-breakpoint-down(md) {
 		&.navbar-inline {
 			.navbar-inline__content {
