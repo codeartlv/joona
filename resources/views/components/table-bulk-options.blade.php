@@ -7,9 +7,9 @@
 					@lang('joona::common.with_selected'):
 				</section>
 				<section>
-					<x-select data-role="options" disabled :options="$options" blank="true" size="sm" />
+					<x-select name="action" data-role="options" disabled :options="$options" blank="true" size="sm" />
 				</section>
-				<x-button type="submit" class="btn-sm" data-role="submit" caption="OK" />
+				<x-button type="button" class="btn-sm" data-role="submit" caption="OK" />
 			</div>
 		</form>
 	</div>

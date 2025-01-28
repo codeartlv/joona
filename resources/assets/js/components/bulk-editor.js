@@ -17,6 +17,7 @@ export default class BulkTableEditor {
 			return;
 		}
 
+		this.form = element.querySelector('form');
 		this.submitButton = element.querySelector('[data-role="submit"]');
 		this.optionSelect = element.querySelector('[data-role="options"]');
 		this.toggleCheck = this.table.querySelector('[data-role="toggle-all"]');
@@ -47,6 +48,20 @@ export default class BulkTableEditor {
 		// Event listener for the toggle checkbox
 		this.toggleCheck.addEventListener('change', () => {
 			this.handleToggleChange();
+		});
+
+		this.submitButton.addEventListener('click', () => {
+			let checked = [];
+
+			this.getOptions(true).forEach((checkbox) => {
+				let field = document.createElement('input');
+				field.type = 'hidden';
+				field.name = 'id[]';
+				field.value = checkbox.value;
+				this.form.appendChild(field);
+			});
+
+			this.form.submit();
 		});
 
 		// Initialize the state of the toggle checkbox
