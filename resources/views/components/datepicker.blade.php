@@ -7,3 +7,4 @@
 	<input type="hidden" data-role="value" name="{{$name}}" value="{{$value}}" />
 	<a href="javascript:;" data-role="clear">@icon('clear')</a>
 </div>
+<div data-field="{{$name}}"></div>
