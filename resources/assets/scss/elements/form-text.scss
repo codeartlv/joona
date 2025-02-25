@@ -1,10 +1,11 @@
 .form-text {
 	font-size: 0.75rem;
-	line-height: 1;
+	line-height: 1.25;
 	display: block;
 	margin: 0;
 }
 
+.form-multiselect ~ .form-text,
 .password-validator ~ .form-text,
 .input-group ~ .form-text,
 .form-control ~ .form-text {
