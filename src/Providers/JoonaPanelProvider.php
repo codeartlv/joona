@@ -147,6 +147,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'text-editor' => \Codeart\Joona\View\Components\TextEditor::class,
 			'table-bulk-options' => \Codeart\Joona\View\Components\TableBulkOptions::class,
 			'checkbox-group' => \Codeart\Joona\View\Components\CheckboxGroup::class,
+			'page-footer-bar' => \Codeart\Joona\View\Components\PageFooterBar::class,
 		];
 
 		foreach ($components as $name => $class) {

@@ -46,6 +46,14 @@
 			z-index: 1;
 			background: var(--bs-body-bg);
 
+			.list-group {
+				border-radius: 0;
+
+				.list-group-item {
+					border-radius: 0;
+				}
+			}
+
 			.content__sidebar-inner {
 				padding-bottom: $spacer;
 			}
