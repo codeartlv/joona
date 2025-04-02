@@ -239,22 +239,24 @@ export default class Uploader {
 
 	deleteFile(id, thumbnail) {
 		if (id) {
-			let url = parseRoute(this.params.deleteroute);
+			if (this.params.deleteroute.length > 0) {
+				let url = parseRoute(this.params.deleteroute);
 
-			let csrfToken = document
-				.querySelector('meta[name="csrf-token"]')
-				.getAttribute('content');
+				let csrfToken = document
+					.querySelector('meta[name="csrf-token"]')
+					.getAttribute('content');
 
-			fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-CSRF-TOKEN': csrfToken,
-				},
-				body: JSON.stringify({
-					id: id,
-				}),
-			});
+				fetch(url, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-CSRF-TOKEN': csrfToken,
+					},
+					body: JSON.stringify({
+						id: id,
+					}),
+				});
+			}
 		}
 
 		this.uploadCounter--;
