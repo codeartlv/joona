@@ -2,18 +2,21 @@
 
 namespace Codeart\Joona\Auth\Permissions;
 
+use Codeart\Joona\Contracts\PermissionLoaderInterface;
 use Codeart\Joona\Enums\UserLevel;
 use Codeart\Joona\Facades\Joona;
 use Illuminate\Support\Facades\Gate;
 use Codeart\Joona\Models\User\AdminUser;
 use InvalidArgumentException;
+use ValueError;
+use TypeError;
 
 /**
  * Provides permission management and checking
  *
  * @package Codeart\Joona\Auth\Permissions
  */
-class PermissionLoader
+class PermissionLoader implements PermissionLoaderInterface
 {
 	/**
 	 * List of permissions
@@ -102,16 +105,15 @@ class PermissionLoader
 	}
 
 	/**
-	 * Validates permission against the user
-	 *
-	 * @param AdminUser $user
-	 * @param Permission $permission
-	 * @param string $key
-	 * @param mixed $args
-	 * @return bool
-	 * @throws InvalidArgumentException
+	 * Shortcut to validate super user permissions
+	 * 
+	 * @param Codeart\Joona\Auth\Permissions\Admin $user 
+	 * @param Permission $permission 
+	 * @return bool 
+	 * @throws ValueError 
+	 * @throws TypeError 
 	 */
-	public function validate(AdminUser $user, Permission $permission, string $key, ...$args): bool
+	protected function validatesAsSuperUser(AdminUser $user, Permission $permission): bool
 	{
 		// Is functionality enabled globally
 		if (!Joona::usesRolesAndPermissions()) {
@@ -126,6 +128,25 @@ class PermissionLoader
 		// Elevated permissions require superuser
 		if ($permission->isElevated() && UserLevel::from($user->level) != UserLevel::Admin) {
 			return false;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Validates permission against the user
+	 *
+	 * @param AdminUser $user
+	 * @param Permission $permission
+	 * @param string $key
+	 * @param mixed $args
+	 * @return bool
+	 * @throws InvalidArgumentException
+	 */
+	public function validate(AdminUser $user, Permission $permission, string $key, ...$args): bool
+	{
+		if ($this->validatesAsSuperUser($user, $permission)) {
+			return true;
 		}
 
 		// If permission has callback, let it decide

@@ -7,9 +7,11 @@ use Codeart\Joona\Auth\AdminUserProvider;
 use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\Auth\Permissions\RoutePermission;
 use Codeart\Joona\Auth\Permissions\PermissionLoader;
+use Codeart\Joona\Contracts\PermissionLoaderInterface;
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\MetaData\Page;
 use Codeart\Joona\Panel;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
@@ -319,7 +321,15 @@ abstract class JoonaPanelProvider extends JoonaProvider
 		]);
 
 		$this->app->singleton('joona.permission-loader', function () use ($panel) {
-			return new PermissionLoader($panel->getPermissions());
+
+			$className = $panel->getPermissionLoader() ?? 'PermissionLoader';
+			$instance = new $className($panel->getPermissions());
+
+			if (!$instance instanceof PermissionLoaderInterface) {
+				throw new Exception('PermissionLoader must implement PermissionLoaderInterface interface');
+			}
+
+			return $instance;
 		});
 	}
 

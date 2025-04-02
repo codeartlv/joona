@@ -200,6 +200,14 @@ class UserController
 			]);
 		}
 
+		if (!$is_root) {
+			foreach ($roles as $i => $role) {
+				if (!in_array($role['id'], $available_roles)) {
+					unset($roles[$i]);
+				}
+			}
+		}
+
 		return view('joona::user.edit', [
 			'fields' => $fields,
 			'roles' => $roles,
@@ -286,7 +294,7 @@ class UserController
 		}
 
 		if (UserLevel::from($admin->level) != UserLevel::Admin) {
-			$level = UserLevel::User;
+			$level = UserLevel::User->value;
 		}
 
 		$fields = [

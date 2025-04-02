@@ -17,6 +17,11 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
 
+/**
+ * @property string $class
+ * 
+ * @package Codeart\Joona\Models\User
+ */
 class AdminUser extends Authenticatable
 {
 	use SoftDeletes;

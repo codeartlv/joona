@@ -96,6 +96,31 @@ class Panel
 		'free' => null,
 	];
 
+	private ?string $permissionLoader = null;
+
+	/**
+	 * Get permission loader class
+	 * 
+	 * @return null|string 
+	 */
+	public function getPermissionLoader(): ?string
+	{
+		return $this->permissionLoader;
+	}
+
+	/**
+	 * Set custom permission loader class
+	 * 
+	 * @param string $className 
+	 * @return void 
+	 */
+	public function setPermissionLoader(string $className): self
+	{
+		$this->permissionLoader = $className;
+
+		return $this;
+	}
+
 	/**
 	 * Add custom routes
 	 *
