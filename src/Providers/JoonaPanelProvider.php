@@ -322,7 +322,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 
 		$this->app->singleton('joona.permission-loader', function () use ($panel) {
 
-			$className = $panel->getPermissionLoader() ?? 'PermissionLoader';
+			$className = $panel->getPermissionLoader() ?? '\Codeart\Joona\Auth\Permissions\PermissionLoader';
 			$instance = new $className($panel->getPermissions());
 
 			if (!$instance instanceof PermissionLoaderInterface) {
