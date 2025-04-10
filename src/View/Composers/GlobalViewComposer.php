@@ -20,6 +20,7 @@ class GlobalViewComposer
 			'name' => $currentUser ? $currentUser->first_name.' '.$currentUser->last_name : '',
 			'logo' => Joona::getLogo('light'),
 			'logo_dark' => Joona::getLogo('dark'),
+			'icon' => Joona::getIcon(),
 			'menu' => Joona::getNavigation(),
 			'translations' => Joona::getJavascriptTranslations(),
 		]);

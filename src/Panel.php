@@ -10,7 +10,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use InvalidArgumentException;
-use PDO;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
 
@@ -64,6 +63,13 @@ class Panel
 	 * @var string
 	 */
 	private ?string $appLogoDark = '/vendor/joona/images/example_logo.png';
+
+	/**
+	 * Sidebar icon
+	 *
+	 * @var string
+	 */
+	private ?string $icon = null;
 
 	/**
 	 * Panel pages
@@ -306,12 +312,15 @@ class Panel
 	 * Set custom logo to be used within the admin panel
 	 *
 	 * @param string $light URL to logo image file
+	 * @param string $dark URL to dark logo image file
+	 * @param string $icon URL to icon
 	 * @return Panel
 	 */
-	public function setLogo(string $light, ?string $dark = null): self
+	public function setLogo(string $light, ?string $dark = null, ?string $icon = null): self
 	{
 		$this->appLogo = $light;
 		$this->appLogoDark = $dark;
+		$this->icon = $icon;
 
 		return $this;
 	}
@@ -330,6 +339,16 @@ class Panel
 		}
 
 		return $this->$key;
+	}
+
+	/**
+	 * Return icon
+	 * 
+	 * @return string 
+	 */
+	public function getIcon(): string
+	{
+		return $this->icon ?? $this->getLogo('dark');
 	}
 
 	/**

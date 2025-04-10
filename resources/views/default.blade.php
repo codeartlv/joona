@@ -4,7 +4,7 @@
 	<main class="layout layout-default">
 		<aside class="main-menu" data-bs-theme="dark">
 			<div class="main-menu__logo">
-				<img src="{{$logo_dark}}" />
+				<img src="{{$icon}}" />
 				<span>
 					{{ config('app.name', 'Laravel') }}
 					<small>@lang('joona::common.admin_caption')</small>

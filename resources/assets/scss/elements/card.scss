@@ -73,6 +73,10 @@
 			.card-auth__logo {
 				display: block;
 				width: 100%;
+
+				.card-auth__logo-dark {
+					display: none;
+				}
 			}
 		}
 

@@ -58,6 +58,18 @@
 				}
 			}
 		}
+
+		&.card-auth {
+			.card-auth__logo {
+				.card-auth__logo-light {
+					display: none;
+				}
+
+				.card-auth__logo-dark {
+					display: block;
+				}
+			}
+		}
 	}
 
 	.btn-primary {
