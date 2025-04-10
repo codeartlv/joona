@@ -426,21 +426,28 @@ export default class Uploader {
 		ajax.addEventListener('load', () => {
 			progress.style.width = '100%';
 
-			var response = JSON.parse(ajax.responseText);
+			if (ajax.status >= 200 && ajax.status < 300) {
+				var response = JSON.parse(ajax.responseText);
 
-			thumbnail.classList.add('completed');
-			removeSpinner(thumbnail);
+				thumbnail.classList.add('completed');
+				removeSpinner(thumbnail);
 
-			if (response.error) {
-				thumbnail.classList.add('error');
-			} else {
-				thumbnail.classList.add('success');
+				if (response.error) {
+					thumbnail.classList.add('error');
+				} else {
+					thumbnail.classList.add('success');
+				}
+
+				this.updateThumbnail(thumbnail, response);
+
+				this.onComplete();
+				this.syncIds();
+				return;
 			}
 
-			this.updateThumbnail(thumbnail, response);
-
-			this.onComplete();
-			this.syncIds();
+			thumbnail.classList.add('completed');
+			thumbnail.classList.add('error');
+			thumbnail.querySelector('[data-role="message"]').innerText = ajax.statusText;
 		});
 
 		ajax.addEventListener('error', (e) => {
