@@ -28,6 +28,18 @@
 				}
 			}
 		}
+
+		tbody {
+			tr {
+				td {
+					&.table__sort {
+						i {
+							color: var(--bs-gray-400);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	.dropdown-menu {

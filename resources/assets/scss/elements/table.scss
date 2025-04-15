@@ -84,8 +84,11 @@ table.table {
 				}
 
 				&.table__sort {
-					* {
+					i {
+						color: var(--bs-gray-700);
 						cursor: move;
+						position: relative;
+						top: 0.1875rem;
 					}
 				}
 
