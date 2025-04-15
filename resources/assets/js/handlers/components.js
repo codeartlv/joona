@@ -13,6 +13,7 @@ import ChartComponent from '../components/chart.js';
 import TreeEditor from '../components/tree-editor.js';
 import TextEditor from '../components/text-editor.js';
 import BulkTableEditor from '../components/bulk-editor.js';
+import Table from '../components/table.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -69,5 +70,9 @@ export default class Components extends Handler {
 
 	tableBulkOptions(el, params) {
 		return new BulkTableEditor(el, params);
+	}
+
+	table(el, params) {
+		return new Table(el, params);
 	}
 }

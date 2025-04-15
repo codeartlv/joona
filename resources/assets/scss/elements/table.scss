@@ -76,10 +76,17 @@ table.table {
 	tbody {
 		tr {
 			td {
+				&.table__sort,
 				&.table__id {
 					width: 1px;
 					white-space: nowrap;
 					color: var(--bs-gray-600);
+				}
+
+				&.table__sort {
+					* {
+						cursor: move;
+					}
 				}
 
 				&.table__options {
