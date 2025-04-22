@@ -5,6 +5,7 @@ return [
 	'change_password' => 'Change password',
 	'first_name' => 'First name',
 	'last_name' => 'Last name',
+	'class' => 'Class',
 	'email' => 'E-mail',
 	'my_profile_titlebar' => 'My profile',
 	'profile_saved' => 'Profile information saved.',
@@ -84,4 +85,5 @@ return [
 	'permission_manage_admin_users' => 'Manage admin users',
 	'permission_view_admin_users' => 'View admin users',
 	'edit_user_custom_permissions' => 'Custom permissions',
+	'class_not_found' => 'User class not found',
 ];

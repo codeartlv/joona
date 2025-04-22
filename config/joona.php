@@ -32,4 +32,8 @@ return [
 	// entered. The value signifies number of attempts. 0 means that this
 	// option is disabled.
 	'auto_block_user' => 0,
+
+	// Defines how user classes and roles are handled.
+	// For the value of 'interchangeable', only one of the two can be set.
+	'class_role_mode' => 'interchangeable',
 ];

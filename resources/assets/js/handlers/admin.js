@@ -60,7 +60,15 @@ export default class Admin extends Handler {
 		});
 	}
 
-	userEditForm(el) {
+	userEditForm(el, parameters) {
+		parameters = {
+			classmode: null,
+			...parameters,
+		};
+
+		let classDropdown = el.querySelector('[data-role="class"]');
+		let levelDropdown = el.querySelector('[data-role="level-toggle"]');
+
 		// Password toggle
 		let choosePasswordSetup = (method) => {
 			const passwordInput = el.querySelector('[data-role="password-input"]');
@@ -97,7 +105,40 @@ export default class Admin extends Handler {
 			);
 		};
 
-		let levelDropdown = el.querySelector('[data-role="level-toggle"]');
+		// Class toggle
+		let selectClass = (className) => {
+			if (parameters.classmode != 'interchangeable') {
+				return;
+			}
+
+			let rolesBlock = el.querySelector('[data-role="roles"]');
+
+			rolesBlock.classList.toggle('d-none', className.length != 0);
+		};
+
+		// Roles checkboxes
+		let roles = el.querySelectorAll('[data-role="role-value"]');
+
+		roles.forEach((role) => {
+			if (parameters.classmode != 'interchangeable') {
+				return;
+			}
+
+			if (!classDropdown) {
+				return;
+			}
+
+			role.addEventListener('click', () => {
+				let checkedLength = el.querySelectorAll('[data-role="role-value"]:checked').length;
+
+				if (checkedLength > 0) {
+					classDropdown.value = '';
+					classDropdown.disabled = true;
+				} else {
+					classDropdown.disabled = false;
+				}
+			});
+		});
 
 		if (levelDropdown) {
 			levelDropdown.addEventListener('change', (event) => {
@@ -105,6 +146,14 @@ export default class Admin extends Handler {
 			});
 
 			selectLevel(levelDropdown.value);
+		}
+
+		if (classDropdown) {
+			classDropdown.addEventListener('change', (event) => {
+				selectClass(classDropdown.value);
+			});
+
+			selectClass(classDropdown.value);
 		}
 	}
 

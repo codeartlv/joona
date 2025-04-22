@@ -1,7 +1,7 @@
 <x-form action="{{route('joona.user.save')}}">
 	<input type="hidden" name="id" value="{{$fields['id']}}" />
 	<x-dialog :caption="__($fields['id'] ? 'joona::user.edit_user_caption' : 'joona::user.create_user_caption')">
-		<div data-bind="admin.userEditForm">
+		<div data-bind="admin.userEditForm" data-classMode="{{$classMode}}">
 			<div class="block">
 				<x-form-section-heading :label="__('joona::user.edit_user_label_basic_data')"/>
 
@@ -36,11 +36,17 @@
 					</div>
 				@endif
 
-				<div class="form-group d-none" data-toggle="level" data-level="user">
+				@if (!empty($classes))
+					<div class="form-group d-none" data-toggle="level" data-level="user">
+						<x-select :label="__('joona::user.class')" name="class" :options="$classes" :blank="true" data-role="class" />
+					</div>
+				@endif
+
+				<div class="form-group d-none" data-role="roles" data-toggle="level" data-level="user">
 					<label class="form-label">@lang('joona::user.permissions.user_roles')</label>
 					@if (!empty($roles))
 						@foreach ($roles as $role)
-							<x-checkbox type="checkbox" :value="$role['id']" :checked="in_array($role['id'], $user_roles)" name="roles[]" :label="$role['title']"  />
+							<x-checkbox data-role="role-value" type="checkbox" :value="$role['id']" :checked="in_array($role['id'], $user_roles)" name="roles[]" :label="$role['title']"  />
 						@endforeach
 					@else
 						<x-alert role="info">{{__('joona::user.no_roles_created_to_assign')}}</x-alert>

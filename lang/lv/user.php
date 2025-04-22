@@ -5,6 +5,7 @@ return [
 	'change_password' => 'Mainīt paroli',
 	'first_name' => 'Vārds',
 	'last_name' => 'Uzvārds',
+	'class' => 'Klase',
 	'email' => 'E-pasts',
 	'my_profile_titlebar' => 'Mans profils',
 	'profile_saved' => 'Profils veiksmīgi saglabāts.',
@@ -84,4 +85,5 @@ return [
 	'permission_manage_admin_users' => 'Pārvaldīt administrācijas lietotājus',
 	'permission_view_admin_users' => 'Skatīt administrācijas lietotāju sarakstu',
 	'edit_user_custom_permissions' => 'Papildus tiesības',
+	'class_not_found' => 'Šāda lietotāja klase nav atrasta.',
 ];

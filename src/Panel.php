@@ -105,6 +105,12 @@ class Panel
 	private ?string $permissionLoader = null;
 
 	/**
+	 * Add additional user levels
+	 * @var string[]
+	 */
+	protected array $userClasses = [];
+
+	/**
 	 * Get permission loader class
 	 * 
 	 * @return null|string 
@@ -149,6 +155,29 @@ class Panel
 
 		return $this;
     }
+
+	/**
+	 * Add additional user levels
+	 * 
+	 * @param string[] $levels 
+	 * @return Panel 
+	 */
+	public function addUserClasses(array $levels): self
+	{
+		$this->userClasses = $levels;
+
+		return $this;
+	}
+
+	/**
+	 * Returns additional user levels
+	 * 
+	 * @return string[] 
+	 */
+	public function getUserClasses(): array
+	{
+		return $this->userClasses;
+	}
 
 	/**
 	 * Return custom routes

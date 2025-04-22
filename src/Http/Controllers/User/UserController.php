@@ -110,6 +110,7 @@ class UserController
 		$fields = [
 			'id' => 0,
 			'level' => UserLevel::Admin->value,
+			'class' => '',
 			'status' => UserStatus::ACTIVE,
 		];
 
@@ -208,15 +209,23 @@ class UserController
 			}
 		}
 
+		$classes = array_map(function($className) use ($fields){
+			return new Option($className, __('joona::user.class_'.$className), $className == $fields['class']);
+		}, Joona::getUserClasses());
+
+		$classMode = config('joona.class_role_mode', 'interchangeable');
+		
 		return view('joona::user.edit', [
 			'fields' => $fields,
 			'roles' => $roles,
+			'classes' => $classes,
 			'user_roles' => $user_roles,
 			'is_root' => $is_root,
 			'statuses' => $statuses,
 			'available_levels' => $levels,
 			'available_roles' => $available_roles,
 			'uses_permissions' => Joona::usesRolesAndPermissions(),
+			'classMode' => $classMode,
 			'customPermissions' => $customPermissions,
 		]);
 	}
@@ -260,14 +269,21 @@ class UserController
 		$roles = (array) $request->post('roles');
 
 		$level = $request->post('level');
+		$class = $request->post('class');
 		$password_setup = $request->post('password_setup');
 		$user_id = $request->post('id');
 		$available_roles = $admin->canManageRoles();
 		$permissions = (array) $request->post('permissions');
 		$isCreateNew = (bool) !$user_id;
 
+		$classMode = config('joona.class_role_mode', 'interchangeable');
+
 		if (!Joona::usesRolesAndPermissions()) {
 			$level = UserLevel::Admin->value;
+		}
+		
+		if ($classMode == 'interchangeable' && $class) {
+			$roles = [];
 		}
 
 		$roles = array_intersect($roles, $available_roles);
@@ -297,11 +313,17 @@ class UserController
 			$level = UserLevel::User->value;
 		}
 
+		if ($class && !in_array($class, Joona::getUserClasses())) {
+			$form->setError(__('joona::user.class_not_found'), 'class');
+			return response()->json($form);
+		}
+
 		$fields = [
 			'first_name' => $request->post('first_name'),
 			'last_name' => $request->post('last_name'),
 			'email' => $request->post('email'),
 			'level' => $level,
+			'class' => $class,
 			'status' => $request->post('status'),
 		];
 
