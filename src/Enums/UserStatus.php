@@ -11,6 +11,7 @@ enum UserStatus: string implements HasLabel
 {
 	case ACTIVE = 'active';
 	case BLOCKED = 'blocked';
+	case PENDING = 'pending';
 
 	public function getLabel(): string
 	{
@@ -22,6 +23,7 @@ enum UserStatus: string implements HasLabel
 		return match ($this) {
 			self::ACTIVE => 'success',
 			self::BLOCKED => 'danger',
+			self::PENDING => 'warning',
 		};
 	}
 }

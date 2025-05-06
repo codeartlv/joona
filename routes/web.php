@@ -29,6 +29,10 @@ Route::name('joona.')->group(function () {
 	Route::get('/set-locale/{locale}', [MiscController::class, 'setLocale'])->name('set-locale');
 	Route::post('/set-theme/{mode}', [MiscController::class, 'setTheme'])->name('set-theme');
 
+	// Invite routes
+	Route::get('/invite/{hash}', [AuthController::class, 'inviteForm'])->name('user.invite');
+	Route::post('/invite', [AuthController::class, 'inviteProcess'])->name('user.invite-process');
+
 	/**
 	 * Secured routes
 	 */

@@ -33,6 +33,7 @@
 	&.layout-blank {
 		width: 100%;
 		display: flex;
+		padding: $spacer 0;
 
 		> figure {
 			flex: 0 0 50%;

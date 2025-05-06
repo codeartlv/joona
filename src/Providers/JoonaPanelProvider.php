@@ -106,7 +106,9 @@ abstract class JoonaPanelProvider extends JoonaProvider
 		View::composer([
 			'joona::global',
 			'joona::default',
-			'joona::user.auth-form'
+			'joona::error',
+			'joona::user.auth-form',
+			'joona::user.invite-form',
 		], \Codeart\Joona\View\Composers\GlobalViewComposer::class);
 
 		// Blade helpers

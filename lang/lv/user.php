@@ -24,6 +24,7 @@ return [
 	'status_names' => [
 		'active' => 'Aktīvs',
 		'blocked' => 'Bloķēts',
+		'pending' => 'Neaktīvs',
 	],
 	'groups' => 'Grupas',
 	'last_seen' => 'Manīts',
@@ -34,6 +35,7 @@ return [
 	'user_not_found' => 'Lietotāja konts nav atrasts.',
 	'mail_subject_new_password' => 'Jūsu kontam iestatīta parole',
 	'mail_subject_new_user' => 'Jums izveidots jauns konts',
+	'mail_subject_invite' => 'Uzaicinājums izveidot lietotāja kontu',
 	'edit_user_label_basic_data' => 'Pamatdati',
 	'edit_user_label_permissions' => 'Tiesības',
 	'edit_user_label_password' => 'Parole',
@@ -51,6 +53,11 @@ return [
 		'failed' => 'Nekorekts lietotājvārds vai parole.',
 		'success' => 'Uzgaidiet, notiek autorizācija...',
 		'blocked' => 'Jūsu lietotāja konts ir bloķēts',
+		'pending' => 'Jūsu lietotāja konts nav aktivizēts',
+	],
+	'invite' => [
+		'caption' => 'Reģistrācija sistēmā',
+		'register' => 'Reģistrēties',
 	],
 	'permissions' => [
 		'roles' => 'Lomas',
@@ -86,4 +93,5 @@ return [
 	'permission_view_admin_users' => 'Skatīt administrācijas lietotāju sarakstu',
 	'edit_user_custom_permissions' => 'Papildus tiesības',
 	'class_not_found' => 'Šāda lietotāja klase nav atrasta.',
+	'invite_link_invalid' => 'Šī ielūguma saite nav derīga. Pārliecinieties, ka atvērāt saiti kā norādīts epastā, vai arī Jūsu lietotāja profils jau ir aktivizēts.',
 ];

@@ -24,6 +24,7 @@ return [
 	'status_names' => [
 		'active' => 'Active',
 		'blocked' => 'Blocked',
+		'pending' => 'Pending',
 	],
 	'groups' => 'Groups',
 	'last_seen' => 'Last seen',
@@ -34,6 +35,7 @@ return [
 	'user_not_found' => 'User not found.',
 	'mail_subject_new_password' => 'A password has been set for you account',
 	'mail_subject_new_user' => 'An account is created for you',
+	'mail_subject_invite' => 'You are invited to create account',
 	'edit_user_label_basic_data' => 'Basic data',
 	'edit_user_label_permissions' => 'Permissions',
 	'edit_user_label_password' => 'Password',
@@ -51,6 +53,11 @@ return [
 		'failed' => 'Invalid username or password.',
 		'success' => 'Please wait, logging in...',
 		'blocked' => 'Your account is blocked.',
+		'pending' => 'Your account is not active.',
+	],
+	'invite' => [
+		'caption' => 'Signing up',
+		'register' => 'Sign up',
 	],
 	'permissions' => [
 		'roles' => 'Roles',
@@ -86,4 +93,5 @@ return [
 	'permission_view_admin_users' => 'View admin users',
 	'edit_user_custom_permissions' => 'Custom permissions',
 	'class_not_found' => 'User class not found',
+	'invite_link_invalid' => 'This invitation link is not valid. Ensure that you copied and opened link exactly like in invitation email. Other reason might be that your account is already activated.',
 ];

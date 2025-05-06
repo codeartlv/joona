@@ -37,6 +37,15 @@
 		}
 	}
 
+	&.card-error {
+		flex: 0 1 30rem;
+
+		.card-header {
+			background: var(--bs-danger);
+			color: var(--bs-gray-100);
+		}
+	}
+
 	&.card-auth {
 		flex: 0 1 25rem;
 		padding: $spacer * 2;

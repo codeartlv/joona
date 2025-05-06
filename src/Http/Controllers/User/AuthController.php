@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Codeart\Joona\View\Components\Form\FormResponse;
 use Codeart\Joona\Facades\Auth;
+use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Models\User\AdminUser;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController
 {
@@ -24,11 +27,81 @@ class AuthController
 	}
 
 	/**
+	 * Displays user invitation form.
+	 *
+	 * @return \Illuminate\View\View The view instance for the invite form.
+	 */
+	public function inviteForm(string $hash)
+	{
+		$user = AdminUser::where([
+			'hash' => $hash,
+			'status' => UserStatus::PENDING,
+		])->first();
+
+		if (!$user) {
+			return view('joona::error', [
+				'message' => __('joona::user.invite_link_invalid'),
+			]);
+		}
+
+		return view('joona::user.invite-form', [
+			'hash' => $hash,
+			'user_email' => $user->email,
+		]);
+	}
+
+	/**
+	 * Handles the user registration process by invite.
+	 *
+	 * @param \Illuminate\Http\Request $request The incoming request instance.
+	 * @return \Illuminate\Http\JsonResponse The response object containing the authorization result.
+	 */
+	public function inviteProcess(Request $request): JsonResponse
+	{
+		$form = new FormResponse();
+		$hash = (string) $request->post('hash');
+
+		$user = AdminUser::where([
+			'hash' => $hash,
+			'status' => UserStatus::PENDING,
+		])->first();
+
+		if (!$user) {
+			$form->setError(__('joona::user.invite_link_invalid'));
+			return response()->json($form);
+		}
+
+		$fields = [
+			'first_name' => $request->post('first_name'),
+			'last_name' => $request->post('last_name'),
+			'password' => $request->post('password'),
+		];
+
+		AdminUser::createOrUpdate($fields, $user, $form);
+
+		if (!$form->hasError()) {
+			$form->setSuccess(__('joona::user.profile_saved'));
+			$form->setAction('reset', true);
+			$form->setAction('close_popup', true);
+			$form->setAction('redirect', Joona::getBasePath());
+
+			$user->update([
+				'hash' => null,
+				'status' => UserStatus::ACTIVE,
+			]);
+
+			Auth::login($user);
+		}
+
+		return response()->json($form);
+	}
+
+	/**
 	 * Processes the user logout.
 	 *
 	 * @return \Illuminate\Http\RedirectResponse Redirects to the user login route.
 	 */
-	public function logoutProcess()
+	public function logoutProcess(): RedirectResponse
 	{
 		Auth::logout();
 
@@ -47,7 +120,7 @@ class AuthController
 	 * @param \Illuminate\Http\Request $request The incoming request instance.
 	 * @return \Illuminate\Http\JsonResponse The response object containing the authorization result.
 	 */
-	public function authProcess(Request $request)
+	public function authProcess(Request $request): JsonResponse
 	{
 		$form = new FormResponse();
 
@@ -87,6 +160,11 @@ class AuthController
 
 		if ($user->status == UserStatus::BLOCKED) {
 			$form -> setError(__('joona::user.auth.blocked'));
+			return response()->json($form);
+		}
+
+		if ($user->status == UserStatus::PENDING) {
+			$form -> setError(__('joona::user.auth.pending'));
 			return response()->json($form);
 		}
 

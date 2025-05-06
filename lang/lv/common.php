@@ -35,4 +35,6 @@ return [
 	'delete_node_confirm' => 'Vai tiešām vēlaties dzēst šo ierakstu?',
 	'toggle_all' => 'Atzīmēt/noņemt visus',
 	'with_selected' => 'Ar iezīmēto',
+	'error' => 'Notikusi kļūda',
+	'go_home' => 'Atgriezties uz sākumu',
 ];

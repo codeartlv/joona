@@ -35,4 +35,6 @@ return [
 	'delete_node_confirm' => 'Really delete this record?',
 	'toggle_all' => 'Toggle all',
 	'with_selected' => 'With selected',
+	'error' => 'Error encountered',
+	'go_home' => 'Go home',
 ];

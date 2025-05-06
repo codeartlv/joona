@@ -5,6 +5,7 @@ namespace Codeart\Joona\Models\User;
 use Codeart\Joona\Contracts\Result;
 use Codeart\Joona\Enums\UserLevel;
 use Codeart\Joona\Enums\UserStatus;
+use Codeart\Joona\Mail\UserInvite;
 use Codeart\Joona\Models\User\Access\CustomPermission;
 use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\Models\User\Log\LogEvent;
@@ -13,9 +14,11 @@ use Codeart\Joona\Models\User\Access\UserRole;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
+use Illuminate\Support\Str;
 
 /**
  * @property string $class
@@ -47,6 +50,7 @@ class AdminUser extends Authenticatable
 		'class',
 		'status',
 		'failed_attempts',
+		'hash',
 		'logged_at',
 		'logged_ip',
 	];
@@ -193,6 +197,18 @@ class AdminUser extends Authenticatable
 
 		$result->addData('user', $user);
 		return $result;
+	}
+
+	public function sendInvite(): void
+	{
+		if ($this->status != UserStatus::PENDING) {
+			return;
+		}
+
+		$this->hash = Str::random(65);
+		$this->save();
+
+		Mail::to($this)->send(new UserInvite($this, $this->hash));
 	}
 
 	public function roles()
