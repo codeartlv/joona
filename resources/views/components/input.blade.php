@@ -5,7 +5,7 @@
 @if ($iconPrepend || $textPrepend || $iconAppend || $textAppend)
 	<div class="input-group">
 		@if ($iconPrepend || $textPrepend)
-			<span class="input-group-text">
+			<span class="input-group-text {{ $iconPrepend ? 'as-icon':''}} ">
 				@if ($iconPrepend)
 					@icon($iconPrepend)
 				@else
@@ -15,7 +15,7 @@
 		@endif
 		<input class="form-control form-control-{{ $size }}" name="{{ $name }}" {{ $attributes }} value="{{ $value }}" />
 		@if ($iconAppend || $textAppend)
-			<span class="input-group-text">
+			<span class="input-group-text {{ $iconPrepend ? 'as-icon':''}} ">
 				@if ($iconAppend)
 					@icon($iconAppend)
 				@else

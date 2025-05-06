@@ -2,8 +2,12 @@
 	.input-group-text {
 		background: var(--bs-input-bg);
 		transition: $input-transition;
-		width: 2.575rem;
-		color: var(--bs-border-color);
+		color: var(--bs-gray-600);
+
+		&.as-icon {
+			width: 2.975rem;
+			color: var(--bs-border-color);
+		}
 	}
 
 	.input-group-text {
