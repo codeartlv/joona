@@ -37,4 +37,7 @@ return [
 	'with_selected' => 'Ar iezīmēto',
 	'error' => 'Notikusi kļūda',
 	'go_home' => 'Atgriezties uz sākumu',
+	'email_required' => 'Epasts ir obligāti jāievada.',
+	'email_invalid' => 'Nekorekta epasta adrese',
+	'data_saved' => 'Dati saglabāti.',
 ];

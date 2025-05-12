@@ -33,6 +33,12 @@ Route::name('joona.')->group(function () {
 	Route::get('/invite/{hash}', [AuthController::class, 'inviteForm'])->name('user.invite');
 	Route::post('/invite', [AuthController::class, 'inviteProcess'])->name('user.invite-process');
 
+	// Forgot password
+	Route::get('/recover', [AuthController::class, 'recoverForm'])->name('user.recover-form');
+	Route::post('/recover', [AuthController::class, 'recoverStart'])->name('user.recover-start');
+	Route::get('/recover/set', [AuthController::class, 'recoverSetForm'])->name('user.recover-set');
+	Route::post('/recover/set', [AuthController::class, 'recoverFinish'])->name('user.recover-finish');
+
 	/**
 	 * Secured routes
 	 */

@@ -37,4 +37,7 @@ return [
 	'with_selected' => 'With selected',
 	'error' => 'Error encountered',
 	'go_home' => 'Go home',
+	'email_required' => 'Email is required.',
+	'email_invalid' => 'Email is invalid',
+	'data_saved' => 'Data saved.',
 ];

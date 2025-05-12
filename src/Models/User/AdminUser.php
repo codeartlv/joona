@@ -11,8 +11,10 @@ use Codeart\Joona\Models\User\Log\LogEntry;
 use Codeart\Joona\Models\User\Log\LogEvent;
 use Codeart\Joona\Models\User\Access\Role;
 use Codeart\Joona\Models\User\Access\UserRole;
+use Codeart\Joona\Notifications\AdminResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
@@ -27,7 +29,7 @@ use Illuminate\Support\Str;
  */
 class AdminUser extends Authenticatable
 {
-	use SoftDeletes;
+	use SoftDeletes, Notifiable;
 
 	/**
 	 * Models associated table
@@ -383,5 +385,10 @@ class AdminUser extends Authenticatable
 		}
 
 		return true;
+	}
+
+	public function sendPasswordResetNotification($token): void
+	{
+    	$this->notify(new AdminResetPassword($this, $token));
 	}
 }

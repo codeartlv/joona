@@ -4,13 +4,16 @@ namespace Codeart\Joona\Http\Controllers\User;
 
 use Codeart\Joona\Enums\UserStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Session;
 use Codeart\Joona\View\Components\Form\FormResponse;
 use Codeart\Joona\Facades\Auth;
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Models\User\AdminUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AuthController
 {
@@ -51,10 +54,145 @@ class AuthController
 	}
 
 	/**
+	 * Displays password recover form
+	 *
+	 * @return \Illuminate\View\View The view instance for the invite form.
+	 */
+	public function recoverForm(): View
+	{
+		return view('joona::user.recover-form', [
+			'sent' => session('recover_sent'),
+		]);
+	}
+
+	/**
+	 * Displays new password setup form
+	 *
+	 * @param \Illuminate\Http\Request $request The incoming request instance.
+	 * @return \Illuminate\View\View The view instance for the invite form.
+	 */
+	public function recoverSetForm(Request $request): View
+	{
+		$token = (string) $request->get('token');
+		$email = (string) $request->get('email');
+
+		return view('joona::user.recover-password', [
+			'token' => $token,			
+			'provided_email' => $email,			
+		]);
+	}
+
+	/**
+	 * Displays password recover form
+	 *
+	 * @param \Illuminate\Http\Request $request The incoming request instance.
+	 * @return JsonResponse The response object containing the form process result.
+	 */
+	public function recoverStart(Request $request): JsonResponse
+	{
+		$form = new FormResponse();
+		$email = strtolower((string) $request->post('email'));
+
+		if (!$email) {
+			$form->setError(__('joona::common.email_required'), 'email');
+			return response()->json($form);
+		}
+
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$form->setError(__('joona::common.email_invalid'), 'email');
+			return response()->json($form);
+		}
+
+		$throttleKey = 'joona-recover-form-' . $request->ip();
+		$maxAttempts = 5;
+		$decayMinutes = 0.5;
+
+		if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts)) {
+			$form -> setError(__('joona::common.throttle', [
+				'seconds' => RateLimiter::availableIn($throttleKey)
+			]));
+
+			return response()->json($form);
+		}
+
+		RateLimiter::hit($throttleKey, $decayMinutes * 60);
+
+		$user = AdminUser::where([
+			'email' => $email,
+			'status' => UserStatus::ACTIVE,
+		])->first();
+
+		$showSuccess = function() use ($form) {
+			$form->setSuccess(__('joona::common.data_saved'));
+			$form->setAction('reset', true);
+			$form->setAction('reload', true);
+
+			Session::flash('recover_sent', 1);
+
+			return response()->json($form);
+		};
+
+		if (!$user) {
+			return $showSuccess();
+		}
+
+		Password::broker('admins')->sendResetLink(
+			$request->only('email')
+		);
+
+		return $showSuccess();
+	}
+
+	/**
+	 * Displays password setup form
+	 *
+	 * @param \Illuminate\Http\Request $request The incoming request instance.
+	 * @return JsonResponse The response object containing the form process result.
+	 */
+	public function recoverFinish(Request $request): JsonResponse
+	{
+		$form = new FormResponse();
+		$password = (string) $request->post('password');
+		$token = (string) $request->post('token');
+		$email = (string) $request->post('email');
+
+		if (!$password) {
+			$form->setError(__('joona::user.recover.password_required'), 'password');
+			return response()->json($form);
+		}
+
+		if (!AdminUser::isSecurePassword($password)) {
+			$form->setError(__('joona::validation.password.unsecure'), 'password');
+			return response()->json($form);
+		}
+
+		$status = Password::broker('admins')->reset(
+            [
+				'password' => $password,
+				'token' => $token,
+				'email' => $email,
+			],
+            function ($user, string $password) {
+				$user->setPassword($password, true);
+				Auth::login($user);
+            }
+        );
+
+		if ($status === Password::PASSWORD_RESET) {
+			$form->setSuccess(__('joona::user.recover.success'));
+			$form->setAction('redirect', Joona::getBasePath());
+		} else {
+			$form->setError(__('joona::user.recover.failed'));
+		}
+
+		return response()->json($form);
+	}
+
+	/**
 	 * Handles the user registration process by invite.
 	 *
 	 * @param \Illuminate\Http\Request $request The incoming request instance.
-	 * @return \Illuminate\Http\JsonResponse The response object containing the authorization result.
+	 * @return JsonResponse The response object containing the form process result.
 	 */
 	public function inviteProcess(Request $request): JsonResponse
 	{

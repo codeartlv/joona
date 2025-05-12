@@ -22,5 +22,13 @@ return [
 			'driver' => 'eloquent',
 			'model' => Codeart\Joona\Models\User\AdminUser::class,
 		],
-	]
+	],
+	'passwords' => [
+		'admins' => [
+			'provider' => 'joona',
+			'table'    => 'admin_password_resets',
+			'expire'   => 60,
+			'throttle' => 0,
+		],
+	],
 ];
