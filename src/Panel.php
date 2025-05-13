@@ -343,7 +343,8 @@ class Panel
 	 */
 	public function addViteResources(array $resources): self
 	{
-		$this->viteResources = $resources;
+		$this->viteResources = array_merge($resources, $this->viteResources);
+		
 		return $this;
 	}
 
