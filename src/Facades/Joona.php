@@ -8,6 +8,6 @@ class Joona extends Facade
 {
 	protected static function getFacadeAccessor()
 	{
-		return 'joona.panel';
+		return 'codeartlv.joona';
 	}
 }

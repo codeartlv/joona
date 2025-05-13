@@ -36,7 +36,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	 */
 	public function register()
 	{
-		$this->app->singleton('joona.panel', fn () => new Panel());
+		$this->app->singleton('codeartlv.joona', fn () => new Panel());
 
 		$this->registerAuthGuard();
 	}
@@ -169,27 +169,8 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	 */
 	private function setupRoutes(): void
 	{
-		Route
-			::domain(Joona::getBaseDomain())
-			->prefix(Joona::getBasePath())
-			->middleware(['web', 'admin.web'])
-			->group(function () {
-				$this->loadRoutesFrom($this->getPackageRoutesPath() . 'web.php');
-
-				$setup = Joona::getCustomRoutes('free');
-
-				if ($setup) {
-					$setup();
-				}
-
-				Route::middleware(['admin.auth'])->group(function () {
-					$setup = Joona::getCustomRoutes('secure');
-
-					if ($setup) {
-						$setup();
-					}
-				});
-			});
+		Joona::addRoutes('free', $this->getPackageRoutesPath() . 'web.php');
+		Joona::addRoutes('secure', $this->getPackageRoutesPath() . 'secure.php');
 	}
 
 	/**
@@ -237,7 +218,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 
 	private function registerPages(): void
 	{
-		$panel = resolve('joona.panel');
+		$panel = resolve('codeartlv.joona');
 
 		$default_menu = [];
 
@@ -282,7 +263,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	 */
 	private function registerGate(): void
 	{
-		$panel = resolve('joona.panel');
+		$panel = resolve('codeartlv.joona');
 
 		$panel->addPermissions([
 			PermissionGroup::make('joona::user.elevated-permissions', [
@@ -346,7 +327,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 	 */
 	private function configurePanel(): void
 	{
-		$this->configure(resolve('joona.panel'));
+		$this->configure(resolve('codeartlv.joona'));
 	}
 
 	/**
@@ -382,7 +363,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::common.delete_node_confirm',
 		], $userKeys);
 
-		$panel = resolve('joona.panel');
+		$panel = resolve('codeartlv.joona');
 		$panel->setJavascriptTranslations($translationKeys);
 	}
 }

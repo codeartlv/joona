@@ -2,6 +2,7 @@
 
 namespace Codeart\Joona;
 
+use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Facades\Permission;
 use Illuminate\Support\Facades\Lang;
 use Codeart\Joona\MetaData\Page;
@@ -9,6 +10,7 @@ use Codeart\Joona\MetaData\Locale;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use InvalidArgumentException;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
@@ -142,16 +144,34 @@ class Panel
 	public function addRoutes(string $security, callable|string $routes): self
     {
 		$security = in_array($security, ['secure', 'free']) ? $security : 'secure';
-
+		$group = null;
+		
 		if (is_callable($routes)) {
-            $this->customRoutes[$security] = $routes;
+            $group = $routes;
         } elseif (is_string($routes) && file_exists($routes)) {
-            $this->customRoutes[$security] = function () use ($routes) {
-                require $routes;
+            $group = function () use ($routes) {
+				require $routes;
             };
-        } else {
-            throw new InvalidArgumentException('Routes must be a callable or a valid file path.');
         }
+
+		if (!$group) {
+			throw new InvalidArgumentException('Routes must be a callable or a valid file path.');
+		}
+
+		Route::domain(Joona::getBaseDomain())
+			->prefix(Joona::getBasePath())
+			->middleware(['web', 'admin.web'])
+			->group(function () use ($security, $group) {
+
+				if ($security == 'free') {
+					$group();
+					return;
+				}
+
+				Route::middleware(['admin.auth'])->group(function () use ($group) {
+					$group();
+				});
+			});
 
 		return $this;
     }
