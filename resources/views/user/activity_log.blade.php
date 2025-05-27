@@ -4,7 +4,7 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="form-group">
-						<x-select name="user_id" required="true" :label="__('joona::user.user')" :options="$users" blank />
+						<x-select name="user_id" :label="__('joona::user.user')" :options="$users" blank />
 					</div>
 
 					<div class="form-group">

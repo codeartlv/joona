@@ -2,6 +2,7 @@ export default class FormHandler {
 	form = null;
 	state = null;
 	request = null;
+	submitter = null;
 	events = {
 		start: [],
 		complete: [],
@@ -18,9 +19,11 @@ export default class FormHandler {
 		};
 
 		this.form.addEventListener('submit', (e) => {
+			this.submitter = e.submitter;
+
 			e.preventDefault();
 
-			this.submit();
+			this.submit(e);
 			return false;
 		});
 	}
@@ -98,7 +101,8 @@ export default class FormHandler {
 			this.request.abort();
 		}
 
-		const formData = new FormData(this.form);
+		const formData = new FormData(this.form, this.submitter);
+
 		const method = this.form.method || 'POST';
 		const url = this.form.action || '';
 

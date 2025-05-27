@@ -95,15 +95,10 @@ class Panel
 	private $jsTranslations = [];
 
 	/**
-	 * Cusrtom routes
+	 * Custom permission loader
 	 *
-	 * @var array
+	 * @var null|string
 	 */
-	protected $customRoutes = [
-		'secure' => null,
-		'free' => null,
-	];
-
 	private ?string $permissionLoader = null;
 
 	/**
@@ -114,8 +109,8 @@ class Panel
 
 	/**
 	 * Get permission loader class
-	 * 
-	 * @return null|string 
+	 *
+	 * @return null|string
 	 */
 	public function getPermissionLoader(): ?string
 	{
@@ -124,9 +119,9 @@ class Panel
 
 	/**
 	 * Set custom permission loader class
-	 * 
-	 * @param string $className 
-	 * @return void 
+	 *
+	 * @param string $className
+	 * @return void
 	 */
 	public function setPermissionLoader(string $className): self
 	{
@@ -142,17 +137,17 @@ class Panel
 	 * @return void
 	 */
 	public function addRoutes(string $security, callable|string $routes): self
-    {
+	{
 		$security = in_array($security, ['secure', 'free']) ? $security : 'secure';
 		$group = null;
 		
 		if (is_callable($routes)) {
-            $group = $routes;
-        } elseif (is_string($routes) && file_exists($routes)) {
-            $group = function () use ($routes) {
+			$group = $routes;
+		} elseif (is_string($routes) && file_exists($routes)) {
+			$group = function () use ($routes) {
 				require $routes;
-            };
-        }
+			};
+		}
 
 		if (!$group) {
 			throw new InvalidArgumentException('Routes must be a callable or a valid file path.');
@@ -174,13 +169,13 @@ class Panel
 			});
 
 		return $this;
-    }
+	}
 
 	/**
 	 * Add additional user levels
-	 * 
-	 * @param string[] $levels 
-	 * @return Panel 
+	 *
+	 * @param string[] $levels
+	 * @return Panel
 	 */
 	public function addUserClasses(array $levels): self
 	{
@@ -191,23 +186,12 @@ class Panel
 
 	/**
 	 * Returns additional user levels
-	 * 
-	 * @return string[] 
+	 *
+	 * @return string[]
 	 */
 	public function getUserClasses(): array
 	{
 		return $this->userClasses;
-	}
-
-	/**
-	 * Return custom routes
-	 *
-	 * @param string $security
-	 * @return null|callable
-	 */
-	public function getCustomRoutes(string $security): ?callable
-	{
-		return $this->customRoutes[$security];
 	}
 
 	/**
@@ -393,8 +377,8 @@ class Panel
 
 	/**
 	 * Return icon
-	 * 
-	 * @return string 
+	 *
+	 * @return string
 	 */
 	public function getIcon(): string
 	{
@@ -675,4 +659,3 @@ class Panel
 		return $this;
 	}
 }
-

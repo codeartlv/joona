@@ -66,7 +66,7 @@ export default class AjaxForm {
 		this.form.classList.add(`loading-${this.settings.overlay}`);
 
 		if (this.settings.overlay == 'button') {
-			setButtonLoading(this.submitButton);
+			setButtonLoading(this.handler.submitter);
 		} else {
 			addSpinner(this.form);
 		}
@@ -77,7 +77,7 @@ export default class AjaxForm {
 		this.form.classList.remove(`loading-${this.settings.overlay}`);
 
 		if (this.settings.overlay == 'button') {
-			unsetButtonLoading(this.submitButton);
+			unsetButtonLoading(this.handler.submitter);
 		} else {
 			removeSpinner(this.form);
 		}

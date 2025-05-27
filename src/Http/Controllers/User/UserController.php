@@ -64,6 +64,7 @@ class UserController
 		if (!$form->hasError()) {
 			$form->setSuccess(__('joona::user.profile_saved'));
 			$form->setAction('close_popup', true);
+			$form->setAction('reload', true);
 		}
 
 		return response()->json($form);
