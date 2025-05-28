@@ -10,6 +10,7 @@
 
 			.image-gallery__items {
 				background: none;
+				padding-bottom: $spacer * 0.25;
 			}
 
 			.image-gallery__image-trash {
@@ -38,6 +39,15 @@
 
 			.image-gallery__caption {
 				display: none;
+			}
+
+			.image-gallery__controls {
+				padding: $spacer * 0.5;
+			}
+
+			.cdx-button {
+				@extend .btn;
+				@extend .btn-outline-primary;
 			}
 		}
 	}

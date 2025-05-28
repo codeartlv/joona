@@ -41,4 +41,28 @@ return [
 	'email_invalid' => 'Nekorekta epasta adrese',
 	'data_saved' => 'Dati saglabāti.',
 	'select_files' => 'Izvēlēties failus',
+	'editorjs' => [
+		'tools' => [
+			'list' => [
+				'ordered' => 'Numurēts saraksts',
+				'unordered' => 'Punktu saraksts',
+				'checklist' => 'Atzīmju saraksts',
+			],
+			'heading' => [
+				'name' => 'Virsraksts',
+			],
+			'gallery' => [
+				'name' => 'Galerija',
+			],
+			'text' => [
+				'name' => 'Paragrāfs',
+			],
+			'quote' => [
+				'name' => 'Citāts',
+			],
+			'table' => [
+				'name' => 'Tabula',
+			],
+		],
+	],
 ];

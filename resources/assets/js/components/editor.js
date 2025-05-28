@@ -2,6 +2,8 @@ import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import ImageGallery from '@kiberpro/editorjs-gallery';
+import Quote from '@editorjs/quote';
+import Table from '@editorjs/table';
 import Sortable from 'sortablejs';
 
 import { parseJsonLd } from './../helpers';
@@ -59,11 +61,34 @@ export default class Editor {
 
 		params = {
 			tools: {},
+			i18n: {
+				messages: {
+					toolNames: {
+						'Ordered List': trans('joona::common.editorjs.tools.list.ordered'),
+						'Unordered List': trans('joona::common.editorjs.tools.list.unordered'),
+						Checklist: trans('joona::common.editorjs.tools.list.checklist'),
+						Heading: trans('joona::common.editorjs.tools.heading.name'),
+						Gallery: trans('joona::common.editorjs.tools.gallery.name'),
+						Text: trans('joona::common.editorjs.tools.text.name'),
+						Quote: trans('joona::common.editorjs.tools.quote.name'),
+						Table: trans('joona::common.editorjs.tools.table.name'),
+					},
+					tools: {},
+				},
+			},
 			...params,
 		};
 
-		params.tools.heading = Header;
+		params.tools.heading = {
+			class: Header,
+			config: {
+				levels: [2, 3, 4, 5, 6],
+				defaultLevel: 3,
+			},
+		};
 		params.tools.list = List;
+		params.tools.quote = Quote;
+		params.tools.table = Table;
 
 		if (this.settings.upload_url) {
 			params.tools.gallery = {
@@ -83,4 +108,3 @@ export default class Editor {
 		return this.editor;
 	}
 }
-

@@ -363,6 +363,14 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::common.select_files',
 			'joona::common.confirm',
 			'joona::common.delete_node_confirm',
+			'joona::common.editorjs.tools.list.ordered',
+			'joona::common.editorjs.tools.list.unordered',
+			'joona::common.editorjs.tools.list.checklist',
+			'joona::common.editorjs.tools.heading.name',
+			'joona::common.editorjs.tools.gallery.name',
+			'joona::common.editorjs.tools.text.name',
+			'joona::common.editorjs.tools.quote.name',
+			'joona::common.editorjs.tools.table.name',
 		], $userKeys);
 
 		$panel = resolve('codeartlv.joona');
