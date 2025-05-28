@@ -1,4 +1,5 @@
 import { addSpinner, removeSpinner, parseJsonLd, parseRoute } from './../helpers';
+import Sortable from 'sortablejs';
 
 export default class Uploader {
 	uploadCounter = 0;
@@ -15,6 +16,7 @@ export default class Uploader {
 			limit: 1,
 			list: null,
 			name: '',
+			sortable: false,
 			fileOptions: {
 				remove: {
 					caption: trans('joona::common.delete'),
@@ -50,6 +52,19 @@ export default class Uploader {
 
 		if (!this.list) {
 			this.list = this.element;
+		}
+
+		if (this.params.sortable) {
+			new Sortable(this.list, {
+				animation: 150,
+				delay: 500,
+				delayOnTouchOnly: true,
+				preventOnFilter: false,
+				draggable: '.upload-file',
+				onEnd: () => {
+					this.syncIds();
+				},
+			});
 		}
 
 		this.triggerEl = element.querySelector('[data-role="trigger"]');
