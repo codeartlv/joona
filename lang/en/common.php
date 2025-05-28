@@ -40,4 +40,5 @@ return [
 	'email_required' => 'Email is required.',
 	'email_invalid' => 'Email is invalid',
 	'data_saved' => 'Data saved.',
+	'select_files' => 'Select files',
 ];

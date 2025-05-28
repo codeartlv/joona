@@ -1,0 +1,49 @@
+.editor {
+	@extend .form-control;
+
+	.cdx-block {
+		&.image-gallery {
+			.image-gallery__container {
+				background: $gray-200;
+				border-radius: $border-radius-sm;
+			}
+
+			.image-gallery__items {
+				background: none;
+			}
+
+			.image-gallery__image-trash {
+				@extend .material-symbols-outlined;
+
+				&::before {
+					content: 'delete';
+				}
+
+				svg {
+					display: none;
+				}
+			}
+
+			.image-gallery__image {
+				background: none;
+				padding: 0;
+
+				img.image-gallery__image-picture {
+					display: block;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+
+			.image-gallery__caption {
+				display: none;
+			}
+		}
+	}
+}
+
+.ce-block__content,
+.ce-toolbar__content {
+	max-width: calc(100% - 120px);
+}

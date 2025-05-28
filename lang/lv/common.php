@@ -40,4 +40,5 @@ return [
 	'email_required' => 'Epasts ir obligāti jāievada.',
 	'email_invalid' => 'Nekorekta epasta adrese',
 	'data_saved' => 'Dati saglabāti.',
+	'select_files' => 'Izvēlēties failus',
 ];

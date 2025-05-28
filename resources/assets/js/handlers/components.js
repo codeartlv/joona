@@ -14,6 +14,7 @@ import TreeEditor from '../components/tree-editor.js';
 import TextEditor from '../components/text-editor.js';
 import BulkTableEditor from '../components/bulk-editor.js';
 import Table from '../components/table.js';
+import Editor from '../components/editor.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
@@ -62,6 +63,10 @@ export default class Components extends Handler {
 
 	treeEditor(el, params) {
 		return new TreeEditor(el, params);
+	}
+
+	editor(el, params) {
+		return new Editor(el, params);
 	}
 
 	textEditor(el, params) {

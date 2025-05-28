@@ -155,6 +155,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'checkbox-group' => \Codeart\Joona\View\Components\CheckboxGroup::class,
 			'page-footer-bar' => \Codeart\Joona\View\Components\PageFooterBar::class,
 			'table' => \Codeart\Joona\View\Components\DataTable::class,
+			'editor' => \Codeart\Joona\View\Components\Editor::class,
 		];
 
 		foreach ($components as $name => $class) {
@@ -359,6 +360,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::common.no_results_found',
 			'joona::common.selected',
 			'joona::common.copied',
+			'joona::common.select_files',
 			'joona::common.confirm',
 			'joona::common.delete_node_confirm',
 		], $userKeys);

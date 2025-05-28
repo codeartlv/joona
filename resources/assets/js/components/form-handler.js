@@ -23,7 +23,7 @@ export default class FormHandler {
 
 			e.preventDefault();
 
-			this.submit(e);
+			this.submit();
 			return false;
 		});
 	}
@@ -96,6 +96,10 @@ export default class FormHandler {
 		});
 	}
 
+	async intercept(formData) {
+		return formData;
+	}
+
 	async submit() {
 		if (this.state === 'loading' && this.request) {
 			this.request.abort();
@@ -105,6 +109,8 @@ export default class FormHandler {
 
 		const method = this.form.method || 'POST';
 		const url = this.form.action || '';
+
+		await this.intercept(formData);
 
 		try {
 			const response = await this.send(method, url, formData);
