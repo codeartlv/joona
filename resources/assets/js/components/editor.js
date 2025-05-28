@@ -57,16 +57,16 @@ export default class Editor {
 		params.holder = this.editorId;
 		params.data = parseJsonLd(this.container.querySelector('[data-role="data"]'));
 
-		let tools = {
-			heading: Header,
-			list: {
-				class: List,
-				config: {},
-			},
+		params = {
+			tools: {},
+			...params,
 		};
 
+		params.tools.heading = Header;
+		params.tools.list = List;
+
 		if (this.settings.upload_url) {
-			tools.gallery = {
+			params.tools.gallery = {
 				class: ImageGallery,
 				config: {
 					sortableJs: Sortable,
@@ -78,13 +78,9 @@ export default class Editor {
 			};
 		}
 
-		params = {
-			tools: tools,
-			...params,
-		};
-
 		this.editor = new EditorJS(params);
 
 		return this.editor;
 	}
 }
+
