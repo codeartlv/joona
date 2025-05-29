@@ -4,6 +4,7 @@ import List from '@editorjs/list';
 import ImageGallery from '@kiberpro/editorjs-gallery';
 import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
+import Embed from '@editorjs/embed';
 import Sortable from 'sortablejs';
 
 import { parseJsonLd } from './../helpers';
@@ -89,6 +90,7 @@ export default class Editor {
 		params.tools.list = List;
 		params.tools.quote = Quote;
 		params.tools.table = Table;
+		params.tools.embed = Embed;
 
 		if (this.settings.upload_url) {
 			params.tools.gallery = {
