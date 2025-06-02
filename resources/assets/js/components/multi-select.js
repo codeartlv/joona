@@ -5,21 +5,29 @@ export default class MultiSelect {
 		this.toggleCheck = this.container.querySelector('input[data-role="toggle"]');
 
 		let dropdown = this.container.querySelector('.dropdown-menu');
-		dropdown.addEventListener('click', (e) => {
-			e.stopPropagation();
-		});
+		if (dropdown) {
+			dropdown.addEventListener('click', (e) => {
+				e.stopPropagation();
+			});
+		}
+
+		let checkboxes = this.container.querySelectorAll('input[data-role="option"]');
 
 		// Add event listener to the option checkboxes
-		this.container.querySelectorAll('input[data-role="option"]').forEach((element) => {
-			element.addEventListener('change', () => {
-				this.updateChecked();
+		if (checkboxes) {
+			checkboxes.forEach((element) => {
+				element.addEventListener('change', () => {
+					this.updateChecked();
+				});
 			});
-		});
+		}
 
 		// Event listener for the toggle checkbox
-		this.toggleCheck.addEventListener('change', () => {
-			this.handleToggleChange();
-		});
+		if (this.toggleCheck) {
+			this.toggleCheck.addEventListener('change', () => {
+				this.handleToggleChange();
+			});
+		}
 
 		// Initialize the state of the toggle checkbox
 		this.updateChecked();
