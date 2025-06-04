@@ -49,6 +49,10 @@ export default class MultiSelect {
 		let totalOptions = allOptionInputs.length;
 		let totalChecked = checkedInputs.length;
 
+		if (!this.toggleCheck) {
+			return;
+		}
+
 		if (totalChecked === totalOptions && totalOptions > 0) {
 			// All options are checked
 			this.toggleCheck.checked = true;
