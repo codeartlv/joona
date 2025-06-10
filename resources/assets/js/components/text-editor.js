@@ -32,6 +32,10 @@ export default class TextEditor {
 					name: 'ulist',
 					icon: '<i class="material-symbols-outlined">format_list_bulleted</i>',
 				},
+				{
+					name: 'link',
+					icon: '<i class="material-symbols-outlined">link</i>',
+				},
 			],
 		});
 
