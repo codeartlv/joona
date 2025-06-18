@@ -21,6 +21,7 @@ export default class BulkTableEditor {
 		this.submitButton = element.querySelector('[data-role="submit"]');
 		this.optionSelect = element.querySelector('[data-role="options"]');
 		this.toggleCheck = this.table.querySelector('[data-role="toggle-all"]');
+		this.handlers = {};
 
 		if (!this.toggleCheck) {
 			console.error(
@@ -51,7 +52,23 @@ export default class BulkTableEditor {
 		});
 
 		this.submitButton.addEventListener('click', () => {
-			let checked = [];
+			let action = this.optionSelect.value;
+
+			if (action in this.handlers) {
+				let checked = [];
+
+				this.getOptions(true).forEach((checkbox) => {
+					checked.push(checkbox.value);
+					checkbox.checked = false;
+				});
+
+				this.toggleCheck.checked = false;
+				this.updateChecked();
+				this.optionSelect.value = '';
+
+				this.handlers[action](checked);
+				return;
+			}
 
 			this.getOptions(true).forEach((checkbox) => {
 				let field = document.createElement('input');
@@ -66,6 +83,15 @@ export default class BulkTableEditor {
 
 		// Initialize the state of the toggle checkbox
 		this.updateChecked();
+	}
+
+	setAction(name, handler) {
+		if (typeof handler !== 'function') {
+			console.error('Handler must be a function.');
+			return;
+		}
+
+		this.handlers[name] = handler;
 	}
 
 	getOptions(state) {
@@ -130,3 +156,4 @@ export default class BulkTableEditor {
 		});
 	}
 }
+
