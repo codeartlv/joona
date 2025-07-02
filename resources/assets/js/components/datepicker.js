@@ -20,6 +20,7 @@ export default class Datepicker {
 			dateSeparator: ' / ',
 			position: 'bottom left',
 			format: 'dd.MM.yyyy',
+			timeFormat: 'HH:mm',
 			timepicker: false,
 			mindate: '',
 			firstDay: 1,
@@ -52,8 +53,17 @@ export default class Datepicker {
 		this.instance.clear();
 	}
 
+	get() {
+		return this.params.range ? this.instance.selectedDates : this.instance.selectedDates[0];
+	}
+
 	set(date) {
 		this.clear();
+
+		if (!date) {
+			return;
+		}
+
 		this.instance.selectDate(date);
 	}
 
@@ -115,8 +125,10 @@ export default class Datepicker {
 			position: this.params.position,
 			multipleDatesSeparator: this.params.dateSeparator,
 			dateFormat: this.params.format,
+			timeFormat: this.params.timeFormat,
 			timepicker: this.params.timepicker,
-			altFieldDateFormat: 'yyyy-MM-dd' + (this.params.timepicker ? ' hh:ii:00' : ''),
+			startDate: new Date(new Date().setHours(0, 0, 0, 0)),
+			altFieldDateFormat: 'yyyy-MM-dd' + (this.params.timepicker ? ' HH:mm:00' : ''),
 			altField: this.valueField,
 			onSelect: ({ date }) => {
 				this.trigger('select', date);
@@ -159,7 +171,7 @@ export default class Datepicker {
 					this.instance.selectDate([to.toDate()]);
 				}
 			} else {
-				var format = settings.altFieldDateFormat.toUpperCase().replaceAll('I', 'm');
+				var format = this.params.timepicker ? 'YYYY-MM-DD LTS' : 'YYYY-MM-DD';
 				var date = moment(value, format);
 
 				if (date.isValid()) {
