@@ -2,8 +2,15 @@ import BootstrapTooltip from 'bootstrap/js/dist/tooltip';
 
 export default class CopyText {
 	constructor(element, params) {
-		const tooltip = BootstrapTooltip.getOrCreateInstance(element, {
-			trigger: 'click',
+		params = {
+			container: null,
+			...params,
+		};
+
+		const container = params.container ? document.querySelector(params.container) : element;
+
+		const tooltip = BootstrapTooltip.getOrCreateInstance(container, {
+			trigger: 'manual',
 			title: trans('joona::common.copied'),
 		});
 
@@ -15,6 +22,8 @@ export default class CopyText {
 			input.select();
 			document.execCommand('Copy');
 			input.remove();
+
+			tooltip.show();
 
 			setTimeout(function () {
 				tooltip.hide();
