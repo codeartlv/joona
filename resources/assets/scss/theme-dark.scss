@@ -299,4 +299,25 @@
 	.active > .page-link {
 		border-color: var(--bs-gray-600);
 	}
+
+	@include media-breakpoint-down(md) {
+		.table {
+			&.table-mobile-stacked {
+				tbody {
+					tr {
+						td {
+							&.table__options {
+								.dropdown-menu {
+									.dropdown-item {
+										background: var(--bs-gray-800);
+										border-color: var(--bs-gray-700);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

@@ -254,6 +254,8 @@ table.table {
 								.dropdown-item {
 									background: var(--bs-gray-100);
 									justify-content: center;
+									border: solid 1px var(--bs-gray-300);
+									border-radius: $btn-border-radius;
 
 									&:active {
 										color: var(--bs-primary);
