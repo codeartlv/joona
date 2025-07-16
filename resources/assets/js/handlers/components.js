@@ -15,10 +15,15 @@ import TextEditor from '../components/text-editor.js';
 import BulkTableEditor from '../components/bulk-editor.js';
 import Table from '../components/table.js';
 import Editor from '../components/editor.js';
+import Tag from '../components/tag.js';
 
 export default class Components extends Handler {
 	static get pluginName() {
 		return 'components';
+	}
+
+	tags(el, params) {
+		return new Tag(el, params);
 	}
 
 	form(el, params) {

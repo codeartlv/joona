@@ -156,6 +156,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'page-footer-bar' => \Codeart\Joona\View\Components\PageFooterBar::class,
 			'table' => \Codeart\Joona\View\Components\DataTable::class,
 			'editor' => \Codeart\Joona\View\Components\Editor::class,
+			'tags' => \Codeart\Joona\View\Components\Tag\Tags::class,
 		];
 
 		foreach ($components as $name => $class) {

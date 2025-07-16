@@ -276,6 +276,10 @@
 	}
 
 	.form-multiselect {
+		.form-multiselect__group-label {
+			background: var(--bs-gray-700);
+		}
+
 		.dropdown-menu {
 			> li {
 				&.form-multiselect__toggle-all {
@@ -298,6 +302,29 @@
 	.page-link.active,
 	.active > .page-link {
 		border-color: var(--bs-gray-600);
+	}
+
+	.tagify {
+		--tag-bg: var(--bs-gray-700);
+		--tag-text-color: var(--bs-gray-200);
+		--tag-hover: var(--bs-gray-600);
+
+		.tagify__tag__removeBtn::after {
+			color: var(--bs-gray-100);
+		}
+	}
+
+	.tagify__dropdown__wrapper {
+		--tagify-dd-bg-color: var(--bs-body-bg);
+		--tagify-dd-text-color: var(--bs-body-color);
+		border-color: var(--bs-gray-800);
+
+		.tagify__dropdown__item {
+			&.tagify__dropdown__item--active {
+				background: var(--bs-gray-800);
+				color: var(--bs-gray-100);
+			}
+		}
 	}
 
 	@include media-breakpoint-down(md) {

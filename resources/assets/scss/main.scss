@@ -10,6 +10,7 @@
 @import '../node_modules/swiper/modules/navigation';
 @import '../node_modules/swiper/modules/effect-fade';
 @import '../node_modules/pell/src/pell';
+@import '../node_modules/@yaireo/tagify/dist/tagify';
 
 @import 'globals';
 
@@ -67,6 +68,7 @@
 @import 'vendor/autocomplete';
 @import 'vendor/pell';
 @import 'vendor/swiper';
+@import 'vendor/tagify';
 
 @import 'theme-light';
 @import 'theme-dark';
