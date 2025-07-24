@@ -228,4 +228,18 @@ export default class Admin extends Handler {
 			);
 		});
 	}
+
+	openPopup(el, parameters) {
+		el.addEventListener('click', () => {
+			parameters = {
+				name: 'default',
+				url: '?',
+				...parameters,
+			};
+
+			let modal = new Modal(parameters.name);
+
+			modal.open(parameters.url);
+		});
+	}
 }
