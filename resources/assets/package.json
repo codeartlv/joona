@@ -34,7 +34,7 @@
 		"jquery": "3.7.1",
 		"lang.js": "^1.1.14",
 		"leaflet": "^1.9.4",
-		"material-symbols": "^0.14",
+		"material-symbols": "^0.33",
 		"moment": "^2.30",
 		"pell": "^1.0.6",
 		"perfect-scrollbar": "^1.5",
