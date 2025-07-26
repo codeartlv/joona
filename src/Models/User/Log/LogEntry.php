@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * User journal entry.
+ *
+ * @property string $object_id 
  */
 class LogEntry extends Model
 {
