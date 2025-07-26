@@ -24,6 +24,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property string $class
+ * @property string $email
  * 
  * @package Codeart\Joona\Models\User
  */
