@@ -358,7 +358,7 @@ class AdminUser extends Authenticatable
 		}
 
 		// If the password exceeds max length, consider it secure
-		if (!is_null($max_length) && $password_length > $max_length) {
+		if (!is_null($max_length) && $password_length >= $max_length) {
 			return true;
 		}
 
