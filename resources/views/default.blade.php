@@ -26,6 +26,7 @@
 			</div>
 			<div class="offcanvas-body" data-bs-theme="dark">
 				<div class="offcanvas-inner">
+					@include('joona::common.topbar')
 					@include('joona::menu')
 				</div>
 			</div>
@@ -42,6 +43,7 @@
 							<img class="main-header__logo" src="{{$logo}}" />
 						</section>
 						<section class="main-header__menu">
+							@include('joona::common.topbar')
 							<section class="main-header__side-nav">
 								<ul class="header-nav">
 									<li class="header-nav__name">
