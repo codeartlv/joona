@@ -8,14 +8,17 @@
 	</div>
 	<ul class="dropdown-menu">
 		@if (!empty($options))
-			<li class="form-multiselect__toggle-all">
-				<x-checkbox data-role="toggle" :label="__('joona::common.toggle_all')" />
-			</li>
+			@if ($type == 'checkbox')
+				<li class="form-multiselect__toggle-all">
+					<x-checkbox data-role="toggle" :label="__('joona::common.toggle_all')" />
+				</li>
+			@endif
+
 			@foreach ($options as $item)
 				@if (method_exists($item, 'options'))
 					@if ($item->selectable)
 						<li class="form-multiselect__group">
-							<x-checkbox data-role="option" :checked="$item->selected" :disabled="$item->disabled" label="{{$item->label}}" value="{{$item->value}}" name="{{ $name }}"/>
+							<x-checkbox type="{{$type}}" data-role="option" :checked="$item->selected" :disabled="$item->disabled" label="{{$item->label}}" value="{{$item->value}}" name="{{ $name }}"/>
 						</li>
 					@else
 						<li class="form-multiselect__group-label">{{$item->label}}</li>
@@ -38,6 +41,7 @@
 						:disabled="$option->disabled"
 						label="{{$option->label}}"
 						value="{{$option->value}}"
+						type="{{$type}}"
 						name="{{ $name }}"
 					/>
 					</li>

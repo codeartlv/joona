@@ -10,6 +10,7 @@ class Multiselect extends Component
 		public array $options = [],
 		public string $label = '',
 		public string $name = '',
+		public string $type = 'checkbox',
 		public bool $required = false,
 	) {
 
