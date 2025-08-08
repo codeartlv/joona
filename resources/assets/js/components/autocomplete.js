@@ -103,7 +103,7 @@ export default class Autocomplete {
 	}
 
 	change() {
-		this.element.toggleClass('selected', this.id > 0);
+		this.element.toggleClass('selected', this.id > 0 || this.id.length > 0);
 	}
 
 	on(event, callback) {
