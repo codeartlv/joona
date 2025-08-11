@@ -45,7 +45,7 @@ export default class MultiSelect {
 			count: checkedInputs.length,
 		});
 
-		let allOptionInputs = this.container.querySelectorAll('input[data-role="option"]');
+		let allOptionInputs = this.container.querySelectorAll('input[data-role="option"]:enabled');
 		let totalOptions = allOptionInputs.length;
 		let totalChecked = checkedInputs.length;
 
@@ -81,7 +81,7 @@ export default class MultiSelect {
 	}
 
 	setAllOptions(checked) {
-		this.container.querySelectorAll('input[data-role="option"]').forEach((element) => {
+		this.container.querySelectorAll('input[data-role="option"]:enabled').forEach((element) => {
 			element.checked = checked;
 		});
 	}
