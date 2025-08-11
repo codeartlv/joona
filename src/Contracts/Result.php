@@ -238,6 +238,17 @@ class Result implements Arrayable
 		return implode("\n", $messages);
 	}
 
+	public function merge(Result $source): static
+	{
+		foreach ($source->getErrors() as $key => $value) {
+			foreach ($value as $message) {
+				$this->setError($message, $key);
+			}
+		}
+
+		return $this;
+	}
+	
 	public function from(Result $source): static
 	{
 		$this->setErrors($source->getErrors());
