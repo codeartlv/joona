@@ -55,7 +55,7 @@ class PermissionLoader implements PermissionLoaderInterface
 
 	/**
 	 * Returns all permissions for the user
-	 * @return array
+	 * @return array<int,string>
 	 */
 	public function all(): array
 	{
