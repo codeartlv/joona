@@ -1,5 +1,6 @@
 import Handler from './../handler.js';
 import Modal from '../components/modal.js';
+import Offcanvas from '../components/offcanvas.js';
 import PerfectScrollbar from 'perfect-scrollbar';
 import ConfirmDialog from '../components/confirm-dialog.js';
 import BootstrapTooltip from 'bootstrap/js/dist/tooltip';
@@ -226,6 +227,20 @@ export default class Admin extends Handler {
 					id: parameters.id || 0,
 				})
 			);
+		});
+	}
+
+	openOffcanvas(el, parameters) {
+		el.addEventListener('click', () => {
+			parameters = {
+				name: 'default',
+				url: '?',
+				...parameters,
+			};
+
+			let modal = new Offcanvas(parameters.name);
+
+			modal.open(parameters.url);
 		});
 	}
 
