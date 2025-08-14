@@ -28,6 +28,7 @@
 			.image-gallery__image {
 				background: none;
 				padding: 0;
+				overflow: visible;
 
 				img.image-gallery__image-picture {
 					display: block;
@@ -35,6 +36,10 @@
 					height: 100%;
 					object-fit: cover;
 				}
+			}
+
+			.image-gallery__item-caption-input {
+				margin-top: $spacer * 0.25;
 			}
 
 			.image-gallery__caption {
