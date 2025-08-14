@@ -4,6 +4,7 @@ namespace Codeart\Joona\Http\Middleware;
 
 use Closure;
 use Codeart\Joona\Facades\Auth;
+use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Facades\Permission;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,6 +20,8 @@ class CheckPermissions
 	public function handle($request, Closure $next)
 	{
 		if (Auth::check()) {
+			Permission::setUser(Auth::user());
+
 			$route = $request->route();
 
 			if (is_object($route) && method_exists($route, 'getName')) {

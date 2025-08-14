@@ -3,7 +3,6 @@
 namespace Codeart\Joona\Contracts;
 
 use Codeart\Joona\Auth\Permissions\Permission;
-use Codeart\Joona\Models\User\AdminUser;
 
 /**
  * Requirement for permission loader
@@ -12,5 +11,5 @@ use Codeart\Joona\Models\User\AdminUser;
  */
 interface PermissionLoaderInterface
 {
-	public function validate(AdminUser $user, Permission $permission, string $key, ...$args): bool;
+	public function validate(Permission $permission, string $key, ...$args): bool;
 }

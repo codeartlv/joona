@@ -21,12 +21,15 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 /**
  * @property string $class
  * @property string $email
  * @property string $first_name
  * @property string $last_name
+ * @property Carbon $created_at
+ * @property UserStatus $status
  * 
  * @package Codeart\Joona\Models\User
  */
@@ -243,20 +246,6 @@ class AdminUser extends Authenticatable
 				])
 			);
 		}
-	}
-
-	public function permissions(): array
-	{
-		$permissions = collect();
-
-		foreach ($this->roles as $role) {
-			$permissions = $permissions->merge($role->permissions()->pluck('permission'));
-		}
-
-		$custom = $this->customPermissions->pluck('permission')->all();
-		$permissions = $permissions->merge($custom);
-
-		return $permissions->unique()->all();
 	}
 
 	public function canManageRoles(): array

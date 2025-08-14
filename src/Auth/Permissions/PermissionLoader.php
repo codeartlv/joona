@@ -26,14 +26,68 @@ class PermissionLoader implements PermissionLoaderInterface
 	private array $permissions = [];
 
 	/**
+	 * User instance for which permissions are loaded
+	 * 
+	 * @var AdminUser
+	 */
+	protected ?AdminUser $user = null;
+
+	/**
 	 * Instantiate permission handler
 	 *
-	 * @param array $permissions
 	 * @return void
 	 */
 	public function __construct(array $permissions)
 	{
 		$this->addPermissions($permissions);
+	}
+
+	/**
+	 * Set permission subject
+	 * 
+	 * @param AdminUser $user 
+	 * @return void 
+	 */
+	public function setUser(AdminUser $user): void
+	{
+		$this->user = $user;
+	}
+
+	/**
+	 * Returns all permissions for the user
+	 * @return array
+	 */
+	public function all(): array
+	{
+		if (!$this->user) {
+			return [];
+		}
+
+		$permissions = collect();
+
+		foreach ($this->user->roles as $role) {
+			$permissions = $permissions->merge($role->permissions()->pluck('permission'));
+		}
+
+		$custom = $this->user->customPermissions->pluck('permission')->all();
+		$permissions = $permissions->merge($custom);
+
+		return $permissions->unique()->all();
+	}
+
+	/**
+	 * Validate whether user has a specific permission key
+	 * 
+	 * @param string $key 
+	 * @return bool
+	 */
+	public function hasKey(string $key): bool
+	{
+		if (!$this->user) {
+			return false;
+		}
+
+		return in_array($key, $this->all());
 	}
 
 	/**
@@ -59,7 +113,7 @@ class PermissionLoader implements PermissionLoaderInterface
 						return false;
 					}
 
-					return $this->validate($user, $permission, $key, $args);
+					return $this->validate($permission, $key, $args);
 				});
 			}
 		}
@@ -107,26 +161,29 @@ class PermissionLoader implements PermissionLoaderInterface
 	/**
 	 * Shortcut to validate super user permissions
 	 * 
-	 * @param Codeart\Joona\Auth\Permissions\Admin $user 
 	 * @param Permission $permission 
 	 * @return bool 
 	 * @throws ValueError 
 	 * @throws TypeError 
 	 */
-	protected function validatesAsSuperUser(AdminUser $user, Permission $permission): bool
+	protected function validatesAsSuperUser(Permission $permission): bool
 	{
+		if (!$this->user) {
+			return false;
+		}
+
 		// Is functionality enabled globally
 		if (!Joona::usesRolesAndPermissions()) {
 			return true;
 		}
 
 		// Superusers are allowed always
-		if (UserLevel::from($user->level) == UserLevel::Admin) {
+		if (UserLevel::from($this->user->level) == UserLevel::Admin) {
 			return true;
 		}
 
 		// Elevated permissions require superuser
-		if ($permission->isElevated() && UserLevel::from($user->level) != UserLevel::Admin) {
+		if ($permission->isElevated() && UserLevel::from($this->user->level) != UserLevel::Admin) {
 			return false;
 		}
 
@@ -136,26 +193,29 @@ class PermissionLoader implements PermissionLoaderInterface
 	/**
 	 * Validates permission against the user
 	 *
-	 * @param AdminUser $user
 	 * @param Permission $permission
 	 * @param string $key
 	 * @param mixed $args
 	 * @return bool
 	 * @throws InvalidArgumentException
 	 */
-	public function validate(AdminUser $user, Permission $permission, string $key, ...$args): bool
+	public function validate(Permission $permission, string $key, ...$args): bool
 	{
-		if ($this->validatesAsSuperUser($user, $permission)) {
+		if (!$this->user) {
+			return false;
+		}
+
+		if ($this->validatesAsSuperUser($permission)) {
 			return true;
 		}
 
 		// If permission has callback, let it decide
 		if (in_array(HasCallback::class, class_uses_recursive($permission))) {
-			return (bool) call_user_func($permission->getCallback(), $user, ...$args);
+			return (bool) call_user_func($permission->getCallback(), $this->user, ...$args);
 		}
 
 		// Check against defined permissions
-		return count(array_intersect($permission->getAccessKeys(), $user->permissions())) > 0;
+		return count(array_intersect($permission->getAccessKeys(), $this->all())) > 0;
 	}
 
 	/**

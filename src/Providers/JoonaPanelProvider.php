@@ -8,13 +8,13 @@ use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\Auth\Permissions\RoutePermission;
 use Codeart\Joona\Auth\Permissions\PermissionLoader;
 use Codeart\Joona\Contracts\PermissionLoaderInterface;
+use Codeart\Joona\Facades\Auth as FacadesAuth;
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\MetaData\Page;
 use Codeart\Joona\Panel;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as ValidatorObject;
 
