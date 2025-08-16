@@ -53,7 +53,8 @@
 	}
 
 	.offcanvas-header {
-		background: var(--bs-gray-100);
+		background: var(--bs-gray-200);
+		margin-bottom: $spacer;
 	}
 
 	.offcanvas-footer {

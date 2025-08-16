@@ -113,6 +113,11 @@
 
 	&__item {
 		padding-bottom: 75%;
+		position: relative;
+	}
+
+	&__item:has(.dropdown-menu.show) {
+		z-index: 999;
 	}
 
 	&.gallery {
@@ -219,6 +224,10 @@
 	}
 
 	&.error {
+		&.completed {
+			background: var(--bs-gray-200);
+		}
+
 		.upload-file__msg {
 			display: block;
 			position: absolute;
@@ -262,7 +271,7 @@
 		line-height: 1;
 	}
 
-	&.file-pdf {
+	&.file-document {
 		background: var(--bs-gray-100);
 
 		.upload-file__info {

@@ -62,6 +62,14 @@
 		height: 100%;
 	}
 
+	&.modal-dialog--cropper {
+		.modal-footer {
+			background: rgba(0, 0, 0, 0.5) !important;
+			border-radius: 0;
+		}
+	}
+
+	&.modal-dialog--cropper,
 	&.modal-dialog-gallery {
 		max-width: 100%;
 		min-height: 100%;
@@ -70,6 +78,7 @@
 		.modal-content {
 			height: 100svh;
 			background: none;
+			border-radius: 0;
 		}
 
 		.modal-body {

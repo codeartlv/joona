@@ -41,4 +41,30 @@ return [
 	'email_invalid' => 'Email is invalid',
 	'data_saved' => 'Data saved.',
 	'select_files' => 'Select files',
+	'crop' => 'Crop',
+	'editorjs' => [
+		'tools' => [
+			'list' => [
+				'ordered' => 'Ordered list',
+				'unordered' => 'Unordered list',
+				'checklist' => 'Checklist',
+			],
+			'heading' => [
+				'name' => 'Heading',
+			],
+			'gallery' => [
+				'name' => 'Gallery',
+			],
+			'text' => [
+				'name' => 'Paragraph',
+			],
+			'quote' => [
+				'name' => 'Quote',
+			],
+			'table' => [
+				'name' => 'Table',
+			],
+		],
+	],
+	'cropper' => 'Image cropper',
 ];

@@ -3,24 +3,21 @@
 namespace Codeart\Joona\View\Components\Uploader;
 
 use Illuminate\Contracts\Support\Arrayable;
+use JsonSerializable;
 
-class UploadedFile implements Arrayable
+abstract readonly class UploadedFile implements JsonSerializable, Arrayable
 {
-	public $id = null;
-	public ?string $filename = null;
-	public ?string $thumbnail = null;
-	public bool $error = false;
-	public bool $locked = false;
-	public ?string $message = null;
-
-	public function toArray()
+	public function __construct(
+		public mixed $id = null,
+		public ?string $filename = null,
+		public ?string $caption = null,
+	)
 	{
-		return [
-			'id' => $this->id,
-			'filename' => $this->filename,
-			'thumbnail' => $this->thumbnail,
-			'error' => $this->error,
-			'message' => $this->message,
-		];
+		
+	}
+
+	public function jsonSerialize(): array
+	{
+		return $this->toArray();
 	}
 }

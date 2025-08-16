@@ -41,6 +41,7 @@ return [
 	'email_invalid' => 'Nekorekta epasta adrese',
 	'data_saved' => 'Dati saglabāti.',
 	'select_files' => 'Izvēlēties failus',
+	'crop' => 'Kadrēt',
 	'editorjs' => [
 		'tools' => [
 			'list' => [
@@ -65,4 +66,5 @@ return [
 			],
 		],
 	],
+	'cropper' => 'Kadrētājs',
 ];
