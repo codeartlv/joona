@@ -19,7 +19,7 @@ readonly class UploadResponse implements Arrayable
 	public function toArray()
 	{
 		return [
-			'file' => $this->file->toArray(),
+			'file' => $this->file?->toArray(),
 			'error' => $this->status === UploadStatus::FAILED,
 			'message' => $this->message,
 		];
