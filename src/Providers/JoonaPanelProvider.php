@@ -358,6 +358,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::common.cancel',
 			'joona::common.error',
 			'joona::common.delete',
+			'joona::common.crop',
 			'joona::common.no_results_found',
 			'joona::common.selected',
 			'joona::common.copied',

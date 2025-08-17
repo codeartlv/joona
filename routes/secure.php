@@ -1,5 +1,6 @@
 <?php
 
+use Codeart\Joona\Http\Controllers\Common\ComponentsController;
 use Codeart\Joona\Http\Controllers\Common\DashboardController;
 use Codeart\Joona\Http\Controllers\User\UserController;
 use Codeart\Joona\Http\Controllers\User\PermissionsController;
@@ -37,4 +38,7 @@ Route::name('joona.')->group(function () {
 
 	// Dashboard
 	Route::get('/', [DashboardController::class, 'dashboardIndex'])->name('dashboard');
+
+	// Component routes
+	Route::get('/crop', [ComponentsController::class, 'crop'])->name('cropper');
 });

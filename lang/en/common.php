@@ -67,4 +67,5 @@ return [
 		],
 	],
 	'cropper' => 'Image cropper',
+	'crop' => 'Crop',
 ];

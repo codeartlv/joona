@@ -1,6 +1,9 @@
 <div class="modal-content">
 	<div class="modal-header">
 		<h5 class="modal-title">{{$caption}}</h5>
+		@isset($header)
+			{{ $header }}
+		@endisset
 		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@lang('joona::common.close')">
 			@icon('close')
 		</button>

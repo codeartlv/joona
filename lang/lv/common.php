@@ -67,4 +67,5 @@ return [
 		],
 	],
 	'cropper' => 'Kadrētājs',
+	'crop' => 'Kadrēt',
 ];

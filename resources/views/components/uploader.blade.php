@@ -7,6 +7,7 @@
 		</figcaption>
 	</label>
 	<script data-role="data" type="application/ld+json">@json($files)</script>
+	
 	<template data-role="thumbnail">
 		<div class="upload-file uploader__item" data-id="0">
 			<figure data-role="thumbnail">
@@ -29,4 +30,6 @@
 			</div>
 		</div>
 	</template>
+
+	{{ $slot }}
 </div>

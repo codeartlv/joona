@@ -1,0 +1,36 @@
+.cropper {
+	position: relative;
+
+	select {
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 2;
+		width: auto;
+	}
+
+	.cropper-modal {
+		background: none;
+		opacity: 1;
+	}
+
+	.cropper-view-box {
+		outline-color: var(--bs-primary);
+	}
+
+	.cropper-point,
+	.cropper-line {
+		background: var(--bs-primary);
+	}
+
+	.cropper-wrapper {
+		height: 100%;
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
+			display: block;
+			margin: auto;
+		}
+	}
+}

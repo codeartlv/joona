@@ -1,5 +1,6 @@
 import { addSpinner, removeSpinner, parseJsonLd, parseRoute } from './../helpers';
 import Sortable from 'sortablejs';
+import ImageCropper from './cropper.js';
 
 class ManagedFile {
 	constructor({
@@ -86,6 +87,35 @@ export default class Uploader {
 					available: (file) => true,
 					callback: (file, thumbnailEl, uploader) => {
 						uploader.deleteFile(file, thumbnailEl);
+					},
+				},
+				crop: {
+					caption: trans('joona::common.crop'),
+					icon: 'crop',
+					available: (file) => {
+						return file.isImage() && this.params.croproute;
+					},
+					callback: (file, thumbnailEl, uploader) => {
+						if (!this.params.croproute) {
+							console.warn('Crop route not defined, cannot open crop dialog.');
+							return;
+						}
+
+						let presetData = element.querySelector('[data-role="crop-presets"]');
+
+						if (!presetData) {
+							return;
+						}
+
+						presetData = parseJsonLd(presetData);
+
+						let cropper = new ImageCropper(
+							file.id,
+							file.image,
+							parseRoute(this.params.croproute),
+							presetData
+						);
+						cropper.open();
 					},
 				},
 			},
