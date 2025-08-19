@@ -6,6 +6,7 @@ import { parseRoute } from './../helpers';
 export default class ImageCropper {
 	events = {
 		finish: [],
+		crop: [],
 	};
 
 	constructor(imageId, imageUrl, saveUrl, presets, options = {}) {
@@ -42,6 +43,7 @@ export default class ImageCropper {
 
 				this._form.instance.on('success', () => {
 					modal.close();
+					this._dispatchEvent('crop');
 				});
 			});
 
