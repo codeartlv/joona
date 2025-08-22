@@ -28,8 +28,10 @@ export default class AjaxForm {
 
 		let button = this.form.querySelector('button[type="submit"]');
 
-		if (!button && this.form.id) {
-			button = document.querySelector(`button[form=${this.form.id}]`);
+		let formId = formElement.getAttribute('id');
+
+		if (!button && formId) {
+			button = document.querySelector(`button[form=${formId}]`);
 		}
 		
 		if (button) {
