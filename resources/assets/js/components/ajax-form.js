@@ -28,6 +28,10 @@ export default class AjaxForm {
 
 		let button = this.form.querySelector('button[type="submit"]');
 
+		if (!button && this.form.id) {
+			button = document.querySelector(`button[form=${this.form.id}]`);
+		}
+		
 		if (button) {
 			this.submitButton = button;
 		} else if (this.settings.overlay == 'button') {
