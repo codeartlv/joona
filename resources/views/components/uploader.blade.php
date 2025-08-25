@@ -28,6 +28,9 @@
 				<span class="upload-file__icon fiv-sqo" data-role="file-icon"></span>
 				<span class="upload-file__filename" data-role="filename"></span>
 			</div>
+			<div class="upload-file__caption">
+				<x-input type="text" size="sm" placeholder="{{__('joona::common.image_caption')}}" data-role="caption" />
+			</div>
 		</div>
 	</template>
 

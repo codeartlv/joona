@@ -68,4 +68,5 @@ return [
 	],
 	'cropper' => 'Image cropper',
 	'crop' => 'Crop',
+	'image_caption' => 'Image caption',
 ];

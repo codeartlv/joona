@@ -68,4 +68,5 @@ return [
 	],
 	'cropper' => 'Kadrētājs',
 	'crop' => 'Kadrēt',
+	'image_caption' => 'Bildes paraksts',
 ];

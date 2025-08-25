@@ -79,6 +79,7 @@ export default class Uploader {
 			list: null,
 			name: '',
 			sortable: false,
+			captions: false,
 
 			fileOptions: {
 				remove: {
@@ -140,16 +141,17 @@ export default class Uploader {
 			this.fileSelector.multiple = true;
 		}
 
+		if (this.params.captions) {
+			element.classList.add('has-captions');
+		}
+
 		// Where thumbnails live
 		this.list = this.params.list ? document.querySelector(this.params.list) : this.element;
 		this.triggerEl = element.querySelector('[data-role="trigger"]');
 
 		// Hidden field that will carry ordered IDs
-		this.dataField = document.createElement('input');
-		this.dataField.type = 'hidden';
-		this.dataField.name = this.fileSelector.name;
+		this.fieldName = this.fileSelector.name;
 		this.fileSelector.setAttribute('name', '');
-		this.fileSelector.parentNode.insertBefore(this.dataField, this.fileSelector.nextSibling);
 
 		this.files = []; // array of ManagedFile instances
 
@@ -217,7 +219,7 @@ export default class Uploader {
 	 * Programmatically clear all files (UI + memory).
 	 */
 	clear() {
-		this.dataField.value = '';
+		this.clearIds();
 		this.files.forEach((f) => {
 			if (f.thumbnailEl) f.thumbnailEl.remove();
 		});
@@ -533,6 +535,12 @@ export default class Uploader {
 		const iconEl = thumbnailEl.querySelector('[data-role="file-icon"]');
 		const msgEl = thumbnailEl.querySelector('[data-role="message"]');
 		const thumbBg = thumbnailEl.querySelector('[data-role="thumbnail"]');
+		const captionEl = thumbnailEl.querySelector('[data-role="caption"]');
+
+		if (file.id != null) {
+			captionEl.name = this.fieldName + `[${file.id}][caption]`;
+			captionEl.value = file.caption;
+		}
 
 		if (filenameEl) {
 			filenameEl.innerText =
@@ -700,7 +708,21 @@ export default class Uploader {
 			if (f && typeof f.id === 'number' && !isNaN(f.id) && f.id > 0) ids.push(f.id);
 		});
 
-		this.dataField.value = ids.join(',');
+		this.clearIds();
+
+		for (let i = 0; i < ids.length; i++) {
+			let el = document.createElement('input');
+			el.dataset.role = 'file-id';
+			el.name = this.fieldName + `[${ids[i]}][id]`;
+			el.value = ids[i];
+			el.type = 'hidden';
+
+			this.element.appendChild(el);
+		}
+	}
+
+	clearIds() {
+		this.element.querySelectorAll('[data-role="file-id"]').forEach((e) => e.remove());
 	}
 
 	_reconcileOrderFromDOM() {
