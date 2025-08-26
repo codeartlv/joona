@@ -95,9 +95,12 @@ export default class Editor {
 			config: {
 				services: {
 					youtube: {
-						regex: /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i,
+						regex: /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?:[?&#].*)?$/i,
 						embedUrl: 'https://www.youtube.com/embed/<%= remote_id %>',
-						html: "<iframe width='100%' height='315' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>",
+						html:
+							"<iframe width='100%' height='315' frameborder='0' " +
+							"allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' " +
+							'allowfullscreen></iframe>',
 						height: 315,
 						width: 560,
 						id: (groups) => groups[0],
