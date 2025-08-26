@@ -2,13 +2,10 @@
 
 namespace Codeart\Joona\View\Components\Uploader;
 
-class ReceivedFiles
-{
-	/**
-	 * @var array<int,ReceivedFile>
-	 */
-	protected array $data;
+use Illuminate\Support\Collection;
 
+class ReceivedFiles extends Collection
+{
 	public function __construct($data)
 	{
 		if (!is_array($data)) {
@@ -17,14 +14,20 @@ class ReceivedFiles
 
 		$filteredData = [];
 
-		foreach ($data as $key => $value) {
-			$filteredData[] = new ReceivedFile(
-				id: (int) ($value['id'] ?? null),
-				caption: $value['caption'] ?? null
-			);
+		foreach ($data as $value) {
+			if ($value instanceof ReceivedFile) {
+				$filteredData[] = $value;
+			} elseif (is_array($value)) {
+				$filteredData[] = new ReceivedFile(
+					id: (int) ($value['id'] ?? 0),
+					caption: $value['caption'] ?? null
+				);
+			} else {
+				$filteredData[] = $value;
+			}
 		}
 
-		$this->data = $filteredData;
+		parent::__construct($filteredData);
 	}
 
 	public static function fromPost(string $fieldName): self
@@ -36,31 +39,5 @@ class ReceivedFiles
 		}
 
 		return new self($data);
-	}
-
-	public function getIds(): array
-	{
-		return array_map(function($file){
-			return $file->id;
-		}, $this->data);
-	}
-
-	public function files(): array
-	{
-		return $this->data;
-	}
-
-	public function getFirstId(): ?int
-	{
-		if (empty($this->data)) {
-			return null;
-		}
-
-		return $this->data[0]->id;
-	}
-
-	public function hasFiles(): bool
-	{
-		return !empty($this->data);
 	}
 }
