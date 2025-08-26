@@ -90,7 +90,32 @@ export default class Editor {
 		params.tools.list = List;
 		params.tools.quote = Quote;
 		params.tools.table = Table;
-		params.tools.embed = Embed;
+		params.tools.embed = {
+			class: Embed,
+			config: {
+				services: {
+					youtube: {
+						regex: /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i,
+						embedUrl: 'https://www.youtube.com/embed/<%= remote_id %>',
+						html: "<iframe width='100%' height='315' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen></iframe>",
+						height: 315,
+						width: 560,
+						id: (groups) => groups[0],
+					},
+					tiktok: {
+						regex: /https?:\/\/(?:www\.|m\.)?tiktok\.com\/@[\w.-]+\/video\/(\d+)(?:[?#].*)?$/i,
+						embedUrl: 'https://www.tiktok.com/embed/<%= remote_id %>',
+						html: "<iframe src='<%= embedUrl %>' width='325' height='575' frameborder='0' allowfullscreen></iframe>",
+						height: 575,
+						width: 325,
+						id: (groups) => groups[0],
+					},
+					facebook: true,
+					instagram: true,
+					pinterest: true,
+				},
+			},
+		};
 
 		if (this.settings.upload_url) {
 			params.tools.gallery = {
@@ -110,3 +135,4 @@ export default class Editor {
 		return this.editor;
 	}
 }
+
