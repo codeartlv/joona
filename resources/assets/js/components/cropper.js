@@ -49,7 +49,7 @@ export default class ImageCropper {
 
 			this._mount = wnd.querySelector('[data-role="cropper.root"]');
 
-			this._opts['select-container'] = wnd.querySelector(this._mount.dataset.selectContainer);
+			this._opts['select-container'] = null; // dropdown removed
 			this._opts['save-button'] = wnd.querySelector(this._mount.dataset.saveButton);
 
 			this.ready();
@@ -59,27 +59,21 @@ export default class ImageCropper {
 	ready() {
 		// Internal state
 		this._root = null;
-		this._controls = null;
-		this._select = null;
-		this._img = null;
-		this._cropper = null;
+		this._grid = null;
+		this._imgByPreset = new Map(); // id -> <img>
+		this._cropperByPreset = new Map(); // id -> CropperJS
 		this._saveBtn = null;
 
-		this._savedData = new Map();
-		this._initialData = new Map();
-		this._dirty = new Set();
-		this._currentPresetId = null;
+		// per-preset data
+		this._data = new Map(); // id -> crop data (natural image coords)
+		this._started = new Set(); // id where user initiated a crop
+		this._dirty = new Set(); // id where crop differs from baseline (baseline is "no crop")
 
-		this._onCropEnd = null;
+		this._onCropEndHandlers = new Map(); // id -> handler
+		this._onCropStartHandlers = new Map(); // id -> handler
 
 		this._buildUi();
-		this._wireSelect();
-
-		this._img.onload = () => {
-			this._currentPresetId = this._presets[0].id;
-			this._initCropper(this._presets[0]._ratio, this._currentPresetId);
-		};
-		this._img.src = this._imageUrl;
+		this._mountAllCroppers();
 	}
 
 	on(event, callback) {
@@ -94,45 +88,50 @@ export default class ImageCropper {
 		}
 	}
 
-	/** Current preset id. */
+	/** Deprecated with multi-view: always null to signal "no single current preset". */
 	getCurrentPresetId() {
-		return this._currentPresetId;
+		return null;
 	}
 
-	/** Current crop data (natural image coordinates). */
-	getCurrentCropData() {
-		return this._cropper ? this._cropper.getData() : null;
+	/** Multi-view helpers */
+	getCropData(presetId) {
+		return this._data.get(presetId) ?? null;
 	}
 
-	/** Canvas of the cropped region (may be tainted if image is cross-origin without CORS). */
-	getCroppedCanvas(options) {
-		return this._cropper ? this._cropper.getCroppedCanvas(options) : null;
+	getCroppedCanvas(presetId, options) {
+		const c = this._cropperByPreset.get(presetId);
+		return c ? c.getCroppedCanvas(options) : null;
 	}
 
 	/**
 	 * Save all modified crops.
 	 * Returns an object keyed by preset id, containing the crop data and preset meta.
-	 * Only includes presets that differ from their initial auto-crop (i.e., actually changed).
+	 * Only includes presets where the user actually started cropping and ended with a crop box.
 	 */
 	save() {
-		if (this._cropper && this._currentPresetId) {
-			const cur = this._cropper.cropped ? this._cropper.getData() : null;
+		// consolidate latest data from active croppers
+		for (const [id, cropper] of this._cropperByPreset) {
+			if (!cropper) continue;
+			const hasCrop = !!cropper.cropped;
+			const cur = hasCrop ? cropper.getData() : null;
+			this._data.set(id, cur);
 
-			this._savedData.set(this._currentPresetId, cur);
-			const base = this._initialData.get(this._currentPresetId);
-
-			if (this._isDifferent(cur, base)) {
-				this._dirty.add(this._currentPresetId);
+			// baseline is "no crop"
+			if (this._isDifferent(cur, null)) {
+				this._dirty.add(id);
 			} else {
-				this._dirty.delete(this._currentPresetId);
+				this._dirty.delete(id);
 			}
 		}
 
 		const result = {};
-
 		for (const id of this._dirty) {
-			const data = this._savedData.get(id);
+			// include only if the user started cropping on this preset
+			if (!this._started.has(id)) continue;
+
+			const data = this._data.get(id);
 			if (!data) continue;
+
 			const preset = this._presets.find((p) => p.id === id);
 			result[id] = {
 				crop: { ...data },
@@ -149,21 +148,30 @@ export default class ImageCropper {
 	}
 
 	destroy() {
-		if (this._cropper) {
-			this._detachRuntimeListeners();
-			this._cropper.destroy();
-			this._cropper = null;
+		// detach listeners and destroy croppers
+		for (const [id, img] of this._imgByPreset) {
+			const endH = this._onCropEndHandlers.get(id);
+			const startH = this._onCropStartHandlers.get(id);
+			if (img && endH) img.removeEventListener('cropend', endH);
+			if (img && startH) img.removeEventListener('cropstart', startH);
 		}
+
+		for (const [, cropper] of this._cropperByPreset) {
+			if (cropper) cropper.destroy();
+		}
+
+		this._cropperByPreset.clear();
+		this._imgByPreset.clear();
+		this._onCropEndHandlers.clear();
+		this._onCropStartHandlers.clear();
+
 		if (this._root) {
 			this._root.replaceChildren();
 		}
-		this._select = null;
-		this._img = null;
-		this._controls = null;
-		this._savedData.clear();
-		this._initialData.clear();
+
+		this._data.clear();
 		this._dirty.clear();
-		this._currentPresetId = null;
+		this._started.clear();
 		this._presets = [];
 	}
 
@@ -173,12 +181,12 @@ export default class ImageCropper {
 		if (!this._root) {
 			this._root = document.createElement('div');
 			this._root.className = 'cropper-wrapper';
-			this._root.style.width = '100%';
 			this._mount.appendChild(this._root);
 		} else {
 			this._root.replaceChildren();
 		}
 
+		// Save button
 		if (!this._opts['save-button']) {
 			this._saveBtn = document.createElement('button');
 			this._saveBtn.classList.add('btn');
@@ -207,138 +215,134 @@ export default class ImageCropper {
 			this._form.instance.handler.submit();
 		});
 
-		this._controls = document.createElement('div');
-		this._controls.className = 'cropper-controls';
+		// Grid container to render ALL presets
+		this._grid = document.createElement('div');
+		this._grid.className = 'cropper-grid';
+		this._root.appendChild(this._grid);
+	}
 
-		this._select = document.createElement('select');
-		this._select.setAttribute('aria-label', 'Crop presets');
-		this._select.classList.add('form-select');
-		this._select.classList.add('form-select-sm');
-
+	_mountAllCroppers() {
+		// For each preset, render a tile with caption + image
 		for (const p of this._presets) {
-			const opt = document.createElement('option');
-			opt.value = p.id;
-			opt.textContent = p.caption;
-			this._select.appendChild(opt);
+			const tile = document.createElement('div');
+			tile.className = 'cropper-tile';
+
+			const img = document.createElement('img');
+			img.alt = `Image to crop for preset "${p.caption}"`;
+			img.style.maxWidth = '100%';
+			img.style.height = 'auto';
+			img.style.display = 'block';
+
+			tile.appendChild(img);
+			this._grid.appendChild(tile);
+
+			this._imgByPreset.set(p.id, img);
+
+			img.onload = () => {
+				this._initCropperForPreset(p, img);
+			};
+			img.src = this._imageUrl;
 		}
-
-		if (this._opts['select-container']) {
-			this._opts['select-container'].appendChild(this._select);
-		} else {
-			this._controls.appendChild(this._select);
-		}
-
-		this._img = document.createElement('img');
-		this._img.alt = 'Image to crop';
-		this._img.style.maxWidth = '100%';
-		this._img.style.height = 'auto';
-		this._img.style.display = 'block';
-
-		this._root.appendChild(this._controls);
-		this._root.appendChild(this._img);
 	}
 
-	_wireSelect() {
-		this._select.onchange = () => {
-			const nextId = this._select.value;
-			if (nextId === this._currentPresetId) return;
+	_initCropperForPreset(preset, imgEl) {
+		// Ensure any prior cropper for this id is destroyed first (unlikely here, but safe)
+		const prev = this._cropperByPreset.get(preset.id);
 
-			// Save current crop for current preset
-			if (this._cropper && this._currentPresetId) {
-				const cur = this._cropper.cropped ? this._cropper.getData() : null;
-				this._savedData.set(this._currentPresetId, cur);
-				const base = this._initialData.has(this._currentPresetId)
-					? this._initialData.get(this._currentPresetId)
-					: null;
-				if (this._isDifferent(cur, base)) this._dirty.add(this._currentPresetId);
-				else this._dirty.delete(this._currentPresetId);
-			}
-
-			// Switch preset
-			const preset = this._presets.find((p) => p.id === nextId);
-			if (!preset) return;
-			this._currentPresetId = preset.id;
-			this._initCropper(preset._ratio, preset.id);
-		};
-	}
-
-	_initCropper(aspectRatio, presetId) {
-		if (this._cropper) {
-			this._detachRuntimeListeners();
-			this._cropper.destroy();
-			this._cropper = null;
+		if (prev) {
+			prev.destroy();
+			this._cropperByPreset.delete(preset.id);
 		}
 
-		const saved = presetId ? this._savedData.get(presetId) : undefined;
-
-		this._cropper = new CropperJS(this._img, {
-			autoCrop: false,
+		const cropper = new CropperJS(imgEl, {
+			autoCrop: false, // do not show crop until user starts
 			responsive: true,
 			background: false,
 			dragMode: 'crop',
 			...this._opts.cropperOptions,
-			aspectRatio,
+			aspectRatio: preset._ratio,
 			viewMode: 1,
 			zoomOnWheel: false,
 			checkCrossOrigin: false,
+			crop: (e) => {
+				let data = cropper.getCropBoxData();
+				let hasCrop = 'left' in data;
+
+				const container = imgEl
+					.closest('.cropper-tile')
+					.querySelector('.cropper-container');
+				container.classList.toggle('has-crop', hasCrop);
+			},
 			ready: () => {
-				if (saved) {
-					// If we have a previous crop for this preset, show and restore it
-					this._cropper.crop(); // ensure crop box is visible
-					try {
-						this._cropper.setData(saved);
-					} catch (_) {}
-				} else {
-					// No previous crop: keep it invisible
-					this._cropper.clear();
-				}
+				// No prior state restoration by design
+				// Baseline is "no crop": keep cleared initially
+				cropper.clear();
 
-				// Baseline: if first time we see this preset, record “no crop” or restored crop
-				if (!this._initialData.has(presetId)) {
-					this._initialData.set(presetId, saved || null);
-				}
+				const header = document.createElement('div');
+				header.className = 'cropper-tile__header';
+				header.textContent = `${preset.caption} (${preset.width}×${preset.height})`;
 
-				this._attachRuntimeListeners();
+				const canvas = imgEl.closest('.cropper-tile').querySelector('.cropper-canvas');
+				canvas.appendChild(header);
 
+				const reset = document.createElement('a');
+				reset.href = 'javascript:;';
+				reset.className = 'material-symbols-outlined cropper__reset';
+				reset.text = 'reset_focus';
+				canvas.appendChild(reset);
+
+				const dragBox = imgEl.closest('.cropper-tile').querySelector('.cropper-drag-box');
+				dragBox.addEventListener('click', (e) => {
+					const under = (document.elementsFromPoint?.(e.clientX, e.clientY) || []).find(
+						(el) => el.closest && el.closest('a')
+					);
+
+					const a = under && under.closest ? under.closest('a') : null;
+					if (a) {
+						a.click();
+						e.preventDefault();
+						e.stopPropagation();
+					}
+				});
+
+				reset.addEventListener('click', () => {
+					cropper.clear();
+				});
+
+				// downstream hook if provided
 				if (typeof this._opts.cropperOptions?.ready === 'function') {
-					this._opts.cropperOptions.ready.call(this._cropper);
+					this._opts.cropperOptions.ready.call(cropper);
 				}
 			},
 		});
-	}
 
-	_attachRuntimeListeners() {
-		if (!this._img) {
-			return;
-		}
+		// Attach per-preset listeners
+		const onStart = () => {
+			this._started.add(preset.id);
+			// Ensure crop box is visible once the user starts interacting
+			try {
+				cropper.crop();
+			} catch (_) {}
+		};
 
-		this._onCropEnd = () => {
-			if (!this._cropper || !this._currentPresetId) {
-				return;
-			}
+		const onEnd = () => {
+			// Update stored data and dirty flag against baseline (null/no-crop)
+			const cur = cropper.cropped ? cropper.getData() : null;
+			this._data.set(preset.id, cur);
 
-			const cur = this._cropper.cropped ? this._cropper.getData() : null;
-
-			this._savedData.set(this._currentPresetId, cur);
-
-			const base = this._initialData.get(this._currentPresetId);
-
-			if (this._isDifferent(cur, base)) {
-				this._dirty.add(this._currentPresetId);
+			if (this._isDifferent(cur, null)) {
+				this._dirty.add(preset.id);
 			} else {
-				this._dirty.delete(this._currentPresetId);
-				s;
+				this._dirty.delete(preset.id);
 			}
 		};
-		this._img.addEventListener('cropend', this._onCropEnd, { passive: true });
-	}
 
-	_detachRuntimeListeners() {
-		if (this._img && this._onCropEnd) {
-			this._img.removeEventListener('cropend', this._onCropEnd);
-		}
+		imgEl.addEventListener('cropstart', onStart, { passive: true });
+		imgEl.addEventListener('cropend', onEnd, { passive: true });
 
-		this._onCropEnd = null;
+		this._onCropStartHandlers.set(preset.id, onStart);
+		this._onCropEndHandlers.set(preset.id, onEnd);
+		this._cropperByPreset.set(preset.id, cropper);
 	}
 
 	_normalizePresets(input) {
