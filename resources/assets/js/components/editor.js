@@ -56,7 +56,12 @@ export default class Editor {
 		this.container.appendChild(editorWrapper);
 	}
 
-	init(params) {
+	init(params, options) {
+		options = {
+			beforeInit: () => {},
+			...(options || {}),
+		};
+
 		params.holder = this.editorId;
 		params.data = parseJsonLd(this.container.querySelector('[data-role="data"]'));
 
@@ -133,9 +138,9 @@ export default class Editor {
 			};
 		}
 
+		options.beforeInit(params);
 		this.editor = new EditorJS(params);
 
 		return this.editor;
 	}
 }
-
