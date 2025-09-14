@@ -14,7 +14,7 @@ export default class Offcanvas {
 		const offcanvasEl = document.querySelector(`.offcanvas--${this.id}`);
 
 		if (!offcanvasEl) {
-			console.warn(`Offcanvas with ID ${this.id} is not currently opened.`);
+			this.open(newUrl);
 			return;
 		}
 
