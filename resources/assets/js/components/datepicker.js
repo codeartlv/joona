@@ -24,6 +24,7 @@ export default class Datepicker {
 			timepicker: false,
 			mindate: '',
 			firstDay: 1,
+			view: 'days',
 			...params,
 		};
 
@@ -130,6 +131,8 @@ export default class Datepicker {
 			startDate: new Date(new Date().setHours(0, 0, 0, 0)),
 			altFieldDateFormat: 'yyyy-MM-dd' + (this.params.timepicker ? ' HH:mm:00' : ''),
 			altField: this.valueField,
+			view: this.params.view,
+			minView: this.params.view,
 			onSelect: ({ date }) => {
 				this.trigger('select', date);
 				this.container.classList.toggle('has-date', date);
