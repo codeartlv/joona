@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * User journal entry.
  *
+ * @property string $user_id 
+ * @property string $session_id 
+ * @property string $action 
+ * @property string $category 
  * @property string $object_id 
+ * @property string $parameters 
+ * @property string $ua 
  */
 class LogEntry extends Model
 {
