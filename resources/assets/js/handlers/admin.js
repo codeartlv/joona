@@ -47,6 +47,7 @@ export default class Admin extends Handler {
 	tooltip(element, parameters) {
 		return new BootstrapTooltip(element, {
 			title: parameters.title,
+			html: parameters.html || false,
 		});
 	}
 
