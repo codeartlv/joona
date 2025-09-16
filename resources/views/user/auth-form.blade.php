@@ -31,7 +31,7 @@
 				</div>
 			</div>
 			<div class="card-footer">
-				<x-button type="submit" role="primary" class="btn-block" :caption="__('joona::user.auth.button')" icon="key" />
+				<x-button type="submit" role="primary" disabled class="btn-block" :caption="__('joona::user.auth.button')" icon="key" />
 
 				<p class="card-auth__forgot-pass">
 					<a href="{{route('joona.user.recover-form')}}">@lang('joona::user.recover.forgot_password')</a>

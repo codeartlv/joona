@@ -33,9 +33,10 @@ export default class AjaxForm {
 		if (!button && formId) {
 			button = document.querySelector(`button[form=${formId}]`);
 		}
-		
+
 		if (button) {
 			this.submitButton = button;
+			this.submitButton.disabled = false;
 		} else if (this.settings.overlay == 'button') {
 			this.settings.overlay = 'overlay';
 		}
