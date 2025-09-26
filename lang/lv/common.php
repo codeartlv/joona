@@ -8,6 +8,7 @@ return [
 	'save' => 'Saglabāt',
 	'records' => ':0 ieraksti|:0 ieraksts',
 	'never' => 'Nekad',
+	'search' => 'Meklēt',
 	'ok' => 'Labi',
 	'cancel' => 'Atcelt',
 	'error' => 'Kļūda',

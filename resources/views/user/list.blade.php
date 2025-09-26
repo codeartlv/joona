@@ -5,6 +5,22 @@
 		@endif
 	</x-slot>
 
+	<x-slot name="sidebar">
+		<form action="" method="get">
+			<div class="card">
+				<div class="card-header">@lang('common.data_filter')</div>
+				<div class="card-body">
+					<div class="form-group">
+						<x-input :label="__('joona::common.search')" name="search" :value="$search" />
+					</div>
+				</div>
+				<div class="card-footer">
+					<x-button type="submit" icon="search" :caption="__('common.search')" />
+				</div>
+			</div>
+		</form>
+	</x-slot>
+
 	<div class="block">
 		<table class="table table-striped table-mobile-stacked">
 			<thead>

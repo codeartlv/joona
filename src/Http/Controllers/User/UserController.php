@@ -77,10 +77,20 @@ class UserController
 	 */
 	public function userList()
 	{
+		$search = request()->query('search');
 		$admin = Auth::user();
 		$chunk_size = 50;
-		$user_chunk = AdminUser::with('roles')->paginate($chunk_size);
+		$users = AdminUser::with('roles');
+		
+		if ($search) {
+			$users
+				->whereLike('email', '%'.$search.'%')
+				->orWhereLike('first_name', '%'.$search.'%')
+				->orWhereLike('last_name', '%'.$search.'%');
+		}
 
+		$user_chunk = $users->paginate($chunk_size);
+		
 		$users = $user_chunk->getCollection()->map(function ($user) use ($admin) {
 			return $user->toArray() + [
 				'can_manage' => $user->canBeManagedBy($admin),
@@ -93,6 +103,7 @@ class UserController
 			'total' => $user_chunk->total(),
 			'size' => $chunk_size,
 			'users' => $users,
+			'search' => $search,
 			'uses_permissions' => Joona::usesRolesAndPermissions(),
 		]);
 	}

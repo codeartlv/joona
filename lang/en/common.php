@@ -8,6 +8,7 @@ return [
 	'save' => 'Save',
 	'records' => ':0 record|:0 records',
 	'never' => 'Never',
+	'search' => 'Search',
 	'ok' => 'OK',
 	'cancel' => 'Cancel',
 	'error' => 'Error',
