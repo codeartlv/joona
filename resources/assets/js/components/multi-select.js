@@ -1,7 +1,7 @@
 export default class MultiSelect {
 	constructor(container, options = {}) {
 		this.container = container;
-
+		this.searchInput = this.container.querySelector('[data-role="search-keyword"]');
 		this.toggleCheck = this.container.querySelector('input[data-role="toggle"]');
 
 		let dropdown = this.container.querySelector('.dropdown-menu');
@@ -31,10 +31,68 @@ export default class MultiSelect {
 
 		// Initialize the state of the toggle checkbox
 		this.updateChecked();
+
+		if (this.searchInput) {
+			const onSearch = () => this.filterOptions(this.searchInput.value);
+
+			this.searchInput.addEventListener('input', onSearch);
+
+			this.searchInput.addEventListener('paste', (e) => {
+				const pasted = (e.clipboardData || window.clipboardData)?.getData('text') ?? '';
+				// apply immediately using the pasted text
+				this.filterOptions(pasted);
+				// then once the input's value updates
+				setTimeout(onSearch, 0);
+			});
+
+			// initial filter (no-op if empty)
+			this.filterOptions(this.searchInput.value);
+		}
 	}
 
 	getOptions() {
 		return this.container.querySelectorAll('input[data-role="option"]:checked');
+	}
+
+	filterOptions(keyword) {
+		const normalize = (s) =>
+			String(s || '')
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.toLocaleLowerCase();
+
+		const q = normalize(keyword).trim();
+
+		const inputs = this.container.querySelectorAll('input[data-role="option"]');
+		inputs.forEach((input) => {
+			const label =
+				input.closest('label') ||
+				(input.id
+					? this.container.querySelector(
+							`label[for="${
+								typeof CSS !== 'undefined' && CSS.escape
+									? CSS.escape(input.id)
+									: input.id
+							}"]`
+					  )
+					: null);
+
+			if (!label) return;
+
+			const match = !q || normalize(label.textContent).includes(q);
+
+			// Toggle visibility on the wrapper <li.form-multiselect__option>
+			const item =
+				label.closest('li.form-multiselect__option') ||
+				input.closest('li.form-multiselect__option');
+
+			if (item) {
+				item.classList.toggle('d-none', !match);
+			} else {
+				// Fallback if no <li> wrapper exists
+				label.style.display = match ? '' : 'none';
+			}
+		});
 	}
 
 	updateChecked() {

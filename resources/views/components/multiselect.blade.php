@@ -7,6 +7,9 @@
 		<em data-role="selected-text"></em>
 	</div>
 	<ul class="dropdown-menu">
+		<li class="form-multiselect__search">
+			<input class="form-control form-control-sm" type="text" data-role="search-keyword" placeholder="{{__('joona::common.search')}}" />
+		</li>
 		@if (!empty($options))
 			@if ($type == 'checkbox')
 				<li class="form-multiselect__toggle-all">

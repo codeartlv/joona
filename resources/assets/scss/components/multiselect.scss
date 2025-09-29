@@ -10,6 +10,15 @@
 		}
 	}
 
+	.form-multiselect__search {
+		padding: 0 $spacer * 0.5 $spacer * 0.45 $spacer * 0.5;
+		cursor: text;
+
+		input {
+			cursor: text;
+		}
+	}
+
 	.dropdown-menu {
 		width: 100%;
 		top: 100% !important;
