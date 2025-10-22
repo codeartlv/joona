@@ -104,7 +104,7 @@
 	@include media-breakpoint-down(md) {
 		> li {
 			> a {
-				padding: 0 $spacer * 0.5;
+				padding: 0 $spacer * 0.25;
 			}
 
 			&.header-nav__mobile-menu {
