@@ -176,6 +176,13 @@ export default class AjaxForm {
 				case 'reload':
 					document.location = document.location;
 					break;
+				case 'close_popup_reload':
+					if (window.JoonaModalInstance) {
+						window.JoonaModalInstance.on('close', () => {
+							document.location = document.location;
+						});
+					}
+					break;
 				case 'close_popup':
 					if (window.JoonaModalInstance) {
 						window.JoonaModalInstance.close();
