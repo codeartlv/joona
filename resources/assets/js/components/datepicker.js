@@ -23,6 +23,7 @@ export default class Datepicker {
 			timeFormat: 'HH:mm',
 			timepicker: false,
 			mindate: '',
+			inline: false,
 			firstDay: 1,
 			view: 'days',
 			...params,
@@ -30,6 +31,8 @@ export default class Datepicker {
 
 		this.params.timepicker =
 			this.params.timepicker === 'true' || this.params.timepicker === true;
+
+		this.params.inline = this.params.inline === 'true' || this.params.inline === true;
 
 		this.init();
 	}
@@ -128,6 +131,7 @@ export default class Datepicker {
 			dateFormat: this.params.format,
 			timeFormat: this.params.timeFormat,
 			timepicker: this.params.timepicker,
+			inline: this.params.inline,
 			startDate: new Date(new Date().setHours(0, 0, 0, 0)),
 			altFieldDateFormat: 'yyyy-MM-dd' + (this.params.timepicker ? ' HH:mm:00' : ''),
 			altField: this.valueField,

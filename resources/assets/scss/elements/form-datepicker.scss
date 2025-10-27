@@ -1,0 +1,7 @@
+.input-group.datepicker {
+	&[data-inline='true'] {
+		input[data-role='datepicker'] {
+			display: none;
+		}
+	}
+}

@@ -97,4 +97,14 @@
 			background: var(--bs-gray-200);
 		}
 	}
+
+	&.-inline- {
+		--adp-day-cell-height: 1fr;
+		width: 100%;
+
+		.air-datepicker-cell,
+		.air-datepicker-body--day-name {
+			aspect-ratio: 1/1;
+		}
+	}
 }
