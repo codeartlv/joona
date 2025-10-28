@@ -16,6 +16,7 @@ export default class Tag {
 			valuesdataid: 'tags',
 			name: element.name,
 			free: false,
+			limit: 0,
 			...params,
 		};
 
@@ -25,8 +26,7 @@ export default class Tag {
 		this.initialValues = parseJsonLd(script);
 		script.remove();
 
-		// Initialize Tagify
-		this.#tagify = new Tagify(this.#inputEl, {
+		const settings = {
 			duplicates: false,
 			enforceWhitelist: !this.#params.free,
 			whitelist: this.initialValues,
@@ -38,7 +38,14 @@ export default class Tag {
 				fuzzySearch: true,
 				enabled: true,
 			},
-		});
+		};
+
+		if (this.#params.limit && Number(this.#params.limit) > 0) {
+			settings.maxTags = Number(this.#params.limit);
+		}
+
+		// Initialize Tagify
+		this.#tagify = new Tagify(this.#inputEl, settings);
 
 		this.#tagify.addTags(this.initialValues);
 
@@ -136,3 +143,4 @@ export default class Tag {
 		this.#tagify.destroy();
 	}
 }
+
