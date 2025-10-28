@@ -23,6 +23,7 @@ export default class Datepicker {
 			timeFormat: 'HH:mm',
 			timepicker: false,
 			mindate: '',
+			maxdate: '',
 			inline: false,
 			firstDay: 1,
 			view: 'days',
@@ -145,6 +146,10 @@ export default class Datepicker {
 
 		if (this.params.mindate) {
 			settings.minDate = new Date(this.params.mindate);
+		}
+
+		if (this.params.maxdate) {
+			settings.maxDate = new Date(this.params.maxdate);
 		}
 
 		this.instance = new AirDatepicker(this.input, settings);
