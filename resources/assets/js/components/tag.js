@@ -15,6 +15,7 @@ export default class Tag {
 			route: null,
 			valuesdataid: 'tags',
 			name: element.name,
+			free: false,
 			...params,
 		};
 
@@ -27,7 +28,7 @@ export default class Tag {
 		// Initialize Tagify
 		this.#tagify = new Tagify(this.#inputEl, {
 			duplicates: false,
-			enforceWhitelist: true,
+			enforceWhitelist: !this.#params.free,
 			whitelist: this.initialValues,
 			autocomplete: true,
 			addTagOnBlur: false,
@@ -115,10 +116,15 @@ export default class Tag {
 			.reverse()
 			.forEach((tag) => {
 				const input = document.createElement('input');
+
 				input.type = 'hidden';
 				input.name = `${this.#params.name}[]`;
 				input.dataset.id = this.#params.valuesdataid;
-				input.value = tag.id;
+				input.value = this.#params.free
+					? tag.id
+						? `${tag.id}|`
+						: `0|${tag.value}`
+					: tag.id;
 				this.#inputEl.after(input);
 			});
 	}
