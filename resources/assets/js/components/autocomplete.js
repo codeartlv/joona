@@ -4,7 +4,10 @@ import 'devbridge-autocomplete/dist/jquery.autocomplete';
 export default class Autocomplete {
 	events = {
 		select: [],
+		change: [],
 	};
+
+	selected = null;
 
 	constructor(element, data) {
 		this.element = $(element);
@@ -90,7 +93,10 @@ export default class Autocomplete {
 	}
 
 	clear() {
+		this.selected = null;
+
 		if (!this.dataField.val()) {
+			this.trigger('change', null);
 			return;
 		}
 
@@ -104,6 +110,7 @@ export default class Autocomplete {
 
 	change() {
 		this.element.toggleClass('selected', this.id > 0 || this.id.length > 0);
+		this.trigger('change', null);
 	}
 
 	on(event, callback) {
@@ -135,6 +142,7 @@ export default class Autocomplete {
 			this.clearToggle.prop('disabled', false);
 		}
 
+		this.selected = suggestion;
 		this.trigger('select', suggestion);
 		this.change();
 	}
@@ -146,5 +154,9 @@ export default class Autocomplete {
 	clearBtn() {
 		this.clear();
 		this.focus();
+	}
+
+	value() {
+		return this.selected;
 	}
 }
