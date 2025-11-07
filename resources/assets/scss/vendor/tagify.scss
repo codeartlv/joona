@@ -63,6 +63,7 @@
 	margin: 0.25rem 0 0px 0.2rem;
 	overflow: hidden;
 	border-radius: $border-radius;
+	background: var(--tag-bg);
 
 	&:hover > div::before {
 		top: 0 !important;
