@@ -78,7 +78,7 @@ export default class Tag {
 		this.#tagify.settings.whitelist = [];
 		this.#tagify.loading(true).dropdown.hide();
 
-		const url = `${parseRoute(this.#params.route)}?query=${encodeURIComponent(value)}`;
+		const url = `${parseRoute(this.#params.route, { query: value })}`;
 
 		try {
 			const res = await fetch(url, {
@@ -143,4 +143,3 @@ export default class Tag {
 		this.#tagify.destroy();
 	}
 }
-

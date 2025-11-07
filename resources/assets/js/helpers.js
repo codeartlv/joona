@@ -59,7 +59,10 @@ export function parseJsonLd(element) {
 	return data;
 }
 
-export function parseRoute(arg) {
+export function parseRoute(arg, params) {
+	// Initialize parameters object
+	params = params || {};
+
 	// Use a regular expression to extract the route and the parameters part
 	const routePattern = /^([^\[]+)/;
 	const paramsPattern = /\[([^\]]+)\]/;
@@ -69,9 +72,6 @@ export function parseRoute(arg) {
 
 	// Extract route
 	let route = routeMatch ? routeMatch[0] : '';
-
-	// Initialize parameters object
-	let params = {};
 
 	// Extract and process parameters string if it exists
 	if (paramsMatch) {
