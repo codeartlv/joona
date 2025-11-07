@@ -9,6 +9,10 @@ export default class Tag {
 	#debounceTimer = null;
 	static _csrfToken = null;
 
+	events = {
+		change: [],
+	};
+
 	constructor(element, params = {}) {
 		this.#inputEl = element;
 		this.#params = {
@@ -20,6 +24,7 @@ export default class Tag {
 			...params,
 		};
 
+		this.eventListeners = new Map();
 		this.#inputEl.name = '';
 
 		const script = document.querySelector(`script[data-id="${this.#params.valuesdataid}"]`);
@@ -61,6 +66,22 @@ export default class Tag {
 		this.#tagify.on('change', () => this.#updateHiddenInputs());
 
 		this.#updateHiddenInputs();
+	}
+
+	on(event, callback) {
+		if (!this.eventListeners.has(event)) {
+			this.eventListeners.set(event, []);
+		}
+
+		this.eventListeners.get(event).push(callback);
+	}
+
+	trigger(event, ...args) {
+		const listeners = this.eventListeners.get(event);
+
+		if (listeners && listeners.length) {
+			listeners.forEach((listener) => listener(...args));
+		}
 	}
 
 	// Debounced input handler
@@ -110,6 +131,10 @@ export default class Tag {
 		return this.#tagify.value; // Array of {value, id}
 	}
 
+	value() {
+		return this.values;
+	}
+
 	// Rebuild hidden inputs after any change
 	#updateHiddenInputs() {
 		// Remove old hidden fields
@@ -134,6 +159,8 @@ export default class Tag {
 					: tag.id;
 				this.#inputEl.after(input);
 			});
+
+		this.trigger('change');
 	}
 
 	// Expose a destroy method to clean up
@@ -141,5 +168,9 @@ export default class Tag {
 		clearTimeout(this.#debounceTimer);
 		this.#abortController?.abort();
 		this.#tagify.destroy();
+	}
+
+	clear() {
+		this.#tagify.removeAllTags();
 	}
 }
