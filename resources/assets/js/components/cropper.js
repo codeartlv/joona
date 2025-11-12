@@ -245,8 +245,26 @@ export default class ImageCropper {
 		}
 	}
 
+	_computeCenteredFitRect(targetRatio, imgW, imgH) {
+		const imgRatio = imgW / imgH;
+		let width, height;
+
+		if (imgRatio >= targetRatio) {
+			// image is wider — limit by height
+			height = imgH;
+			width = Math.round(height * targetRatio);
+		} else {
+			// image is taller — limit by width
+			width = imgW;
+			height = Math.round(width / targetRatio);
+		}
+
+		const x = Math.round((imgW - width) / 2);
+		const y = Math.round((imgH - height) / 2);
+		return { x, y, width, height };
+	}
+
 	_initCropperForPreset(preset, imgEl) {
-		// Ensure any prior cropper for this id is destroyed first (unlikely here, but safe)
 		const prev = this._cropperByPreset.get(preset.id);
 
 		if (prev) {
@@ -255,7 +273,7 @@ export default class ImageCropper {
 		}
 
 		const cropper = new CropperJS(imgEl, {
-			autoCrop: false, // do not show crop until user starts
+			autoCrop: true,
 			responsive: true,
 			background: false,
 			dragMode: 'crop',
@@ -264,7 +282,7 @@ export default class ImageCropper {
 			viewMode: 1,
 			zoomOnWheel: false,
 			checkCrossOrigin: false,
-			crop: (e) => {
+			crop: () => {
 				let data = cropper.getCropBoxData();
 				let hasCrop = 'left' in data;
 
@@ -274,9 +292,32 @@ export default class ImageCropper {
 				container.classList.toggle('has-crop', hasCrop);
 			},
 			ready: () => {
-				// No prior state restoration by design
-				// Baseline is "no crop": keep cleared initially
-				cropper.clear();
+				// CHANGED: initialize a centered, maximal crop that fits the preset ratio
+				try {
+					const imgData = cropper.getImageData(); // natural image space
+					const { naturalWidth: iw, naturalHeight: ih } = imgData;
+
+					const rect = this._computeCenteredFitRect(preset._ratio, iw, ih);
+
+					// Apply in natural pixel coordinates
+					cropper.setData({
+						x: rect.x,
+						y: rect.y,
+						width: rect.width,
+						height: rect.height,
+						rotate: 0,
+						scaleX: 1,
+						scaleY: 1,
+					});
+
+					// Ensure the crop box is visible
+					cropper.crop();
+				} catch (_) {
+					// Fallback: ensure cropped state visible even if something above fails
+					try {
+						cropper.crop();
+					} catch (_) {}
+				}
 
 				const header = document.createElement('div');
 				header.className = 'cropper-tile__header';
@@ -306,7 +347,25 @@ export default class ImageCropper {
 				});
 
 				reset.addEventListener('click', () => {
-					cropper.clear();
+					// Reset back to our initial centered-fit crop instead of clearing
+					try {
+						const imgData = cropper.getImageData();
+						const { naturalWidth: iw, naturalHeight: ih } = imgData;
+						const rect = this._computeCenteredFitRect(preset._ratio, iw, ih);
+						cropper.setData({
+							x: rect.x,
+							y: rect.y,
+							width: rect.width,
+							height: rect.height,
+							rotate: 0,
+							scaleX: 1,
+							scaleY: 1,
+						});
+						cropper.crop();
+					} catch (_) {
+						// if anything goes wrong, keep previous behavior
+						cropper.clear();
+					}
 				});
 
 				// downstream hook if provided
@@ -396,3 +455,4 @@ export default class ImageCropper {
 		return false;
 	}
 }
+
