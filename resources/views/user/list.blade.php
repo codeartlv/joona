@@ -8,14 +8,14 @@
 	<x-slot name="sidebar">
 		<form action="" method="get">
 			<div class="card">
-				<div class="card-header">@lang('common.data_filter')</div>
+				<div class="card-header">@lang('joona::common.data_filter')</div>
 				<div class="card-body">
 					<div class="form-group">
 						<x-input :label="__('joona::common.search')" name="search" :value="$search" />
 					</div>
 				</div>
 				<div class="card-footer">
-					<x-button type="submit" icon="search" :caption="__('common.search')" />
+					<x-button type="submit" icon="search" :caption="__('joona::common.search')" />
 				</div>
 			</div>
 		</form>
@@ -143,3 +143,4 @@
 		</div>
 	</x-slot>
 </x-content>
+

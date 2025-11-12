@@ -14,6 +14,7 @@ return [
 	'error' => 'Error',
 	'access_denied' => 'Access denied.',
 	'failed_to_create' => 'Failed to create new record in the database. Please see log for details',
+	'data_filter' => 'Data filter',
 	'menu' => [
 		'home' => 'Dashboard',
 		'settings' => 'Settings',
@@ -71,3 +72,4 @@ return [
 	'crop' => 'Crop',
 	'image_caption' => 'Image caption',
 ];
+

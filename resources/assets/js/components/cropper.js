@@ -229,18 +229,24 @@ export default class ImageCropper {
 
 			const img = document.createElement('img');
 			img.alt = `Image to crop for preset "${p.caption}"`;
-			img.style.maxWidth = '100%';
-			img.style.height = 'auto';
-			img.style.display = 'block';
+			img.classList.add('cropper-source-image');
 
 			tile.appendChild(img);
 			this._grid.appendChild(tile);
 
 			this._imgByPreset.set(p.id, img);
 
+			const imageContainer = document.createElement('div');
+			imageContainer.style.aspectRatio = p._ratio;
+			imageContainer.classList.add('image-container');
+
+			imageContainer.append(img);
+			tile.appendChild(imageContainer);
+
 			img.onload = () => {
 				this._initCropperForPreset(p, img);
 			};
+
 			img.src = this._imageUrl;
 		}
 	}
@@ -265,6 +271,8 @@ export default class ImageCropper {
 	}
 
 	_initCropperForPreset(preset, imgEl) {
+		//return;
+
 		const prev = this._cropperByPreset.get(preset.id);
 
 		if (prev) {
@@ -455,4 +463,3 @@ export default class ImageCropper {
 		return false;
 	}
 }
-

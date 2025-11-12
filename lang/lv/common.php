@@ -14,6 +14,7 @@ return [
 	'error' => 'Kļūda',
 	'access_denied' => 'Šī darbība nav atļauta.',
 	'failed_to_create' => 'Neizdevās izveidot jaunu ierakstu sistēmā. Sazinaties ar lapas izstrādātāju lai noskaidrotu iemeslu.',
+	'data_filter' => 'Datu atlase',
 	'menu' => [
 		'home' => 'Pārskats',
 		'settings' => 'Iestatījumi',
@@ -71,3 +72,4 @@ return [
 	'crop' => 'Kadrēt',
 	'image_caption' => 'Bildes paraksts',
 ];
+
