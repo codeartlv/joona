@@ -16,6 +16,7 @@ class ManagedFile {
 		error = false,
 		status = 'pending',
 		nativeFile = null,
+		properties = null,
 	} = {}) {
 		this.id = id;
 		this.type = type;
@@ -29,6 +30,7 @@ class ManagedFile {
 		this.error = !!error;
 		this.status = status;
 		this.nativeFile = nativeFile;
+		this.properties = { ...(properties || {}) };
 
 		// DOM link (assigned when rendered)
 		this.thumbnailEl = null;
@@ -38,6 +40,14 @@ class ManagedFile {
 
 		// internal stable uid for mapping during sorting
 		this._uid = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+	}
+
+	setProperty(key, value) {
+		this.properties[key] = value;
+	}
+
+	getProperty(key) {
+		return this.properties[key] ?? null;
 	}
 
 	isImage() {
@@ -188,7 +198,10 @@ export default class Uploader {
 
 	trigger(event, ...args) {
 		const listeners = this.eventListeners.get(event);
-		if (listeners && listeners.length) listeners.forEach((fn) => fn(...args));
+
+		if (listeners && listeners.length) {
+			listeners.forEach((fn) => fn(...args));
+		}
 	}
 
 	/*** Public API ***/
@@ -202,17 +215,30 @@ export default class Uploader {
 	 * @param {object} option option object as above
 	 */
 	addOption(target, key, option) {
-		const file = this._resolveFile(target);
+		let addOptionToFile = (file, key, option) => {
+			file.options.set(key, this._normalizeOption(option));
 
-		if (!file) {
+			if (file.thumbnailEl) {
+				this._renderOptionsInto(file, file.thumbnailEl);
+			}
+		};
+
+		if (target) {
+			const file = this._resolveFile(target);
+
+			if (!file) {
+				return;
+			}
+
+			addOptionToFile(file, key, option);
 			return;
 		}
 
-		file.options.set(key, this._normalizeOption(option));
-
-		if (file.thumbnailEl) {
-			this._renderOptionsInto(file, file.thumbnailEl);
+		for (let i = 0; i < this.files.length; i++) {
+			addOptionToFile(this.files[i], key, option);
 		}
+
+		this.params.fileOptions[key] = option;
 	}
 
 	/**
@@ -248,6 +274,7 @@ export default class Uploader {
 				image: fData.image ?? null,
 				filename: fData.filename ?? null,
 				extension: fData.extension ?? null,
+				properties: fData.properties ?? null,
 				message: null,
 				locked: !!fData.locked,
 				error: false,
@@ -281,6 +308,16 @@ export default class Uploader {
 		}
 
 		return Math.max(0, limit - this.files.length);
+	}
+
+	getFile(id) {
+		for (let i = 0; i < this.files.length; i++) {
+			if (this.files[i].id == id) {
+				return this.files[i];
+			}
+		}
+
+		return null;
 	}
 
 	_initUploader() {
@@ -499,10 +536,8 @@ export default class Uploader {
 		const thumbnail = template.content.cloneNode(true);
 		const el = thumbnail.querySelector(':first-child');
 
-		// Ensure base class is present
 		el.classList.add('upload-file');
 
-		// We'll add a data-uid for ordering reconciliation
 		el.setAttribute('data-uid', '');
 
 		return el;
@@ -521,7 +556,14 @@ export default class Uploader {
 	}
 
 	_bindThumbnailEvents(thumbnailEl, file) {
-		// Options are (re)bound during _renderOptionsInto
+		const menu = thumbnailEl.querySelector('[data-role="menu"]');
+
+		if (menu) {
+			menu.parentElement.addEventListener('show.bs.dropdown', () => {
+				this._renderOptionsInto(file, thumbnailEl);
+			});
+		}
+
 		this._renderOptionsInto(file, thumbnailEl);
 	}
 
@@ -584,7 +626,10 @@ export default class Uploader {
 
 	_renderOptionsInto(file, thumbnailEl) {
 		const menu = thumbnailEl.querySelector('[data-role="menu"]');
-		if (!menu) return;
+
+		if (!menu) {
+			return;
+		}
 
 		// Gather all candidate options: per-file overrides extend globals
 		const globalEntries = Object.entries(this.params.fileOptions || {}).map(([key, opt]) => [
@@ -624,17 +669,20 @@ export default class Uploader {
 		// Build list
 		menu.innerHTML = '';
 		availableEntries.forEach(([key, opt]) => {
+			let optionCaption = typeof opt.caption == 'function' ? opt.caption(file) : opt.caption;
+
 			const a = document.createElement('a');
 			a.className = 'dropdown-item';
 			a.setAttribute('data-action', key);
 			a.innerHTML = `
         <i class="material-symbols-outlined">${opt.icon}</i>
-        ${opt.caption}
+        ${optionCaption}
       `.trim();
 			a.addEventListener('click', (ev) => {
 				ev.preventDefault();
 				if (typeof opt.callback === 'function') {
 					opt.callback(file, thumbnailEl, this);
+					this.syncIds();
 				}
 			});
 			menu.appendChild(a);
@@ -717,7 +765,24 @@ export default class Uploader {
 			el.value = ids[i];
 			el.type = 'hidden';
 
+			let file = this.getFile(ids[i]);
+
 			this.element.appendChild(el);
+
+			for (let key in file.properties) {
+				let value = file.properties[key];
+
+				if (typeof value === 'boolean') {
+					value = value ? '1' : '0';
+				}
+
+				let el = document.createElement('input');
+				el.dataset.role = 'file-id';
+				el.name = this.fieldName + `[${ids[i]}][properties][${key}]`;
+				el.value = value;
+				el.type = 'hidden';
+				this.element.appendChild(el);
+			}
 		}
 	}
 
@@ -735,11 +800,9 @@ export default class Uploader {
 			if (f) newOrder.push(f);
 		});
 
-		// Edge: thumbnails that are not in DOM anymore (e.g., removed) are dropped
 		this.files = newOrder;
 	}
 
-	/*** State helpers ***/
 	_toggleSubmitDisabled(disabled) {
 		if (this.submitButton) this.submitButton.disabled = !!disabled;
 	}
@@ -758,13 +821,13 @@ export default class Uploader {
 
 	_normalizeOption(opt) {
 		const normalized = {
-			caption: opt?.caption ?? '',
+			caption: opt?.caption,
 			icon: opt?.icon ?? '',
-			// Optional flag so you can hide actions when locked
 			lockSensitive: !!opt?.lockSensitive,
 			available: typeof opt?.available === 'function' ? opt.available : () => true,
 			callback: typeof opt?.callback === 'function' ? opt.callback : () => {},
 		};
+
 		return normalized;
 	}
 
@@ -786,13 +849,10 @@ export default class Uploader {
 		return null;
 	}
 
-	/*** Legacy compatibility (optional): keep method names if external code calls them ***/
-	// onFileSelect wrapper (kept for compatibility with your old code)
 	onFileSelect(files) {
 		this._onFileSelect(Array.from(files || []));
 	}
 
-	// updateThumbnail wrapper – now paints from model
 	updateThumbnail(thumbnailEl, dataOrFile) {
 		const file =
 			dataOrFile instanceof ManagedFile

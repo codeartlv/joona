@@ -5,13 +5,14 @@ namespace Codeart\Joona\View\Components\Uploader\File;
 use Codeart\Joona\Enums\FileCategory;
 use Codeart\Joona\View\Components\Uploader\UploadedFile;
 
-readonly class Image extends UploadedFile
+final readonly class Image extends UploadedFile
 {
 	public function __construct(
 		public mixed $id = null,
 		public ?string $caption = null,
 		public ?string $thumbnailUrl = null,
 		public ?string $imageUrl = null,
+		public array $properties = [],
 	)
 	{
 		
@@ -25,6 +26,7 @@ readonly class Image extends UploadedFile
 			'caption' => $this->caption,
 			'thumbnail' => $this->thumbnailUrl,
 			'image' => $this->imageUrl,
+			'properties' => $this->properties,
 		];
 	}
 }

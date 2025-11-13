@@ -20,7 +20,8 @@ class ReceivedFiles extends Collection
 			} elseif (is_array($value)) {
 				$filteredData[] = new ReceivedFile(
 					id: (int) ($value['id'] ?? 0),
-					caption: $value['caption'] ?? null
+					caption: $value['caption'] ?? null,
+					properties: isset($value['properties']) && is_array($value['properties']) ? $value['properties'] : [],
 				);
 			} else {
 				$filteredData[] = $value;

@@ -11,6 +11,7 @@ abstract readonly class UploadedFile implements JsonSerializable, Arrayable
 		public mixed $id = null,
 		public ?string $filename = null,
 		public ?string $caption = null,
+		public array $properties = [],
 	)
 	{
 		
