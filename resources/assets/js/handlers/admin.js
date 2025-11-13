@@ -239,9 +239,8 @@ export default class Admin extends Handler {
 				...parameters,
 			};
 
-			let modal = new Offcanvas(parameters.name);
-
-			modal.open(parameters.url);
+			let offcanvas = new Offcanvas(parameters.name, parameters);
+			offcanvas.open(parameters.url);
 		});
 	}
 

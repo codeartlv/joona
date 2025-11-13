@@ -4,7 +4,12 @@ import { addSpinner } from '../helpers';
 import DataStore from '../store';
 
 export default class Offcanvas {
-	constructor(id) {
+	constructor(id, settings) {
+		this.settings = {
+			backdrop: true,
+			...(settings || {}),
+		};
+
 		this.id = id;
 	}
 
@@ -136,7 +141,7 @@ export default class Offcanvas {
 				DataStore.clearData(`offcanvas_${this.id}`);
 			});
 
-			this.offcanvasInstance = new BootstrapOffcanvas(offcanvasEl);
+			this.offcanvasInstance = new BootstrapOffcanvas(offcanvasEl, this.settings);
 			this.offcanvasInstance.show();
 
 			this.load(url)
