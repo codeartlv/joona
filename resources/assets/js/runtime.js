@@ -277,5 +277,20 @@ export default class Runtime {
 		};
 
 		context.querySelectorAll('[data-bind]').forEach(bindSingle);
+
+		// Fix map component not loading when switching between tabs
+		context.querySelectorAll('[data-bs-toggle="tab"]').forEach((e) => {
+			e.addEventListener('shown.bs.tab', () => {
+				let tabContent = document.querySelector(e.dataset['bsTarget']);
+
+				if (!tabContent) {
+					return;
+				}
+
+				window.Joona.getInstance(tabContent, 'components.map-picker').then((component) => {
+					component.instance.refresh();
+				});
+			});
+		});
 	}
 }

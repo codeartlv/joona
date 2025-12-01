@@ -90,4 +90,10 @@ export default class MapPicker {
 			  )
 			: loc;
 	}
+
+	refresh() {
+		if (this.map) {
+			this.map.invalidateSize();
+		}
+	}
 }
