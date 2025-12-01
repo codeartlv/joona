@@ -61,6 +61,9 @@
 	.offcanvas-footer {
 		background: var(--bs-modal-footer-bg);
 		padding: $spacer $spacer;
+		display: flex;
+		gap: $spacer;
+		align-items: center;
 	}
 
 	&.offcanvas-loading {
