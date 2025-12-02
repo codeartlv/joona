@@ -347,4 +347,17 @@
 			}
 		}
 	}
+
+	.pell {
+		.pell-actionbar {
+			background: var(--bs-gray-800);
+			border-radius: $input-border-radius $input-border-radius 0 0;
+
+			.pell-button {
+				&.pell-button-selected {
+					background: var(--bs-gray-700);
+				}
+			}
+		}
+	}
 }

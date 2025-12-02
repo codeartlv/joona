@@ -1,9 +1,15 @@
 .pell {
+	border-radius: $input-border-radius;
+	border-color: var(--bs-border-color);
+
 	.pell-actionbar {
 		display: flex;
 		align-items: center;
+		background: var(--bs-body-bg);
+		border-radius: $input-border-radius;
 
 		.pell-button {
+			color: var(--bs-body-color);
 			display: block;
 			height: auto;
 			padding: 0.3625rem 0.3rem 0px 0.3rem;
@@ -12,10 +18,21 @@
 	}
 
 	.pell-content {
+		padding: $spacer;
+		font-size: 0.9375rem;
+
 		ul {
 			list-style: initial;
 			list-style-position: outside;
 			margin-left: 1.5rem;
+		}
+	}
+
+	.pell-button {
+		color: var(--bs-body-color);
+
+		&.pell-button-selected {
+			background: var(--bs-gray-300);
 		}
 	}
 }
