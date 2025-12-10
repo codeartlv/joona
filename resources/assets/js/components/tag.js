@@ -29,7 +29,7 @@ export default class Tag {
 
 		const script = document.querySelector(`script[data-id="${this.#params.valuesdataid}"]`);
 		this.initialValues = parseJsonLd(script);
-		script.remove();
+		script?.remove();
 
 		const settings = {
 			duplicates: false,
@@ -39,6 +39,7 @@ export default class Tag {
 			addTagOnBlur: false,
 			userInput: true,
 			editTags: false,
+			pasteAsTags: false,
 			dropdown: {
 				fuzzySearch: true,
 				enabled: true,
@@ -49,9 +50,7 @@ export default class Tag {
 			settings.maxTags = Number(this.#params.limit);
 		}
 
-		// Initialize Tagify
 		this.#tagify = new Tagify(this.#inputEl, settings);
-
 		this.#tagify.addTags(this.initialValues);
 
 		if (!Tag._csrfToken) {
@@ -60,7 +59,23 @@ export default class Tag {
 		}
 
 		if (this.#params.route) {
-			this.#tagify.on('input', this.#onInput.bind(this));
+			this.#tagify.on('input', (e) => {
+				this.#handleQuery(e.detail.value);
+			});
+
+			this.#tagify.DOM.input.addEventListener('paste', (ev) => {
+				queueMicrotask(() => {
+					const v = this.#tagify.DOM.input.textContent || '';
+					this.#handleQuery(v);
+				});
+			});
+
+			this.#tagify.on?.('paste', () => {
+				queueMicrotask(() => {
+					const v = this.#tagify.DOM.input.textContent || '';
+					this.#handleQuery(v);
+				});
+			});
 		}
 
 		this.#tagify.on('change', () => this.#updateHiddenInputs());
@@ -72,22 +87,27 @@ export default class Tag {
 		if (!this.eventListeners.has(event)) {
 			this.eventListeners.set(event, []);
 		}
-
 		this.eventListeners.get(event).push(callback);
 	}
 
 	trigger(event, ...args) {
 		const listeners = this.eventListeners.get(event);
-
 		if (listeners && listeners.length) {
 			listeners.forEach((listener) => listener(...args));
 		}
 	}
 
-	// Debounced input handler
-	async #onInput(e) {
-		const value = e.detail.value.trim();
+	#handleQuery(raw) {
+		const value = (raw || '').trim();
 
+		clearTimeout(this.#debounceTimer);
+
+		this.#debounceTimer = setTimeout(() => {
+			this.#search(value);
+		}, 150);
+	}
+
+	async #search(value) {
 		if (!value) {
 			this.#tagify.dropdown.hide();
 			return;
@@ -105,17 +125,18 @@ export default class Tag {
 			const res = await fetch(url, {
 				method: 'GET',
 				headers: {
-					'Content-Type': 'application/json',
+					Accept: 'application/json',
 					'X-CSRF-TOKEN': Tag._csrfToken,
 				},
 				signal: this.#abortController.signal,
 			});
+
 			if (!res.ok) {
 				throw new Error(`HTTP ${res.status}`);
 			}
+
 			const { suggestions = [] } = await res.json();
 
-			// Update dropdown
 			this.#tagify.settings.whitelist = suggestions;
 			this.#tagify.loading(false).dropdown.show(value);
 		} catch (err) {
@@ -126,23 +147,19 @@ export default class Tag {
 		}
 	}
 
-	// Get current Tagify value
 	get values() {
-		return this.#tagify.value; // Array of {value, id}
+		return this.#tagify.value;
 	}
 
 	value() {
 		return this.values;
 	}
 
-	// Rebuild hidden inputs after any change
 	#updateHiddenInputs() {
-		// Remove old hidden fields
 		document
 			.querySelectorAll(`input[type="hidden"][data-id="${this.#params.valuesdataid}"]`)
 			.forEach((el) => el.remove());
 
-		// Add new ones in reverse to preserve order
 		this.values
 			.slice()
 			.reverse()
@@ -157,13 +174,13 @@ export default class Tag {
 						? `${tag.id}|`
 						: `0|${tag.value}`
 					: tag.id;
+
 				this.#inputEl.after(input);
 			});
 
 		this.trigger('change');
 	}
 
-	// Expose a destroy method to clean up
 	destroy() {
 		clearTimeout(this.#debounceTimer);
 		this.#abortController?.abort();
