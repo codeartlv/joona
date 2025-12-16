@@ -6,13 +6,16 @@ export default class MapPicker {
 			center: '40,0',
 			zoom: 5,
 			precision: 6,
+			required: true,
 			...options,
 		};
+
+		const defaultCenter = [56.95183445015794, 24.098737538563217];
 
 		options.center = options.center.split(',').map((coord) => parseFloat(coord));
 
 		if (options.center.length !== 2 || options.center.some(isNaN)) {
-			throw new Error('Invalid center coordinates provided');
+			options.center = defaultCenter;
 		}
 
 		this.options = options;
@@ -50,6 +53,20 @@ export default class MapPicker {
 				this.onMapClick({ latlng: initialLatLng });
 				this.map.setView(initialLatLng);
 			}
+		}
+
+		const clearButton = container.querySelector('[data-role="map-picker.clear"]');
+		if (clearButton) {
+			clearButton.addEventListener('click', () => {
+				if (!this.marker) {
+					return;
+				}
+
+				this.map.removeLayer(this.marker);
+				this.map.panTo(new L.LatLng(defaultCenter[0], defaultCenter[1]), options.zoom);
+				this.marker = null;
+				this.valueField.value = '';
+			});
 		}
 	}
 
