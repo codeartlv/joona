@@ -5,7 +5,6 @@ import FormHandler from './form-handler.js';
 export default class AjaxForm {
 	handler = null;
 	form = null;
-	submitButton = null;
 	settings = {};
 
 	constructor(formElement, settings) {
@@ -26,7 +25,7 @@ export default class AjaxForm {
 		this.handler.bindEvent('loaded', (response) => this.onSuccess(response));
 		this.handler.bindEvent('failed', (status, message) => this.onError(status, message));
 
-		let button = this.form.querySelector('button[type="submit"]');
+		let button = this.form.querySelectorAll('button[type="submit"]');
 
 		let formId = formElement.getAttribute('id');
 
@@ -35,8 +34,9 @@ export default class AjaxForm {
 		}
 
 		if (button) {
-			this.submitButton = button;
-			this.submitButton.disabled = false;
+			button.forEach((btn) => {
+				btn.disabled = false;
+			});
 		} else if (this.settings.overlay == 'button') {
 			this.settings.overlay = 'overlay';
 		}
@@ -261,3 +261,4 @@ export default class AjaxForm {
 		};
 	}
 }
+
