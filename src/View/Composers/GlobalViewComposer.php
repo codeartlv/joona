@@ -23,6 +23,7 @@ class GlobalViewComposer
 			'icon' => Joona::getIcon(),
 			'menu' => Joona::getNavigation(),
 			'translations' => Joona::getJavascriptTranslations(),
+			'app_title' => Joona::getAppName(),
 		]);
 	}
 }

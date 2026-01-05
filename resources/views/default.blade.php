@@ -6,7 +6,7 @@
 			<div class="main-menu__logo">
 				<img src="{{$icon}}" />
 				<span>
-					{{ config('app.name', 'Laravel') }}
+					{{ $app_title }}
 					<small>@lang('joona::common.admin_caption')</small>
 				</span>
 			</div>

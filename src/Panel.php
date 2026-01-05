@@ -60,6 +60,13 @@ class Panel
 	private ?string $appLogo = '/vendor/joona/images/example_logo.png';
 
 	/**
+	 * App name
+	 *
+	 * @var string
+	 */
+	private ?string $appName = '';
+
+	/**
 	 * Dark mode app logo
 	 *
 	 * @var string
@@ -106,6 +113,33 @@ class Panel
 	 * @var string[]
 	 */
 	protected array $userClasses = [];
+
+	public function __construct()
+	{
+		$this->setAppName(config('app.name', 'Laravel'));
+	}
+
+	/**
+	 * Set application title
+	 * 
+	 * @param string $name 
+	 * @return void 
+	 */
+	public function setAppName(string $name): self
+	{
+		$this->appName = $name;
+		return $this;
+	}
+
+	/**
+	 * get application title
+	 * 
+	 * @return string
+	 */
+	public function getAppName(): string
+	{
+		return $this->appName;
+	}
 
 	/**
 	 * Get permission loader class
