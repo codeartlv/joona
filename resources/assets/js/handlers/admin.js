@@ -236,6 +236,7 @@ export default class Admin extends Handler {
 			parameters = {
 				name: 'default',
 				url: '?',
+				backdrop: true,
 				...parameters,
 			};
 

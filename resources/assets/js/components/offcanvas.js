@@ -7,6 +7,8 @@ export default class Offcanvas {
 	constructor(id, settings) {
 		this.settings = {
 			backdrop: true,
+			scroll: false,
+			position: 'end',
 			...(settings || {}),
 		};
 
@@ -93,29 +95,23 @@ export default class Offcanvas {
 		});
 	}
 
-	open(url, options) {
-		options = {
-			backdropClose: true,
-			bodyScroll: false,
-			position: 'end',
-			...options,
-		};
-
+	open(url) {
 		return new Promise((resolve, reject) => {
 			const offcanvasEl = document.createElement('div');
 			offcanvasEl.classList.add(
 				'offcanvas',
 				'offcanvas-loading',
-				`offcanvas-${options.position}`,
+				`offcanvas-${this.settings.position}`,
 				`offcanvas--${this.id}`
 			);
 
-			if (options.bodyScroll) {
+			if (this.settings.scroll) {
 				offcanvasEl.dataset.bsScroll = 'true';
 			}
 
-			if (!options.backdropClose) {
+			if (this.settings.backdrop == 'static') {
 				offcanvasEl.dataset.bsBackdrop = 'static';
+				offcanvasEl.dataset.bsKeyboard = 'false';
 			}
 
 			offcanvasEl.innerHTML = `
