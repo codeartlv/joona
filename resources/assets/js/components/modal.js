@@ -85,13 +85,17 @@ export default class Modal {
 				});
 
 				modalEl.addEventListener('show.bs.modal', () => {
-					const backdropEl = this.modalInstance._backdrop._getElement();
-					addSpinner(backdropEl, 'light');
+					if (this.modalInstance._backdrop) {
+						const backdropEl = this.modalInstance._backdrop._getElement();
+						addSpinner(backdropEl, 'light');
+					}
 				});
 
 				modalEl.addEventListener('shown.bs.modal', () => {
-					const backdropEl = this.modalInstance._backdrop._getElement();
-					removeSpinner(backdropEl);
+					if (this.modalInstance._backdrop) {
+						const backdropEl = this.modalInstance._backdrop._getElement();
+						removeSpinner(backdropEl);
+					}
 
 					if (modalDialogContent) {
 						modalDialogEl.innerHTML = modalDialogContent;
@@ -163,3 +167,4 @@ export default class Modal {
 		});
 	}
 }
+
