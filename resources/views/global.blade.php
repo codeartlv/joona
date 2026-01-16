@@ -25,5 +25,6 @@
     </head>
 	<body>
 		@yield('html_body')
+		@include('joona::body')
     </body>
 </html>
