@@ -105,6 +105,15 @@ export default class AjaxForm {
 		if (response.status == 'success') {
 			this.showSuccess(response);
 			this.trigger('success', response);
+
+			const successEvent = new CustomEvent('joona:formSuccess', {
+				detail: {
+					form: this.form,
+					response: response,
+				},
+			});
+
+			window.dispatchEvent(successEvent);
 		}
 	}
 
@@ -143,7 +152,7 @@ export default class AjaxForm {
 		}
 
 		let messageContainers = this.form.querySelectorAll(
-			'.invalid-feedback:not(.custom-feedback)'
+			'.invalid-feedback:not(.custom-feedback)',
 		);
 
 		if (messageContainers) {
