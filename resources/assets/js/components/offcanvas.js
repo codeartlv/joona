@@ -97,6 +97,11 @@ export default class Offcanvas {
 
 	open(url) {
 		return new Promise((resolve, reject) => {
+			const openOffcanvases = document.querySelectorAll('.offcanvas.show');
+			const baseZIndex = 1045;
+			const newZIndex = baseZIndex + openOffcanvases.length * 10;
+			const backdropZIndex = newZIndex - 5;
+
 			const offcanvasEl = document.createElement('div');
 			offcanvasEl.classList.add(
 				'offcanvas',
@@ -104,6 +109,8 @@ export default class Offcanvas {
 				`offcanvas-${this.settings.position}`,
 				`offcanvas--${this.id}`,
 			);
+
+			offcanvasEl.style.zIndex = newZIndex;
 
 			if (this.settings.scroll) {
 				offcanvasEl.dataset.bsScroll = 'true';
@@ -130,10 +137,23 @@ export default class Offcanvas {
 
 			addSpinner(body, 'secondary');
 
-			offcanvasEl.addEventListener('hidden.bs.offcanvas', () => {
-				this.offcanvasInstance.dispose();
-				offcanvasEl.remove();
+			offcanvasEl.addEventListener('show.bs.offcanvas', () => {
+				setTimeout(() => {
+					const backdrops = document.querySelectorAll('.offcanvas-backdrop.show');
+					if (backdrops.length > 0) {
+						const lastBackdrop = backdrops[backdrops.length - 1];
+						lastBackdrop.style.zIndex = backdropZIndex;
+					}
+				}, 0);
+			});
 
+			offcanvasEl.addEventListener('hidden.bs.offcanvas', () => {
+				if (this.offcanvasInstance) {
+					this.offcanvasInstance.dispose();
+					this.offcanvasInstance = null;
+				}
+
+				offcanvasEl.remove();
 				DataStore.clearData(`offcanvas_${this.id}`);
 			});
 
@@ -150,3 +170,4 @@ export default class Offcanvas {
 		});
 	}
 }
+
