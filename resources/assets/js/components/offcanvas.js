@@ -102,7 +102,7 @@ export default class Offcanvas {
 				'offcanvas',
 				'offcanvas-loading',
 				`offcanvas-${this.settings.position}`,
-				`offcanvas--${this.id}`
+				`offcanvas--${this.id}`,
 			);
 
 			if (this.settings.scroll) {

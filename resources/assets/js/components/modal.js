@@ -39,6 +39,7 @@ export default class Modal {
 	open(urlOrElement, options) {
 		options = {
 			animations: true,
+			focus: true,
 			...options,
 		};
 
@@ -60,13 +61,17 @@ export default class Modal {
 						modalEl.classList.add('modal', 'fade');
 					}
 
+					if (!options.focus) {
+						modalEl.dataset.bsFocus = 'false';
+					}
+
 					modalEl.dataset.tabindex = -1;
 
 					modalDialogEl = document.createElement('div');
 					modalDialogEl.classList.add(
 						'modal-dialog',
 						'modal-dialog-centered',
-						'modal-dialog-scrollable'
+						'modal-dialog-scrollable',
 					);
 
 					if (this.id) {
@@ -82,6 +87,7 @@ export default class Modal {
 
 				this.modalInstance = new BootstrapModal(modalEl, {
 					backdrop: 'static',
+					focus: options.focus,
 				});
 
 				modalEl.addEventListener('show.bs.modal', () => {
@@ -167,4 +173,3 @@ export default class Modal {
 		});
 	}
 }
-

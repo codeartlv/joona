@@ -73,7 +73,7 @@ return [
 	'min'                  => [
 		'numeric' => ' :attribute jābūt vismaz :min.',
 		'file'    => ' :attribute jābūt vismaz :min kilobaiti.',
-		'string'  => ' :attribute jābūt vismaz :min zīmes.',
+		'string'  => ' :attribute jābūt vismaz :min zīmju garumā.',
 		'array'   => ' :attribute jāsatur vismaz :min vienības.',
 	],
 	'not_in'               => ' izvēlētais :attribute ir nederīgs.',
