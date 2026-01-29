@@ -157,6 +157,10 @@ class NotificationServer
 			return;
 		}
 
+		if (!$isGlobal && !$user) {
+			return;
+		}
+
 		$record = NotificationRecord::create([
 			'type' => $type,
 			'notifiable_id' => $message->notifiableId,

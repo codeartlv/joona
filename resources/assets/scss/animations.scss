@@ -1,0 +1,79 @@
+@keyframes ring {
+	0% {
+		transform: rotate(0);
+	}
+	1% {
+		transform: rotate(7.5deg);
+	}
+	3% {
+		transform: rotate(-7deg);
+	}
+	5% {
+		transform: rotate(8.5deg);
+	}
+	7% {
+		transform: rotate(-8deg);
+	}
+	9% {
+		transform: rotate(7.5deg);
+	}
+	11% {
+		transform: rotate(-7deg);
+	}
+	13% {
+		transform: rotate(6.5deg);
+	}
+	15% {
+		transform: rotate(-6deg);
+	}
+	17% {
+		transform: rotate(5.5deg);
+	}
+	19% {
+		transform: rotate(-5deg);
+	}
+	21% {
+		transform: rotate(4.5deg);
+	}
+	23% {
+		transform: rotate(-4deg);
+	}
+	25% {
+		transform: rotate(3.5deg);
+	}
+	27% {
+		transform: rotate(-3deg);
+	}
+	29% {
+		transform: rotate(2.5deg);
+	}
+	31% {
+		transform: rotate(-2deg);
+	}
+	33% {
+		transform: rotate(1.5deg);
+	}
+	35% {
+		transform: rotate(-1deg);
+	}
+	37% {
+		transform: rotate(0.5deg);
+	}
+	39% {
+		transform: rotate(-0.25deg);
+	}
+	41% {
+		transform: rotate(0.25deg);
+	}
+	43% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(0);
+	}
+}
+
+.ringing {
+	animation: ring 4s 0.7s ease-in-out infinite;
+	transform-origin: 50% 4px;
+}

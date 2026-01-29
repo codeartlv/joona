@@ -21,6 +21,7 @@ return [
 	'theme_dark' => 'Tumšā',
 	'my_profile' => 'Mans profils',
 	'edit_my_profile' => 'Rediģēt profilu',
+	'no_notifications' => 'Nav neviena paziņojuma',
 	'menu' => [
 		'home' => 'Pārskats',
 		'settings' => 'Iestatījumi',

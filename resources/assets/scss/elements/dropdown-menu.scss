@@ -28,6 +28,11 @@
 		width: 31.25rem;
 		min-height: 5rem;
 
+		.alert {
+			margin: $spacer;
+			margin-bottom: $spacer * 0.5;
+		}
+
 		.spinner {
 			position: absolute;
 			left: 50%;

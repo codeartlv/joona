@@ -209,7 +209,7 @@ export default class Admin extends Handler {
 
 			this.trigger.addEventListener('shown.bs.dropdown', () => {
 				this.container
-					.querySelectorAll('[data-role="notification"]')
+					.querySelectorAll('[data-role="notification"],.alert')
 					.forEach((el) => el.remove());
 				this.load();
 			});
@@ -245,12 +245,8 @@ export default class Admin extends Handler {
 
 			this.updateBadge = function (count) {
 				this.trigger.querySelector('.badge').innerText = count > 0 ? count : '';
-
 				el.classList.toggle('has-badge', count > 0);
-
-				if (count == 0) {
-					this.trigger.find('i').removeClass('ringing');
-				}
+				this.trigger.querySelector('i').classList.toggle('ringing', count > 0);
 			};
 
 			axios.get(route('joona.user.notifications-count')).then((response) => {

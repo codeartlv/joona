@@ -21,6 +21,7 @@ return [
 	'theme_dark' => 'Dark',
 	'my_profile' => 'My profile',
 	'edit_my_profile' => 'Edit profile',
+	'no_notifications' => 'No notifications',
 	'menu' => [
 		'home' => 'Dashboard',
 		'settings' => 'Settings',

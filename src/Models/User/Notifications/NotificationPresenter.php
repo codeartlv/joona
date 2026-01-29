@@ -26,8 +26,13 @@ abstract readonly class NotificationPresenter
 		return true;
 	}
 	
+	/**
+	 * @param string|int $notifiableId 
+	 * @param array<int|string,int|bool|string> $data 
+	 * @return void 
+	 */
 	public function __construct(
-		public string $notifiableId,
+		public string|int $notifiableId,
 		public array $data = []
 	)
 	{
