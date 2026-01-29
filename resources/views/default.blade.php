@@ -28,6 +28,60 @@
 				<div class="offcanvas-inner">
 					@include('joona::common.topbar')
 					@include('joona::menu')
+
+					@if (!empty($languages) && count($languages) > 1)
+						<ul class="nav main-nav">
+							<li class="nav-item nav-group">
+								@lang('joona::common.language')
+							</li>
+							@foreach ($languages as $language)
+								<li class="nav-item">
+									<a class=" {{$language['active'] ? 'active':''}}" href="{{$language['url']}}">
+										<img src="{{$language['flag']}}" />
+										<span>
+											{{$language['title']}}
+										</span>
+									</a>
+								</li>
+							@endforeach
+						</ul>						
+					@endif
+
+					<ul class="nav main-nav">
+						<li class="nav-item nav-group">
+							@lang('joona::common.theme')
+						</li>
+						<li class="nav-item">
+							<a href="javascript:;" data-bind="admin.colorThemeSwitch" data-theme="light">
+								@icon('light_mode')
+								<span>@lang('joona::common.theme_light')</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="javascript:;" data-bind="admin.colorThemeSwitch" data-theme="dark">
+								@icon('dark_mode')
+								<span>@lang('joona::common.theme_dark')</span>
+							</a>
+						</li>
+					</ul>
+
+					<ul class="nav main-nav">
+						<li class="nav-item nav-group">
+							@lang('joona::common.my_profile')
+						</li>
+						<li class="nav-item">
+							<a href="javascript:;" data-bind="admin.editMyProfile">
+								@icon('person_edit')
+								<span>@lang('joona::common.edit_my_profile')</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('joona.user.logout')}}">
+								@icon('lock')
+								<span>@lang('joona::user.logout')</span>
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div class="offcanvas-footer">
@@ -52,7 +106,7 @@
 									</li>
 
 									@if (!empty($languages) && count($languages) > 1)
-										<li class="dropdown header-nav__rounded">
+										<li class="dropdown header-nav__rounded header-nav__languages">
 											<a href="javascript:;" data-bs-toggle="dropdown" data-expanded="false">
 												<figure>
 													@foreach ($languages as $language)
@@ -72,21 +126,34 @@
 											</div>
 										</li>
 									@endif
-									<li class="header-nav__rounded">
+
+									<li class="header-nav__rounded header-nav__theme">
 										<a href="javascript:;" data-dark-icon="dark_mode" data-light-icon="light_mode" data-bind="admin.colorThemeSwitch">
 											<figure>
 												<i data-role="icon" class="material-symbols-outlined">{{$theme == 'dark' ? 'light_mode':'dark_mode'}}</i>
 											</figure>
 										</a>
 									</li>
-									<li class="header-nav__rounded">
+
+									<li class="header-nav__rounded header-nav__notifications" data-bind="admin.notification-list">
+										<a href="#notification-list" data-bs-toggle="dropdown" data-expanded="false">
+											<figure>
+												@icon('notifications')
+												<span class="badge bg-primary"></span>
+											</figure>
+										</a>
+										<div data-role="notification-list.container" class="dropdown-menu notification-list">
+										</div>
+									</li>									
+
+									<li class="header-nav__rounded header-nav__profile-edit">
 										<a href="javascript:;" data-bind="admin.editMyProfile">
 											<figure>
 												@icon('person_edit')
 											</figure>
 										</a>
 									</li>
-									<li class="header-nav__lock header-nav__rounded">
+									<li class="header-nav__lock header-nav__rounded  header-nav__logout">
 										<a href="{{route('joona.user.logout')}}">
 											<figure>
 												@icon('lock')

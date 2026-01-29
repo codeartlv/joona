@@ -51,6 +51,12 @@
 			font-size: 0.75rem;
 			text-align: center;
 		}
+
+		.main-nav + .main-nav {
+			border-top: solid 1px var(--bs-gray-600);
+			margin-top: $spacer;
+			padding-top: $spacer;
+		}
 	}
 
 	.offcanvas-header {

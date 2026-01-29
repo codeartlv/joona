@@ -4,12 +4,13 @@ namespace Codeart\Joona;
 
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\Facades\Permission;
-use Illuminate\Support\Facades\Lang;
 use Codeart\Joona\MetaData\Page;
 use Codeart\Joona\MetaData\Locale;
+use Codeart\Joona\Models\User\Notifications\NotificationServer;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 use InvalidArgumentException;
 use Psr\Container\NotFoundExceptionInterface;
@@ -634,6 +635,19 @@ class Panel
 		};
 
 		return $to_array($pages);
+	}
+
+	/**
+	 * Register notification classes
+	 * 
+	 * @param array<int,class-string> $classes 
+	 * @return Panel 
+	 */
+	public function addNotifications(array $classes): self
+	{
+		NotificationServer::register($classes);
+
+		return $this;
 	}
 
 	/**

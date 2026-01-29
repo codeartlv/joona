@@ -26,6 +26,7 @@ return [
 		'blocked' => 'Blocked',
 		'pending' => 'Pending',
 	],
+	'logout' => 'Logout',
 	'groups' => 'Groups',
 	'last_seen' => 'Last seen',
 	'last_ip' => 'Last IP',

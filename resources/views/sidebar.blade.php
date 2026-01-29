@@ -4,7 +4,7 @@
 	<li class="header-nav__sidebar-trigger header-nav__rounded">
 		<a href="javascript:;" data-bind="admin.toggleSidebar" data-sidebar="#sidebar">
 			<figure>
-				@icon('menu_open')
+				@icon('filter_alt')
 			</figure>
 		</a>
 	</li>

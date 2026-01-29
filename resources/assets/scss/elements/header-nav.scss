@@ -54,6 +54,36 @@
 			}
 		}
 
+		&.header-nav__notifications {
+			> a {
+				> figure {
+					overflow: visible !important;
+				}
+			}
+
+			.badge {
+				display: none;
+			}
+
+			&.has-badge {
+				.badge {
+					display: block;
+				}
+			}
+		}
+
+		.badge {
+			position: absolute;
+			position: absolute;
+			font-size: 0.625rem;
+			left: 100%;
+			bottom: 100%;
+			display: block;
+			line-height: 1;
+			transform: translate(-50%, 75%);
+			padding: 4px 4px;
+		}
+
 		&.header-nav__rounded {
 			> a {
 				> figure {
@@ -70,6 +100,7 @@
 					background: transparent;
 					height: $spacer * 2;
 					justify-content: center;
+					position: relative;
 
 					i {
 						font-size: 1.5rem;
@@ -105,6 +136,13 @@
 		> li {
 			> a {
 				padding: 0 $spacer * 0.25;
+			}
+
+			&.header-nav__theme,
+			&.header-nav__profile-edit,
+			&.header-nav__logout,
+			&.header-nav__languages {
+				display: none;
 			}
 
 			&.header-nav__mobile-menu {

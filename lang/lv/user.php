@@ -26,6 +26,7 @@ return [
 		'blocked' => 'Bloķēts',
 		'pending' => 'Neaktīvs',
 	],
+	'logout' => 'Iziet',
 	'groups' => 'Grupas',
 	'last_seen' => 'Manīts',
 	'last_ip' => 'Pēdējā IP',

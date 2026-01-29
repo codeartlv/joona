@@ -15,6 +15,12 @@ return [
 	'access_denied' => 'Access denied.',
 	'failed_to_create' => 'Failed to create new record in the database. Please see log for details',
 	'data_filter' => 'Data filter',
+	'language' => 'Language',
+	'theme' => 'Theme',
+	'theme_light' => 'Light',
+	'theme_dark' => 'Dark',
+	'my_profile' => 'My profile',
+	'edit_my_profile' => 'Edit profile',
 	'menu' => [
 		'home' => 'Dashboard',
 		'settings' => 'Settings',

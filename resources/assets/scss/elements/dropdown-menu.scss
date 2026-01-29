@@ -22,4 +22,27 @@
 	min-height: 1.9375rem;
 	box-shadow: $box-shadow-sm;
 	border: none;
+
+	&.notification-list {
+		max-height: 55vh;
+		width: 31.25rem;
+		min-height: 5rem;
+
+		.spinner {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		@include media-breakpoint-down(md) {
+			max-height: 100%;
+			width: 100%;
+			margin-top: 0 !important;
+			transform: none !important;
+			position: fixed !important;
+			height: calc(100svh - #{$desktop-header-height});
+			top: #{$desktop-header-height} !important;
+		}
+	}
 }

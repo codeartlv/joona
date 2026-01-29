@@ -15,6 +15,12 @@ return [
 	'access_denied' => 'Šī darbība nav atļauta.',
 	'failed_to_create' => 'Neizdevās izveidot jaunu ierakstu sistēmā. Sazinaties ar lapas izstrādātāju lai noskaidrotu iemeslu.',
 	'data_filter' => 'Datu atlase',
+	'language' => 'Valoda',
+	'theme' => 'Krāsu tēma',
+	'theme_light' => 'Gaišā',
+	'theme_dark' => 'Tumšā',
+	'my_profile' => 'Mans profils',
+	'edit_my_profile' => 'Rediģēt profilu',
 	'menu' => [
 		'home' => 'Pārskats',
 		'settings' => 'Iestatījumi',

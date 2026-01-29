@@ -4,6 +4,7 @@ use Codeart\Joona\Http\Controllers\Common\ComponentsController;
 use Codeart\Joona\Http\Controllers\Common\DashboardController;
 use Codeart\Joona\Http\Controllers\User\UserController;
 use Codeart\Joona\Http\Controllers\User\PermissionsController;
+use Codeart\Joona\Http\Controllers\User\NotificationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::name('joona.')->group(function () {
 			Route::post('/permissions/manage', [PermissionsController::class, 'saveUserPermissions'])->name('permission-user-save');
 
 			Route::get('/activites', [UserController::class, 'activityLog'])->name('activities');
+			Route::get('/notifications', [NotificationsController::class, 'list'])->name('notifications');
+			Route::get('/notifications/count', [NotificationsController::class, 'count'])->name('notifications-count');
 		});
 	});
 

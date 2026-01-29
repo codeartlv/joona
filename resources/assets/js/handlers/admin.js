@@ -5,6 +5,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import ConfirmDialog from '../components/confirm-dialog.js';
 import BootstrapTooltip from 'bootstrap/js/dist/tooltip';
 import axios from 'axios';
+import { addSpinner, removeSpinner } from '../helpers';
 
 export default class Admin extends Handler {
 	static get pluginName() {
@@ -57,7 +58,7 @@ export default class Admin extends Handler {
 			modal.open(
 				route('joona.user.edit', {
 					id: parameters.id || 0,
-				})
+				}),
 			);
 		});
 	}
@@ -103,7 +104,7 @@ export default class Admin extends Handler {
 			el.querySelectorAll(`[data-toggle="level"][data-level="${level}"]`).forEach(
 				(element) => {
 					element.classList.remove('d-none');
-				}
+				},
 			);
 		};
 
@@ -186,7 +187,7 @@ export default class Admin extends Handler {
 						return true;
 					},
 				},
-			]
+			],
 		);
 
 		el.addEventListener('click', (event) => {
@@ -198,24 +199,139 @@ export default class Admin extends Handler {
 		return confirmDialog;
 	}
 
-	colorThemeSwitch(el) {
+	notificationList(el, params) {
+		return new (function (el, params) {
+			this.loading = false;
+			this.completed = false;
+
+			this.container = el.querySelector('[data-role="notification-list.container"]');
+			this.trigger = el.querySelector('[data-bs-toggle="dropdown"]');
+
+			this.trigger.addEventListener('shown.bs.dropdown', () => {
+				this.container
+					.querySelectorAll('[data-role="notification"]')
+					.forEach((el) => el.remove());
+				this.load();
+			});
+
+			this.load = (page) => {
+				this.loading = true;
+
+				setTimeout(() => {
+					addSpinner(this.container);
+				}, 10);
+
+				axios
+					.get(
+						route('joona.user.notifications', {
+							lastId: page,
+						}),
+					)
+					.then((response) => {
+						this.completed = response.data.complete;
+						this.loading = false;
+						removeSpinner(this.container);
+
+						this.onLoad(response);
+					});
+			};
+
+			this.onLoad = (response) => {
+				this.container.insertAdjacentHTML('beforeend', response.data.content);
+				this.updateBadge(response.data.badge);
+				window.Joona.init(this.container);
+				this.scrollbar.update();
+			};
+
+			this.updateBadge = function (count) {
+				this.trigger.querySelector('.badge').innerText = count > 0 ? count : '';
+
+				el.classList.toggle('has-badge', count > 0);
+
+				if (count == 0) {
+					this.trigger.find('i').removeClass('ringing');
+				}
+			};
+
+			axios.get(route('joona.user.notifications-count')).then((response) => {
+				this.updateBadge(parseInt(response.data.badge));
+			});
+
+			this.scrollbar = new PerfectScrollbar(this.container, {
+				wheelPropagation: false,
+				suppressScrollX: true,
+			});
+
+			this.container.addEventListener('click', (e) => {
+				if (e.target.closest('[data-role="notification"]')) {
+					e.stopPropagation();
+				}
+			});
+
+			this.container.addEventListener('ps-y-reach-end', (e) => {
+				if (this.loading || this.completed) {
+					return;
+				}
+
+				const notifications = this.container.querySelectorAll(
+					'[data-role="notification"][data-id]',
+				);
+
+				const lastNotification = notifications[notifications.length - 1];
+
+				let lastId = lastNotification ? lastNotification.dataset.id : null;
+
+				this.load(lastId);
+			});
+		})(el, params);
+	}
+
+	colorThemeSwitch(el, params) {
+		let resetStates = () => {
+			let other = document.querySelectorAll(
+				'[data-bind="admin.colorThemeSwitch"][data-theme]',
+			);
+
+			other.forEach((tag) => {
+				tag.classList.remove('active');
+
+				let currentMode = document.documentElement.dataset.bsTheme;
+
+				if (tag.dataset.theme && currentMode == tag.dataset.theme) {
+					tag.classList.add('active');
+				}
+			});
+		};
+
+		params = {
+			theme: '',
+			...params,
+		};
+
+		resetStates();
+
 		el.addEventListener('click', () => {
 			const currentMode = document.documentElement.dataset.bsTheme;
-			const nextMode = currentMode == 'light' ? 'dark' : 'light';
+			let nextMode = currentMode == 'light' ? 'dark' : 'light';
+
+			if (!params.theme) {
+				const newIcon = el.dataset[`${currentMode}Icon`];
+				const iconContainer = el.querySelector('[data-role="icon"]');
+
+				if (iconContainer) {
+					iconContainer.innerHTML = newIcon;
+				}
+			} else {
+				nextMode = params.theme;
+			}
 
 			document.documentElement.dataset.bsTheme = nextMode;
-
-			const newIcon = el.dataset[`${currentMode}Icon`];
-			const iconContainer = el.querySelector('[data-role="icon"]');
-
-			if (iconContainer) {
-				iconContainer.innerHTML = newIcon;
-			}
+			resetStates();
 
 			axios.post(
 				route('joona.set-theme', {
 					mode: nextMode,
-				})
+				}),
 			);
 		});
 	}
@@ -226,7 +342,7 @@ export default class Admin extends Handler {
 			modal.open(
 				route('joona.user.permission-edit-role', {
 					id: parameters.id || 0,
-				})
+				}),
 			);
 		});
 	}
