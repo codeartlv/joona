@@ -11,6 +11,14 @@ abstract readonly class NotificationPresenter
 		return null;
 	}
 	
+	/**
+	 * @return array<string,string>
+	 */
+    public function getUrlAttributes(): array
+	{
+		return [];
+	}
+
     public function getUrl(): ?string
 	{
 		return null;

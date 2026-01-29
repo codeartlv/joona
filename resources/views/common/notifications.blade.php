@@ -6,7 +6,7 @@
 					<img src="{{$notification->getImage()}}" />
 				</span>
 			</figure>
-			<a href="{{$notification->presenter->getUrl()}}">
+			<a href="{{$notification->presenter->getUrl()}}" @attributes($notification->presenter->getUrlAttributes())>
 				<header>
 					<h4>
 						{{$notification->presenter->getTitle()}}
