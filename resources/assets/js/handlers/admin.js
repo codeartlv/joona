@@ -1,11 +1,12 @@
 import Handler from './../handler.js';
 import Modal from '../components/modal.js';
 import Offcanvas from '../components/offcanvas.js';
+import Toast from '../components/toast.js';
 import PerfectScrollbar from 'perfect-scrollbar';
 import ConfirmDialog from '../components/confirm-dialog.js';
 import BootstrapTooltip from 'bootstrap/js/dist/tooltip';
 import axios from 'axios';
-import { addSpinner, removeSpinner } from '../helpers';
+import { addSpinner, parseJsonLd, removeSpinner } from '../helpers';
 
 export default class Admin extends Handler {
 	static get pluginName() {
@@ -197,6 +198,13 @@ export default class Admin extends Handler {
 		});
 
 		return confirmDialog;
+	}
+
+	toast(el, params) {
+		let data = parseJsonLd(el.querySelector('script'));
+		let toast = new Toast();
+
+		toast.show(data);
 	}
 
 	notificationList(el, params) {

@@ -157,6 +157,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'table' => \Codeart\Joona\View\Components\DataTable::class,
 			'editor' => \Codeart\Joona\View\Components\Editor::class,
 			'tags' => \Codeart\Joona\View\Components\Tag\Tags::class,
+			'toast' => \Codeart\Joona\View\Components\Toast::class,
 		];
 
 		foreach ($components as $name => $class) {
