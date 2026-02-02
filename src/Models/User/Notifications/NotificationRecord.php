@@ -3,6 +3,7 @@
 namespace Codeart\Joona\Models\User\Notifications;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $type
@@ -29,6 +30,8 @@ class NotificationRecord extends Model
 	protected $fillable = [
 		'type',
 		'notifiable_id',
+		'group_id',
+		'group',
 		'data',
 		'is_global',
 	];
@@ -55,15 +58,25 @@ class NotificationRecord extends Model
 		];
 	}
 
+	/**
+	 * @return HasMany<NotificationRecipient, $this> 
+	 */
 	public function recipients()
 	{
 		return $this->hasMany(NotificationRecipient::class, 'notification_id');
 	}
 
+	/**
+	 * @return NotificationPresenter 
+	 */
 	public function getPresenter(): NotificationPresenter
 	{
 		$class = NotificationServer::getRegisteredClass($this->type);
-		return new $class($this->notifiable_id, $this->data ?? []);
+
+		return new $class(
+			notifiableId: $this->notifiable_id,
+			data: $this->data ?? []
+		);
 	}
 
 	public function scopeForUser($query, $userId)

@@ -37,16 +37,31 @@ class NotificationServer
 			self::$notifications[$class::getTypeIdentifier()] = $class;
 		}
 	}
-
-    public static function getUnreadCount(?AdminUser $user = null, ?string $type = null): int
-    {
+	
+	/**
+	 * Return number of unread notifications
+	 * 
+	 * @param null|AdminUser $user 
+	 * @param null|string $type 
+	 * @param null|string $group 
+	 * @param null|string $groupId 
+	 * @param null|int $notifiableId 
+	 * @return int 
+	 */
+    public static function getUnreadCount(
+		?AdminUser $user = null,
+		?string $type = null,
+		?string $group = null,
+		?string $groupId = null,
+		?int $notifiableId = null,
+	): int {
 		$user = $user ?? Auth::user();
 
 		if (!$user) {
 			return 0;
 		}
 
-        $query = NotificationRecord::forUser($user->id)
+		$query = NotificationRecord::forUser($user->id)
             ->whereDoesntHave('recipients', function ($q) use ($user) {
                 $q->where('user_id', $user->id)->whereNotNull('read_at');
             });
@@ -55,6 +70,18 @@ class NotificationServer
             $query->where('type', $type);
         }
 
+        if ($group) {
+            $query->where('group', $group);
+        }
+
+        if ($groupId) {
+            $query->where('group_id', $groupId);
+        }
+
+		if ($notifiableId) {
+			$query->where('notifiable_id', $notifiableId);
+		}
+
         return $query->count();
     }
 
@@ -62,6 +89,8 @@ class NotificationServer
      * Return a set of notifications
 	 * 
      * @param AdminUser|null $user
+     * @param string|null $group
+     * @param string|null $groupId
      * @param bool $onlyUnread
      * @param int $limit
      * @param int|null $lastId
@@ -69,6 +98,8 @@ class NotificationServer
      */
 	public static function getNotifications(
 		?AdminUser $user = null,
+		?string $group = null,
+		?string $groupId = null,
 		bool $onlyUnread = false,
 		int $limit = 15,
         ?int $lastId = null
@@ -86,6 +117,14 @@ class NotificationServer
             $query->whereDoesntHave('recipients', function ($q) use ($user) {
                 $q->where('user_id', $user->id)->whereNotNull('read_at');
             });
+        }
+
+		if ($group) {
+            $query->where('group', $group);
+        }
+
+        if ($groupId) {
+            $query->where('group_id', $groupId);
         }
 
         if ($lastId) {
@@ -113,12 +152,69 @@ class NotificationServer
 		});
     }
 
-	public static function markAsRead(int $notifiableId, int $userId): void
+	/**
+	 * Mark specific notifications as read
+	 * 
+	 * @param null|AdminUser $user 
+	 * @param null|int $notifiableId 
+	 * @param null|string $type 
+	 * @param null|string $group 
+	 * @param null|string $groupId 
+	 * @return void 
+	 */
+	public static function markAsRead(
+		?AdminUser $user = null,
+		?int $notifiableId = null,
+		?string $type = null,
+		?string $group = null,
+		?string $groupId = null,
+	): void
+	{
+		$user = $user ?? Auth::user();
+
+		if (!$user) {
+			return;
+		}
+
+		$query = NotificationRecord::forUser($user->id)
+        ->whereDoesntHave('recipients', function ($q) use ($user) {
+            $q->where('user_id', $user->id)->whereNotNull('read_at');
+        });
+
+		if ($notifiableId) {
+			$query->where('notifiable_id', $notifiableId);
+		}
+
+		if ($type) {
+			$query->where('type', $type);
+		}
+
+		if ($group) {
+			$query->where('group', $group);
+		}
+
+		if ($groupId) {
+			$query->where('group_id', $groupId);
+		}
+
+		$query->get()->each(function($notification) use ($user) {
+			self::markAsReadByNotificationId($notification->id, $user->id);
+		});
+	}
+
+	/**
+	 * Mark notification read by it's ID
+	 * 
+	 * @param int $notificationId 
+	 * @param int $userId 
+	 * @return void 
+	 */
+	public static function markAsReadByNotificationId(int $notificationId, int $userId): void
 	{
 		NotificationRecipient::updateOrCreate(
 			[
-				'notification_id' => $notifiableId, 
-				'user_id'         => $userId
+				'notification_id' => $notificationId, 
+				'user_id' => $userId
 			],
 			[
 				'read_at' => now()
@@ -126,6 +222,12 @@ class NotificationServer
 		);
 	}
 
+	/**
+	 * Mark all notifications as read
+	 * 
+	 * @param null|AdminUser $user 
+	 * @return void 
+	 */
 	public static function markAllAsRead(?AdminUser $user = null): void
 	{
 		$user = $user ?? Auth::user();
@@ -141,10 +243,18 @@ class NotificationServer
         ->pluck('id');
 
     	foreach ($notificationIds as $id) {
-        	self::markAsRead($id, $user);
+        	self::markAsReadByNotificationId($id, $user);
     	}
 	}
 
+	/**
+	 * Push new notification
+	 * 
+	 * @param NotificationPresenter $message 
+	 * @param bool $isGlobal 
+	 * @param null|AdminUser $user 
+	 * @return void 
+	 */
 	public static function push(
 		NotificationPresenter $message,
 		bool $isGlobal = false,
@@ -152,6 +262,7 @@ class NotificationServer
 	): void
 	{
 		$type = $message::getTypeIdentifier();
+		$group = $message::getGroup();
 		
 		if (!isset(self::$notifications[$type])) {
 			return;
@@ -164,6 +275,8 @@ class NotificationServer
 		$record = NotificationRecord::create([
 			'type' => $type,
 			'notifiable_id' => $message->notifiableId,
+			'group' => $group,
+			'group_id' => $message->getGroupIdentifier(),
 			'data' => $message->data,
 			'is_global' => $isGlobal,
 		]);
@@ -177,6 +290,12 @@ class NotificationServer
 		}
 	}
 
+	/**
+	 * Return notification type class
+	 * 
+	 * @param string $className 
+	 * @return null|string 
+	 */
 	public static function getRegisteredClass(string $className): ?string
 	{
 		return self::$notifications[$className] ?? null;
