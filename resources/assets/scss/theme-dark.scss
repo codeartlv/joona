@@ -367,4 +367,8 @@
 			background: var(--bs-gray-800);
 		}
 	}
+
+	.notification + .notification {
+		border-top-color: var(--bs-gray-800);
+	}
 }
