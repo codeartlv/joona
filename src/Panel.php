@@ -621,12 +621,15 @@ class Panel
 
 				$is_active_route = is_object($active_route) && method_exists($active_route, 'getName') && in_array($active_route->getName(), $test_routes);
 
+				$badge = $page->badge;
+				$badge = is_callable($badge) ? $badge() : (int) $badge;
+
 				$items[$index] = [
 					'caption' => $page->caption,
 					'url' => $page->route ? route($page->route) : null,
 					'active' => $is_active_route || $has_active_child,
 					'icon' => $page->icon,
-					'badge' => $page->badge,
+					'badge' => $badge,
 					'childs' => $item['children'],
 				];
 			}

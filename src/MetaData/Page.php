@@ -21,7 +21,7 @@ class Page
 	public ?string $caption = null;
 	public ?string $icon = null;
 	public ?string $route = null;
-	public ?int $badge = 0;
+	public mixed $badge = 0;
 	public array $activeRoutes = [];
 
 	/**
@@ -61,10 +61,10 @@ class Page
 	/**
 	 * Sets the badge for the page.
 	 *
-	 * @param int $badge Badge number.
+	 * @param mixed $badge Badge number.
 	 * @return self Returns the instance of this Page for method chaining.
 	 */
-	public function badge(int $badge): self
+	public function badge(mixed $badge): self
 	{
 		$this->badge = $badge;
 		return $this;
