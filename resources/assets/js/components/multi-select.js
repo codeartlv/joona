@@ -59,39 +59,28 @@ export default class MultiSelect {
 			String(s || '')
 				.normalize('NFD')
 				.replace(/[\u0300-\u036f]/g, '')
-				.toLocaleLowerCase();
+				.toLowerCase();
 
 		const q = normalize(keyword).trim();
 
-		const inputs = this.container.querySelectorAll('input[data-role="option"]');
-		inputs.forEach((input) => {
-			const label =
-				input.closest('label') ||
-				(input.id
-					? this.container.querySelector(
-							`label[for="${
-								typeof CSS !== 'undefined' && CSS.escape
-									? CSS.escape(input.id)
-									: input.id
-							}"]`
-					  )
-					: null);
+		this.container.querySelectorAll('li.form-multiselect__option').forEach((li) => {
+			const label = li.querySelector('.form-check-label');
+			const labelText = label ? normalize(label.textContent) : '';
+			const match = !q || labelText.includes(q);
+			li.classList.toggle('d-none', !match);
+		});
 
-			if (!label) return;
+		this.container.querySelectorAll('li.form-multiselect__group').forEach((li) => {
+			const label = li.querySelector('.form-check-label');
+			const labelText = label ? normalize(label.textContent) : '';
+			const match = !q || labelText.includes(q);
+			li.classList.toggle('d-none', !match);
+		});
 
-			const match = !q || normalize(label.textContent).includes(q);
-
-			// Toggle visibility on the wrapper <li.form-multiselect__option>
-			const item =
-				label.closest('li.form-multiselect__option') ||
-				input.closest('li.form-multiselect__option');
-
-			if (item) {
-				item.classList.toggle('d-none', !match);
-			} else {
-				// Fallback if no <li> wrapper exists
-				label.style.display = match ? '' : 'none';
-			}
+		this.container.querySelectorAll('li.form-multiselect__group-label').forEach((li) => {
+			const labelText = normalize(li.textContent);
+			const match = !q || labelText.includes(q);
+			li.classList.toggle('d-none', !match);
 		});
 	}
 
@@ -99,9 +88,11 @@ export default class MultiSelect {
 		let checkedInputs = this.getOptions();
 		let textDisplay = this.container.querySelector('[data-role="selected-text"]');
 
-		textDisplay.textContent = choice('joona::common.selected', checkedInputs.length, {
-			count: checkedInputs.length,
-		});
+		if (typeof choice === 'function') {
+			textDisplay.textContent = choice('joona::common.selected', checkedInputs.length, {
+				count: checkedInputs.length,
+			});
+		}
 
 		let allOptionInputs = this.container.querySelectorAll('input[data-role="option"]:enabled');
 		let totalOptions = allOptionInputs.length;
@@ -134,13 +125,15 @@ export default class MultiSelect {
 			// Toggle checkbox is now unchecked, so uncheck all options
 			this.setAllOptions(false);
 		}
-		// Update the display and the toggle checkbox state
+
 		this.updateChecked();
 	}
 
 	setAllOptions(checked) {
 		this.container.querySelectorAll('input[data-role="option"]:enabled').forEach((element) => {
 			element.checked = checked;
+			element.dispatchEvent(new Event('change'));
 		});
 	}
 }
+
