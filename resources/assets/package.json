@@ -35,7 +35,7 @@
 		"jquery": "3.7.1",
 		"lang.js": "^1.1.14",
 		"leaflet": "^1.9.4",
-		"material-symbols": "^0.33",
+		"material-symbols": "^0.40",
 		"moment": "^2.30",
 		"pell": "^1.0.6",
 		"perfect-scrollbar": "^1.5",
@@ -43,9 +43,7 @@
 		"swiper": "^11.1.10"
 	},
 	"devDependencies": {
-		"rollup-plugin-copy": "^3.5.0",
 		"sass-embedded": "^1.78.0",
-		"vite": "^5.0.10",
-		"vite-plugin-nunjucks": "^0.2.0"
+		"vite": "^5.0.10"
 	}
 }
