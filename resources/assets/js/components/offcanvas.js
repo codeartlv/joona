@@ -13,6 +13,43 @@ export default class Offcanvas {
 		};
 
 		this.id = id;
+		this.currentUrl = null;
+		this.offcanvasInstance = null;
+	}
+
+	static get(id) {
+		return DataStore.getData(`offcanvas_${id}`);
+	}
+
+	static getByUrl(url) {
+		return DataStore.getData(`offcanvas_url_${url}`);
+	}
+
+	static getNextZIndexes() {
+		const openOffcanvases = document.querySelectorAll('.offcanvas.show');
+		const baseZ = 1050;
+
+		if (openOffcanvases.length === 0) {
+			return {
+				elZ: baseZ,
+				backdropZ: baseZ - 10,
+			};
+		}
+
+		let highestZ = baseZ;
+
+		openOffcanvases.forEach((el) => {
+			const z = parseInt(window.getComputedStyle(el).zIndex);
+
+			if (z > highestZ) {
+				highestZ = z;
+			}
+		});
+
+		return {
+			backdropZ: highestZ + 1,
+			elZ: highestZ + 2,
+		};
 	}
 
 	reload(url) {
@@ -32,10 +69,6 @@ export default class Offcanvas {
 		addSpinner(offcanvasBody, 'secondary');
 
 		this.load(newUrl);
-	}
-
-	static get(id) {
-		return DataStore.getData(`offcanvas_${id}`);
 	}
 
 	load(url) {
@@ -70,8 +103,6 @@ export default class Offcanvas {
 					DataStore.setData(`offcanvas_${this.id}`, this);
 				})
 				.catch((e) => {
-					console.error(e);
-
 					if (!e.response) {
 						return;
 					}
@@ -95,12 +126,25 @@ export default class Offcanvas {
 		});
 	}
 
-	open(url) {
+	async open(url) {
+		this.currentUrl = url;
+
+		const existingInstance = Offcanvas.getByUrl(url);
+
+		if (existingInstance) {
+			await new Promise((resolve) => {
+				const el = document.querySelector(`.offcanvas--${existingInstance.id}`);
+				if (el) {
+					el.addEventListener('hidden.bs.offcanvas', () => resolve(), { once: true });
+					existingInstance.offcanvasInstance.hide();
+				} else {
+					resolve();
+				}
+			});
+		}
+
 		return new Promise((resolve, reject) => {
-			const openOffcanvases = document.querySelectorAll('.offcanvas.show');
-			const baseZIndex = 1045;
-			const newZIndex = baseZIndex + openOffcanvases.length * 10;
-			const backdropZIndex = newZIndex - 5;
+			const { elZ, backdropZ } = Offcanvas.getNextZIndexes();
 
 			const offcanvasEl = document.createElement('div');
 			offcanvasEl.classList.add(
@@ -110,41 +154,36 @@ export default class Offcanvas {
 				`offcanvas--${this.id}`,
 			);
 
-			offcanvasEl.style.zIndex = newZIndex;
+			// Apply the calculated Z-Index to the element
+			offcanvasEl.style.zIndex = elZ;
 
-			if (this.settings.scroll) {
-				offcanvasEl.dataset.bsScroll = 'true';
-			}
-
-			if (this.settings.backdrop == 'static') {
+			if (this.settings.scroll) offcanvasEl.dataset.bsScroll = 'true';
+			if (this.settings.backdrop === 'static') {
 				offcanvasEl.dataset.bsBackdrop = 'static';
 				offcanvasEl.dataset.bsKeyboard = 'false';
 			}
 
 			offcanvasEl.innerHTML = `
-			<div class="offcanvas-header">
-				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
-					<i class="material-symbols-outlined">close</i>
-				</button>
-			</div>
-			<div class="offcanvas-body">
-
-			</div>`;
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <i class="material-symbols-outlined">close</i>
+                </button>
+            </div>
+            <div class="offcanvas-body"></div>`;
 
 			document.body.append(offcanvasEl);
 
 			const body = offcanvasEl.querySelector('.offcanvas-body');
-
 			addSpinner(body, 'secondary');
 
 			offcanvasEl.addEventListener('show.bs.offcanvas', () => {
 				setTimeout(() => {
 					const backdrops = document.querySelectorAll('.offcanvas-backdrop.show');
 					if (backdrops.length > 0) {
-						const lastBackdrop = backdrops[backdrops.length - 1];
-						lastBackdrop.style.zIndex = backdropZIndex;
+						const currentBackdrop = backdrops[backdrops.length - 1];
+						currentBackdrop.style.zIndex = backdropZ;
 					}
-				}, 0);
+				}, 10);
 			});
 
 			offcanvasEl.addEventListener('hidden.bs.offcanvas', () => {
@@ -155,18 +194,19 @@ export default class Offcanvas {
 
 				offcanvasEl.remove();
 				DataStore.clearData(`offcanvas_${this.id}`);
+				DataStore.clearData(`offcanvas_url_${this.currentUrl}`);
 			});
 
 			this.offcanvasInstance = new BootstrapOffcanvas(offcanvasEl, this.settings);
+
+			DataStore.setData(`offcanvas_${this.id}`, this);
+			DataStore.setData(`offcanvas_url_${this.currentUrl}`, this);
+
 			this.offcanvasInstance.show();
 
 			this.load(url)
-				.then(() => {
-					resolve(offcanvasEl);
-				})
-				.catch(() => {
-					reject();
-				});
+				.then(() => resolve(offcanvasEl))
+				.catch((e) => reject(e));
 		});
 	}
 }
