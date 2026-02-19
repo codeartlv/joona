@@ -1,6 +1,6 @@
 import BootstrapOffcanvas from 'bootstrap/js/dist/offcanvas';
 import axios from 'axios';
-import { addSpinner } from '../helpers';
+import { addSpinner, ZIndexManager } from '../helpers';
 import DataStore from '../store';
 
 export default class Offcanvas {
@@ -144,7 +144,7 @@ export default class Offcanvas {
 		}
 
 		return new Promise((resolve, reject) => {
-			const { elZ, backdropZ } = Offcanvas.getNextZIndexes();
+			const { elZ, backdropZ } = ZIndexManager.getNextZ();
 
 			const offcanvasEl = document.createElement('div');
 			offcanvasEl.classList.add(
@@ -178,11 +178,7 @@ export default class Offcanvas {
 
 			offcanvasEl.addEventListener('show.bs.offcanvas', () => {
 				setTimeout(() => {
-					const backdrops = document.querySelectorAll('.offcanvas-backdrop.show');
-					if (backdrops.length > 0) {
-						const currentBackdrop = backdrops[backdrops.length - 1];
-						currentBackdrop.style.zIndex = backdropZ;
-					}
+					ZIndexManager.applyToInstance(offcanvasEl, backdropZ, elZ);
 				}, 10);
 			});
 
@@ -210,4 +206,3 @@ export default class Offcanvas {
 		});
 	}
 }
-

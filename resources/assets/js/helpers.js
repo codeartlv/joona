@@ -7,7 +7,7 @@ export function addSpinner(context, color) {
 				<span class="visually-hidden">Loading...</span>
 			</div>
 		</div>
-	`
+	`,
 	);
 }
 
@@ -86,3 +86,41 @@ export function parseRoute(arg, params) {
 
 	return window.route(route, params);
 }
+
+export const ZIndexManager = {
+	getBaseZ: () => 1050,
+
+	getNextZ: () => {
+		const activeLayers = document.querySelectorAll('.modal.show, .offcanvas.show');
+		let highestZ = ZIndexManager.getBaseZ();
+
+		activeLayers.forEach((el) => {
+			const z = parseInt(window.getComputedStyle(el).zIndex);
+			if (!isNaN(z) && z > highestZ) {
+				highestZ = z;
+			}
+		});
+
+		return {
+			backdropZ: highestZ + 1,
+			elZ: highestZ + 2,
+		};
+	},
+
+	applyToInstance: (instanceEl, backdropZ, elZ) => {
+		// Set element Z
+		instanceEl.style.zIndex = elZ;
+
+		// Find backdrop (Bootstrap creates this after .show() usually)
+		// We use a timeout to catch the backdrop insertion
+		setTimeout(() => {
+			const backdrops = document.querySelectorAll(
+				'.modal-backdrop.show, .offcanvas-backdrop.show',
+			);
+			if (backdrops.length > 0) {
+				const currentBackdrop = backdrops[backdrops.length - 1];
+				currentBackdrop.style.zIndex = backdropZ;
+			}
+		}, 10);
+	},
+};

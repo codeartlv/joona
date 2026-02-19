@@ -1,6 +1,6 @@
 import axios from 'axios';
 import BootstrapModal from 'bootstrap/js/dist/modal';
-import { addSpinner, removeSpinner } from '../helpers';
+import { addSpinner, removeSpinner, ZIndexManager } from '../helpers';
 
 export default class Modal {
 	constructor(id) {
@@ -45,6 +45,8 @@ export default class Modal {
 
 		return new Promise((resolve, reject) => {
 			let processOpen = () => {
+				const { elZ, backdropZ } = ZIndexManager.getNextZ();
+
 				window.JoonaModalInstance = this;
 				this.trigger('open');
 
@@ -85,6 +87,8 @@ export default class Modal {
 					modalEl = urlOrElement;
 				}
 
+				modalEl.style.zIndex = elZ;
+
 				this.modalInstance = new BootstrapModal(modalEl, {
 					backdrop: 'static',
 					focus: options.focus,
@@ -92,6 +96,8 @@ export default class Modal {
 
 				modalEl.addEventListener('show.bs.modal', () => {
 					if (this.modalInstance._backdrop) {
+						ZIndexManager.applyToInstance(modalEl, backdropZ, elZ);
+
 						const backdropEl = this.modalInstance._backdrop._getElement();
 						addSpinner(backdropEl, 'light');
 					}
