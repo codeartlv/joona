@@ -240,6 +240,10 @@ export default class Uploader {
 			addOptionToFile(this.files[i], key, option);
 		}
 
+		if (key in this.params.fileOptions) {
+			delete this.params.fileOptions[key];
+		}
+
 		this.params.fileOptions[key] = option;
 	}
 
