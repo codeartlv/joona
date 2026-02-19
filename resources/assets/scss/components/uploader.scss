@@ -130,6 +130,94 @@
 		}
 	}
 
+	&.uploader--list {
+		display: flex;
+		flex-direction: column;
+		gap: $spacer * 0.5;
+
+		.uploader__item {
+			padding: 0;
+		}
+
+		.upload-area {
+			figcaption {
+				position: static;
+				transform: none;
+				flex-direction: row;
+				display: flex;
+				align-items: center;
+				padding: $spacer * 0.5;
+
+				i {
+					margin: 0;
+				}
+			}
+		}
+
+		.upload-file {
+			display: flex;
+			flex-direction: row;
+			padding: $spacer * 0.5;
+			align-items: center;
+			background: var(--bs-gray-200);
+
+			figure {
+				position: static;
+				order: 2;
+				flex: 0 0 auto;
+				width: auto;
+				aspect-ratio: 1/1;
+				height: 2rem;
+			}
+
+			.upload-file__menu {
+				position: static;
+			}
+
+			.upload-file__info {
+				flex-direction: row;
+				gap: $spacer;
+				position: static;
+				flex: 1;
+				outline: none;
+				padding: 0;
+				order: 1;
+				width: auto;
+			}
+
+			.upload-file__icon {
+				margin: 0;
+			}
+
+			.upload-file__filename {
+				flex: 1;
+				text-align: left;
+			}
+
+			.upload-file__options {
+				position: static;
+				margin-left: auto;
+				order: 3;
+			}
+
+			&.file-image,
+			&.has-thumb {
+				.upload-file__info {
+					display: block;
+					order: 2;
+
+					.upload-file__icon {
+						display: none;
+					}
+
+					.upload-file__filename {
+						padding-left: $spacer;
+					}
+				}
+			}
+		}
+	}
+
 	&.file-drag {
 		.upload-area {
 			outline-color: $warning;
@@ -353,3 +441,4 @@
 		outline-color: var(--bs-gray-700);
 	}
 }
+
