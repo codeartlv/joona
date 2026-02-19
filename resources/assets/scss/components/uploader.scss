@@ -200,6 +200,31 @@
 				order: 3;
 			}
 
+			&.error {
+				&.no-preview {
+					figure {
+						display: none;
+					}
+				}
+
+				.upload-file__msg {
+					position: static;
+					width: auto;
+					order: 2;
+					margin: 0 $spacer;
+					flex: 1;
+					text-align: left;
+				}
+
+				.upload-file__info {
+					flex: 0 0 auto;
+
+					.upload-file__filename {
+						display: none;
+					}
+				}
+			}
+
 			&.file-image,
 			&.has-thumb {
 				.upload-file__info {
