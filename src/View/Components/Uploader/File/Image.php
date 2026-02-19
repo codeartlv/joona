@@ -21,11 +21,14 @@ final readonly class Image extends UploadedFile
 
 	public function toArray()
 	{
+		$extension = strtolower(pathinfo($this->filename, PATHINFO_EXTENSION) ?? '');
+		
 		return [
 			'id' => $this->id,
 			'type' => FileCategory::IMAGE->value,
 			'caption' => $this->caption,
 			'filename' => $this->filename,
+			'extension' => $extension,
 			'thumbnail' => $this->thumbnailUrl,
 			'image' => $this->imageUrl,
 			'properties' => $this->properties,

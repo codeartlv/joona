@@ -183,10 +183,10 @@
 				padding: 0;
 				order: 1;
 				width: auto;
-			}
 
-			.upload-file__icon {
-				margin: 0;
+				.upload-file__icon {
+					margin: 0;
+				}
 			}
 
 			.upload-file__filename {
@@ -212,6 +212,26 @@
 
 					.upload-file__filename {
 						padding-left: $spacer;
+					}
+				}
+			}
+
+			&.file-image.no-preview {
+				figure {
+					display: none;
+				}
+
+				.upload-file__info {
+					display: flex;
+					align-items: center;
+
+					.upload-file__icon {
+						display: block;
+						margin: 0;
+					}
+
+					.upload-file__filename {
+						padding-left: 0;
 					}
 				}
 			}
