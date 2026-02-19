@@ -50,6 +50,10 @@ export default class AjaxForm {
 		}
 	}
 
+	async submit() {
+		return this.handler.submit();
+	}
+
 	on(event, callback) {
 		if (!this.eventListeners.has(event)) {
 			this.eventListeners.set(event, []);
@@ -73,7 +77,9 @@ export default class AjaxForm {
 		this.form.classList.add(`loading-${this.settings.overlay}`);
 
 		if (this.settings.overlay == 'button') {
-			setButtonLoading(this.handler.submitter);
+			if (this.handler.submitter) {
+				setButtonLoading(this.handler.submitter);
+			}
 		} else {
 			addSpinner(this.form);
 		}
@@ -84,7 +90,9 @@ export default class AjaxForm {
 		this.form.classList.remove(`loading-${this.settings.overlay}`);
 
 		if (this.settings.overlay == 'button') {
-			unsetButtonLoading(this.handler.submitter);
+			if (this.handler.submitter) {
+				unsetButtonLoading(this.handler.submitter);
+			}
 		} else {
 			removeSpinner(this.form);
 		}
@@ -270,4 +278,3 @@ export default class AjaxForm {
 		};
 	}
 }
-
