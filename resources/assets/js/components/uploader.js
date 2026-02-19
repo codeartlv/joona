@@ -57,12 +57,12 @@ class ManagedFile {
 
 		if (this.nativeFile && typeof this.nativeFile.type === 'string') {
 			return ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(
-				this.nativeFile.type
+				this.nativeFile.type,
 			);
 		}
 		if (this.extension) {
 			return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(
-				this.extension.toLowerCase()
+				this.extension.toLowerCase(),
 			);
 		}
 		return false;
@@ -72,9 +72,11 @@ class ManagedFile {
 export default class Uploader {
 	/*** Public Events ***/
 	// queueChange: whenever files list changes (add/remove/reorder/response)
+	// queueComplete: whenever all files are uploaded
 	// beforeFileSelect: just before opening OS file dialog
 	events = {
 		queueChange: [],
+		queueComplete: [],
 		beforeFileSelect: [],
 	};
 
@@ -124,7 +126,7 @@ export default class Uploader {
 							file.id,
 							file.image,
 							parseRoute(this.params.croproute),
-							presetData
+							presetData,
 						);
 						cropper.open();
 					},
@@ -377,6 +379,18 @@ export default class Uploader {
 		}
 	}
 
+	/**
+	 * Checks if all files in the current queue have finished uploading.
+	 */
+	_checkQueueComplete() {
+		const isProcessing = this.files.some((f) => f.status === 'pending');
+
+		if (!isProcessing) {
+			// Trigger the public event
+			this.trigger('queueComplete', this.files.slice());
+		}
+	}
+
 	/*** Upload Flow ***/
 	_startUpload(nativeFile) {
 		// Create model immediately (pending), render skeleton thumbnail
@@ -476,6 +490,7 @@ export default class Uploader {
 				this._toggleSubmitDisabled(false);
 				this.syncIds();
 				this.trigger('queueChange', this.files.slice());
+				this._checkQueueComplete();
 				return;
 			}
 
@@ -498,6 +513,7 @@ export default class Uploader {
 			this._toggleSubmitDisabled(false);
 			this.syncIds();
 			this.trigger('queueChange', this.files.slice());
+			this._checkQueueComplete();
 		});
 
 		xhr.addEventListener('error', () => {
@@ -518,6 +534,7 @@ export default class Uploader {
 			this._toggleSubmitDisabled(false);
 			this.syncIds();
 			this.trigger('queueChange', this.files.slice());
+			this._checkQueueComplete();
 		});
 
 		xhr.addEventListener('abort', () => {
@@ -861,3 +878,4 @@ export default class Uploader {
 		this._paintThumbnail(thumbnailEl, file);
 	}
 }
+
