@@ -169,6 +169,13 @@
 		z-index: 2;
 	}
 
+	.upload-file__options {
+		position: absolute;
+		z-index: 3;
+		right: 0;
+		top: 0;
+	}
+
 	.upload-file__info {
 		display: none;
 	}

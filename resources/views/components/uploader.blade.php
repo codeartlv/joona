@@ -11,6 +11,9 @@
 	<template data-role="thumbnail">
 		<div class="upload-file uploader__item" data-id="0">
 			<figure data-role="thumbnail">
+				
+			</figure>
+			<div class="upload-file__options">
 				<div class="dropdown upload-file__menu">
 					<a href="javascript:;" class="btn btn-sm btn-secondary captionless" data-bs-toggle="dropdown">
 						@icon('more_horiz')
@@ -19,11 +22,15 @@
 
 					</div>
 				</div>
-				<div class="upload-file__progress progress">
-					<div class="progress-bar bg-success" style="width:0%" data-role="progress"></div>
-				</div>
-				<div class="upload-file__msg" data-role="message"></div>
-			</figure>
+				
+			</div>
+
+			<div class="upload-file__progress progress">
+				<div class="progress-bar bg-success" style="width:0%" data-role="progress"></div>
+			</div>
+
+			<div class="upload-file__msg" data-role="message"></div>
+
 			<div class="upload-file__info">
 				<span class="upload-file__icon fiv-sqo" data-role="file-icon"></span>
 				<span class="upload-file__filename" data-role="filename"></span>
