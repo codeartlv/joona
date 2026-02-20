@@ -1,7 +1,7 @@
 <nav>
-	<ul class="pagination">
+	<ul class="pagination" data-role="pagination">
 		<li class="page-item page-item-first page-item-control {{ $current_page == 1 ? 'disabled' : '' }}">
-			<a class="page-link" href="{{ request()->fullUrlWithQuery([$param => $current_page - 1]) }}">
+			<a class="page-link" data-page="{{$current_page - 1}}" href="{{ request()->fullUrlWithQuery([$param => $current_page - 1]) }}">
 				@icon('navigate_before')
 			</a>
 		</li>
@@ -15,9 +15,10 @@
 		@endforeach
 
 		<li class="page-item page-item-last page-item-control {{ $current_page == $total_pages ? 'disabled' : '' }}">
-			<a class="page-link" href="{{ request()->fullUrlWithQuery([$param => $current_page + 1]) }}">
+			<a data-page="{{$current_page + 1}}" class="page-link" href="{{ request()->fullUrlWithQuery([$param => $current_page + 1]) }}">
 				@icon('navigate_next')
 			</a>
 		</li>
 	</ul>
 </nav>
+
