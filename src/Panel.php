@@ -209,7 +209,7 @@ class Panel
 	/**
 	 * Add additional user levels
 	 *
-	 * @param string[] $levels
+	 * @param array<int,string|\UnitEnum> $levels
 	 * @return Panel
 	 */
 	public function addUserClasses(array $levels): self

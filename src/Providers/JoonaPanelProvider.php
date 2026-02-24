@@ -8,12 +8,13 @@ use Codeart\Joona\Auth\Permissions\PermissionGroup;
 use Codeart\Joona\Auth\Permissions\RoutePermission;
 use Codeart\Joona\Auth\Permissions\PermissionLoader;
 use Codeart\Joona\Contracts\PermissionLoaderInterface;
-use Codeart\Joona\Facades\Auth as FacadesAuth;
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\MetaData\Page;
+use Codeart\Joona\Models\User\AdminUser;
 use Codeart\Joona\Panel;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as ValidatorObject;
@@ -213,6 +214,8 @@ abstract class JoonaPanelProvider extends JoonaProvider
 
 		$router->middlewareGroup('admin.auth', $authMiddlewares);
 
+		$router->aliasMiddleware('userclass', \Codeart\Joona\Http\Middleware\CheckUserClass::class);
+
 		$router->middlewareGroup('admin.web', [
 			\Codeart\Joona\Http\Middleware\SetLocale::class,
 			\Codeart\Joona\Http\Middleware\LogUserActions::class
@@ -308,6 +311,33 @@ abstract class JoonaPanelProvider extends JoonaProvider
 				),
 			])
 		]);
+
+		$classes = $panel->getUserClasses();
+
+		if (!empty($classes)) {
+			Gate::define('userclass', function($user, ...$classes) {
+				dd($classes);
+			});
+
+		/*
+			foreach ($classes as $class) {
+				$className = $class instanceof \UnitEnum ? $class->value : $class;
+				$key = 'userclass:'.$className;
+
+				Gate::define($key, function($user, ...$args) use ($key) {
+					if (!$user instanceof AdminUser) {
+						return false;
+					}
+
+					dd($key);
+
+					list(, $class) = explode(':', $key);
+
+					//return $user->class 
+				});
+			}
+				*/
+		}
 
 		$this->app->singleton('joona.permission-loader', function () use ($panel) {
 

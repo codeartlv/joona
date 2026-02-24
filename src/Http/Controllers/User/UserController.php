@@ -222,6 +222,10 @@ class UserController
 		}
 
 		$classes = array_map(function($className) use ($fields){
+			if ($className instanceof \UnitEnum) {
+				return new Option($className, __('joona::user.class_'.$className->value), $className->value == $fields['class']);	
+			}
+
 			return new Option($className, __('joona::user.class_'.$className), $className == $fields['class']);
 		}, Joona::getUserClasses());
 
@@ -325,7 +329,15 @@ class UserController
 			$level = UserLevel::User->value;
 		}
 
-		if ($class && !in_array($class, Joona::getUserClasses())) {
+		$classes = Joona::getUserClasses();
+
+		foreach ($classes as $index => $className) {
+			if ($className instanceof \UnitEnum) {
+				$classes[$index] = $className->value;
+			}
+		}
+
+		if ($class && !in_array($class, $classes)) {
 			$form->setError(__('joona::user.class_not_found'), 'class');
 			return response()->json($form);
 		}
