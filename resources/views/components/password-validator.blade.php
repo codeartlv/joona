@@ -4,8 +4,19 @@
 
 <div class="password-validator" data-bind="components.passwordValidator" data-policy="{{$policy}}">
 	<div class="input-group">
+		@if ($iconPrepend || $textPrepend)
+			<span class="input-group-text {{ $iconPrepend ? 'as-icon':''}} ">
+				@if ($iconPrepend)
+					@icon($iconPrepend)
+				@else
+					{{$textPrepend}}
+				@endif
+			</span>
+		@endif
+
 		<input class="form-control" type="password" data-role="password-validator.password-input" name="{{$name}}" value="{{$value}}" autocomplete="new-password" />
-		<a href="javascript:;" data-role="password-validator.toggle-visbility" class="input-group-icon">
+
+		<a href="javascript:;" data-role="password-validator.toggle-visbility" class="input-group-icon password-validator__toggle-visibility">
 			@icon('visibility')
 			@icon('visibility_off')
 		</a>

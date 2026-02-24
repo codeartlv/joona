@@ -21,7 +21,7 @@
 					</div>
 
 					<div class="form-group">
-						<x-input :label="__('joona::user.password')" icon="key" iconPrepend="password" type="password" autocomplete="current-password" name="password" required="true" />
+						<x-password-validator name="password" required="true" iconPrepend="password" :label="__('joona::user.password')" autocomplete="current-password" />
 						<div data-field-message="password"></div>
 					</div>
 				</div>

@@ -11,6 +11,8 @@ class PasswordValidator extends Component
 		public string $policy = '',
 		public string $value = '',
 		public ?string $label = '',
+		public ?string $iconPrepend = '',
+		public ?string $textPrepend = '',
 		public bool $required = false,
 	) {
 	}
