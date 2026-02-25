@@ -7,6 +7,49 @@
 		padding-top: 0;
 	}
 
+	&.offcanvas--cropper {
+		max-width: 100vw !important;
+		background: none;
+
+		.offcanvas-body {
+			display: flex;
+			flex-direction: column;
+			background: none;
+
+			> form {
+				flex: 1;
+			}
+		}
+
+		.cropper {
+			flex: 1;
+			height: 100%;
+
+			cropper-canvas {
+				height: 100%;
+				background: none;
+			}
+		}
+
+		.offcanvas-footer {
+			justify-content: flex-end;
+		}
+
+		.offcanvas-header {
+			color: var(--bs-gray-100);
+		}
+
+		.offcanvas-footer,
+		.offcanvas-header {
+			background: rgba(0, 0, 0, 0.8) !important;
+			border-radius: 0;
+		}
+
+		[data-role='form.response'] {
+			display: none;
+		}
+	}
+
 	&.offcanvas-mobile-menu {
 		--bs-offcanvas-width: 100%;
 		--bs-offcanvas-bg: transparent;

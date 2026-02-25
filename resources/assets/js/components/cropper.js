@@ -1,6 +1,6 @@
 // CropperWrapper.js
 import CropperJS from 'cropperjs';
-import Modal from './modal.js';
+import Offcanvas from './offcanvas.js';
 import { parseRoute } from './../helpers';
 
 export default class ImageCropper {
@@ -34,15 +34,15 @@ export default class ImageCropper {
 
 	open() {
 		const url = parseRoute('joona.cropper');
-		const modal = new Modal('cropper');
+		const offcanvas = new Offcanvas('cropper');
 
-		modal.open(url).then((wnd) => {
+		offcanvas.open(url).then((wnd) => {
 			window.Joona.getInstance(wnd, 'components.form').then((form) => {
 				this._form = form;
 				this._form.element.action = this._saveUrl;
 
 				this._form.instance.on('success', () => {
-					modal.close();
+					offcanvas.close();
 					this._dispatchEvent('crop');
 				});
 			});
@@ -343,7 +343,7 @@ export default class ImageCropper {
 				const dragBox = imgEl.closest('.cropper-tile').querySelector('.cropper-drag-box');
 				dragBox.addEventListener('click', (e) => {
 					const under = (document.elementsFromPoint?.(e.clientX, e.clientY) || []).find(
-						(el) => el.closest && el.closest('a')
+						(el) => el.closest && el.closest('a'),
 					);
 
 					const a = under && under.closest ? under.closest('a') : null;

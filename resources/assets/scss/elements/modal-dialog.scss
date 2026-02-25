@@ -62,7 +62,6 @@
 		height: 100%;
 	}
 
-	&.modal-dialog--cropper,
 	&.modal-dialog-gallery {
 		max-width: 100%;
 		min-height: 100%;
@@ -91,51 +90,6 @@
 					font-size: 2rem;
 					color: $gray-100;
 				}
-			}
-		}
-	}
-
-	&.modal-dialog--cropper {
-		[data-role='form.response'] {
-			display: none;
-		}
-
-		.modal-footer {
-			background: rgba(0, 0, 0, 0.5) !important;
-			border-radius: 0;
-		}
-
-		.modal-body {
-			background: rgba(0, 0, 0, 0.8);
-		}
-
-		.modal-inner {
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
-
-		.modal-footer,
-		.modal-header {
-			background: rgba(0, 0, 0, 0.9) !important;
-		}
-
-		.modal-header {
-			display: flex;
-			align-items: center;
-			gap: $spacer;
-			select {
-				margin: 0;
-			}
-		}
-
-		.cropper {
-			flex: 1;
-			height: 100%;
-
-			cropper-canvas {
-				height: 100%;
-				background: none;
 			}
 		}
 	}

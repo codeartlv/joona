@@ -71,6 +71,18 @@ export default class Offcanvas {
 		this.load(newUrl);
 	}
 
+	close() {
+		return new Promise((resolve, reject) => {
+			if (!this.offcanvasInstance) {
+				reject();
+				return;
+			}
+
+			this.offcanvasInstance._element.addEventListener('hidden.bs.offcanvas', resolve);
+			this.offcanvasInstance.hide();
+		});
+	}
+
 	load(url) {
 		this.currentUrl = url;
 
