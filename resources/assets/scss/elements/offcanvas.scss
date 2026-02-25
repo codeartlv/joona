@@ -37,6 +37,10 @@
 
 		.offcanvas-header {
 			color: var(--bs-gray-100);
+
+			.btn-close {
+				color: var(--bs-gray-100);
+			}
 		}
 
 		.offcanvas-footer,
@@ -132,3 +136,4 @@
 		max-width: 100% !important;
 	}
 }
+
