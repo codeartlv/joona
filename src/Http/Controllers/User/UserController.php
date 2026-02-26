@@ -96,6 +96,7 @@ class UserController
 				'can_manage' => $user->canBeManagedBy($admin),
 				'status_label' => $user->status->getLabel(),
 				'status_class' => $user->status->getClass(),
+				'user_object' => $user,
 			];
 		})->toArray();
 

@@ -115,6 +115,12 @@ class Panel
 	 */
 	protected array $userClasses = [];
 
+	/**
+	 * Callbacks for additional user table options
+	 * @var callable[]
+	 */
+	protected array $userOptionCallbacks = [];
+
 	public function __construct()
 	{
 		$this->setAppName(config('app.name', 'Laravel'));
@@ -708,5 +714,32 @@ class Panel
 		$this->jsTranslations = $translations;
 
 		return $this;
+	}
+
+	/**
+	 * Register a callback to add custom options to the user list dropdown
+	 *
+	 * @param callable $callback Should return an array of options
+	 * @return self
+	 */
+	public function addUserOptions(callable $callback): self
+	{
+		$this->userOptionCallbacks[] = $callback;
+		return $this;
+	}
+
+	/**
+	 * Resolve all custom user options for a specific user
+	 *
+	 * @param array|object $user
+	 * @return array
+	 */
+	public function getUserOptions($user): array
+	{
+		$extraOptions = [];
+		foreach ($this->userOptionCallbacks as $callback) {
+			$extraOptions = array_merge($extraOptions, $callback($user));
+		}
+		return $extraOptions;
 	}
 }

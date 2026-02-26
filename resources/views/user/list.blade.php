@@ -89,6 +89,12 @@
 						<td class="table__options">
 							@php
 								$options = [];
+
+								$extraOptions = \Codeart\Joona\Facades\Joona::getUserOptions($user['user_object']);
+								if (!empty($extraOptions)) {
+									$options = array_merge($options, $extraOptions);
+									$options[] = '-';
+								}
 							@endphp
 
 							@can('admin_view_userlog')
@@ -115,6 +121,7 @@
 									]
 								];
 							}
+							
 							@endphp
 
 							@include('joona::components/table-dropdown', [
