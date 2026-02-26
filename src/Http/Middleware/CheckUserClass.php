@@ -15,7 +15,7 @@ class CheckUserClass
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next, ...$classes)
+	public function handle($request, Closure $next, ...$checkClasses)
 	{
 		$classes = Joona::getUserClasses();
 
@@ -30,7 +30,7 @@ class CheckUserClass
 				abort(403);
 			}
 
-			foreach ($classes as $class) {
+			foreach ($checkClasses as $class) {
 				$className = $class instanceof \UnitEnum ? $class->value : $class;
 
 				if ($user->class === $className) {
@@ -42,3 +42,4 @@ class CheckUserClass
 		abort(403);
 	}
 }
+
