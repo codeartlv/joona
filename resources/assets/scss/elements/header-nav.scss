@@ -147,7 +147,13 @@
 
 			&.header-nav__mobile-menu {
 				display: flex;
+				margin-left: $spacer * 0.25;
+
+				i {
+					font-size: 1.5rem;
+				}
 			}
 		}
 	}
 }
+
