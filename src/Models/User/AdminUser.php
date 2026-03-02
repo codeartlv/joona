@@ -234,6 +234,23 @@ class AdminUser extends Authenticatable
 		$this->roles()->sync($roles);
 	}
 
+	public function revokeCustomPermission(string $permission)
+	{
+		$this->customPermissions()->where('permission', $permission)->delete();
+	}
+
+	public function grantCustomPermission(string $permission)
+	{
+		if (!$this->customPermissions()->where('permission', $permission)->exists()) {
+			$this->customPermissions()->save(
+				new CustomPermission([
+					'admin_user_id' => $this->id,
+					'permission' => $permission,
+				])
+			);
+		}
+	}
+
 	public function setCustomPermissions(array $permissions)
 	{
 		$this->customPermissions()->delete();
