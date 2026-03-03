@@ -35,4 +35,8 @@ Route::name('joona.')->group(function () {
 	Route::post('/recover', [AuthController::class, 'recoverStart'])->name('user.recover-start');
 	Route::get('/recover/set', [AuthController::class, 'recoverSetForm'])->name('user.recover-set');
 	Route::post('/recover/set', [AuthController::class, 'recoverFinish'])->name('user.recover-finish');
+
+	Route::get('/ping', function() {
+		return response()->json(['token' => csrf_token()]);
+	})->name('auth-ping');
 });

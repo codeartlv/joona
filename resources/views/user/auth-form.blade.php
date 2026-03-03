@@ -1,7 +1,7 @@
 @extends('joona::blank')
 
 @section('main')
-	<div class="card card-auth">
+	<div class="card card-auth" data-bind="admin.auth-form">
 		<x-form action="{{route('joona.user.auth-process')}}" data-focus="email">
 			<div class="card-header">
 				<span class="card-auth__logo">

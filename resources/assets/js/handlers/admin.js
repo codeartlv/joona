@@ -13,6 +13,20 @@ export default class Admin extends Handler {
 		return 'admin';
 	}
 
+	authForm(el) {
+		let url = route('joona.auth-ping');
+		const reloadInterval = 10 * 60 * 1000;
+
+		setInterval(() => {
+			axios.get(url).then((response) => {
+				document
+					.querySelector('meta[name="csrf-token"]')
+					.setAttribute('content', response.data.token);
+				el.querySelector('input[name="_token"]').value = response.data.token;
+			});
+		}, reloadInterval);
+	}
+
 	editMyProfile(el) {
 		el.addEventListener('click', () => {
 			const modal = new Modal();
