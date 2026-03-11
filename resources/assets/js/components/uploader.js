@@ -376,10 +376,12 @@ export default class Uploader {
 	}
 
 	_onFileSelect(nativeFiles) {
-		for (let i = 0; i < nativeFiles.length; i++) {
+		const reversedFiles = [...nativeFiles].reverse();
+
+		for (let i = 0; i < reversedFiles.length; i++) {
 			const allowed = this.getAllowedFileCount();
 			if (allowed === 0) break;
-			this._startUpload(nativeFiles[i]);
+			this._startUpload(reversedFiles[i]);
 		}
 	}
 
