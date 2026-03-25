@@ -198,6 +198,7 @@ export default class Admin extends Handler {
 					caption: trans('joona::common.ok'),
 					role: 'primary',
 					callback: () => {
+						el.dispatchEvent(new Event('accept'));
 						document.location = el.href;
 						return true;
 					},
