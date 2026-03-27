@@ -329,7 +329,10 @@ export default class Uploader {
 	_initUploader() {
 		// Change via dialog
 		this.fileSelector.addEventListener('change', () => {
-			const files = Array.from(this.fileSelector.files || []);
+			const files = Array.from(this.fileSelector.files || []).sort((a, b) =>
+				a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }),
+			);
+
 			this._onFileSelect(files);
 			this.fileSelector.value = '';
 		});
@@ -353,16 +356,22 @@ export default class Uploader {
 			e.preventDefault();
 			e.stopPropagation();
 			const dataTransfer = e.dataTransfer || e.originalEvent?.dataTransfer;
-			const files = Array.from(dataTransfer?.files || []);
+			const files = Array.from(dataTransfer?.files || []).sort((a, b) =>
+				a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }),
+			);
 
 			if (!files.length) {
 				return;
 			}
 
-			for (let i = 0; i < files.length; i++) {
+			const reversedFiles = files.reverse();
+
+			for (let i = 0; i < reversedFiles.length; i++) {
 				const allowed = this.getAllowedFileCount();
-				if (allowed === 0) break;
-				this._startUpload(files[i]);
+				if (allowed === 0) {
+					break;
+				}
+				this._startUpload(reversedFiles[i]);
 			}
 		};
 
@@ -428,9 +437,11 @@ export default class Uploader {
 		}
 
 		addSpinner(thumb, 'light');
+
 		this._appendThumbnailToList(thumb);
 		this._bindThumbnailEvents(thumb, mf);
-		this.files.push(mf);
+
+		this.files.unshift(mf);
 
 		this._checkLimits();
 		this._toggleSubmitDisabled(true);
