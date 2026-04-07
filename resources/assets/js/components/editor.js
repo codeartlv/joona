@@ -92,7 +92,10 @@ export default class Editor {
 				defaultLevel: 3,
 			},
 		};
-		params.tools.list = List;
+		params.tools.list = {
+			class: List,
+			inlineToolbar: true,
+		};
 		params.tools.quote = Quote;
 		params.tools.table = Table;
 		params.tools.embed = {
@@ -144,3 +147,4 @@ export default class Editor {
 		return this.editor;
 	}
 }
+
