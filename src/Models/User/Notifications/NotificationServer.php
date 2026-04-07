@@ -94,50 +94,93 @@ class NotificationServer
      * @param bool $onlyUnread
      * @param int $limit
      * @param int|null $lastId
-     * @return Collection<int,Notification>
+     * @return NotificationCollection
      */
 	public static function getNotifications(
 		?AdminUser $user = null,
 		?string $group = null,
 		?string $groupId = null,
+		?int $maxDays = null,
 		bool $onlyUnread = false,
 		int $limit = 15,
-        ?int $lastId = null
-	): Collection
-    {
+		?int $lastId = null
+	): NotificationCollection
+	{
 		$user = $user ?? Auth::user();
 
 		if (!$user) {
-			return collect([]);
+			return new NotificationCollection(collect([]), false);
 		}
 
-        $query = NotificationRecord::forUser($user->id);
+		$orderField = 'id';
+		$orderDirection = 'desc';
+		$hasMore = false;
 
-        if ($onlyUnread) {
-            $query->whereDoesntHave('recipients', function ($q) use ($user) {
-                $q->where('user_id', $user->id)->whereNotNull('read_at');
-            });
-        }
+		$query = NotificationRecord::forUser($user->id);
+
+		if ($onlyUnread) {
+			$query->whereDoesntHave('recipients', function ($q) use ($user) {
+				$q->where('user_id', $user->id)->whereNotNull('read_at');
+			});
+		}
 
 		if ($group) {
-            $query->where('group', $group);
-        }
+			$query->where('group', $group);
+		}
 
-        if ($groupId) {
-            $query->where('group_id', $groupId);
-        }
+		if ($groupId) {
+			$query->where('group_id', $groupId);
+		}
 
-        if ($lastId) {
-            $query->where('id', '<', $lastId);
-        }
+		if (!is_null($maxDays)) {
+			$orderField = 'created_at';
+			$orderDirection = 'desc';
 
-        return $query->with(['recipients' => function($q) use ($user) {
-            $q->where('user_id', $user->id);
-        }])
-        ->orderBy('id', 'desc')
-        ->limit($limit)
-        ->get()
-		->map(function($record) use ($user) {
+			$datesQuery = clone $query;
+
+			if ($lastId) {
+				$lastNotification = NotificationRecord::find($lastId);
+
+				if ($lastNotification) {
+					$startOfLastDay = $lastNotification->created_at->copy()->startOfDay();
+					$datesQuery->where('created_at', '<', $startOfLastDay);
+				}
+			}
+
+			$dates = $datesQuery->selectRaw('DATE(created_at) as date')
+				->groupBy('date')
+				->orderBy('date', 'desc')
+				->limit($maxDays + 1)
+				->pluck('date');
+
+			if ($dates->isEmpty()) {
+				return new NotificationCollection(collect([]), false);
+			}
+
+			if ($dates->count() > $maxDays) {
+				$hasMore = true;
+				$dates->pop();
+			}
+
+			$query->whereIn(\DB::raw('DATE(created_at)'), $dates);
+			$limit = null;
+
+		} else {
+			if ($lastId) {
+				$query->where('id', '<', $lastId);
+			}
+		}
+
+		$records = $query->with(['recipients' => function($q) use ($user) {
+			$q->where('user_id', $user->id);
+		}])
+		->orderBy($orderField, $orderDirection);
+
+		if (!is_null($limit)) {
+			$records->limit($limit);
+		}
+
+		$notifications = $records->get()->map(function($record) use ($user) {
 			$recipient = $record->recipients->first();
 			$isRead = $recipient && $recipient->read_at !== null;
 			
@@ -150,7 +193,16 @@ class NotificationServer
 				presenter: $record->getPresenter(),
 			);
 		});
-    }
+
+		if (is_null($maxDays)) {
+			$hasMore = $notifications->count() === $limit;
+		}
+
+		return new NotificationCollection(
+			notifications: $notifications,
+			hasMore: $hasMore
+		);
+	}
 
 	/**
 	 * Mark specific notifications as read

@@ -23,10 +23,10 @@ class NotificationsController
 		);
 
 		$html = view('joona::common.notifications', [
-			'notifications' => $list,
+			'notifications' => $list->notifications,
 		])->render();
 
-		foreach ($list as $item) {
+		foreach ($list->notifications as $item) {
 			if ($item->presenter->autoMarkAsRead()) {
 				$item->markAsRead();
 			}
@@ -36,7 +36,7 @@ class NotificationsController
 
 		return response()->json([
 			'badge' => $count,
-			'complete' => $list->count() < $limit,
+			'complete' => !$list->hasMore,
 			'content' => $html,
 		]);
 	}
