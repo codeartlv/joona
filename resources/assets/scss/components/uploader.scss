@@ -398,6 +398,7 @@
 			color: var(--bs-white);
 			padding: 0.333rem;
 			text-align: center;
+			z-index: 6;
 		}
 	}
 
@@ -486,4 +487,3 @@
 		outline-color: var(--bs-gray-700);
 	}
 }
-
