@@ -85,4 +85,42 @@ export default class Components extends Handler {
 	table(el, params) {
 		return new Table(el, params);
 	}
+
+	dropdownRadios(el, params) {
+		return new (function (el, params) {
+			this.displayEl = el.querySelector('[data-role="dropdown-radios.caption"]');
+
+			this.setValue = (value) => {
+				const input = el.querySelector(`input[value="${value}"]`);
+
+				el.querySelectorAll('.dropdown-item').forEach((item) => {
+					item.classList.remove('active');
+				});
+
+				if (input) {
+					input.checked = true;
+
+					let wrap = input.closest('.dropdown-item');
+					let caption = wrap.querySelector('[data-role="dropdown-radios.item-caption"]');
+					wrap.classList.add('active');
+
+					if (caption) {
+						this.displayEl.innerText = caption.innerText;
+					}
+				}
+			};
+
+			let checked = el.querySelector('input:checked');
+
+			if (checked) {
+				this.setValue(checked.value);
+			}
+
+			el.querySelectorAll('input[type="radio"]').forEach((input) => {
+				input.addEventListener('change', (e) => {
+					this.setValue(e.target.value);
+				});
+			});
+		})(el, params);
+	}
 }

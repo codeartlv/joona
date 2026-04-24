@@ -159,6 +159,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'editor' => \Codeart\Joona\View\Components\Editor::class,
 			'tags' => \Codeart\Joona\View\Components\Tag\Tags::class,
 			'toast' => \Codeart\Joona\View\Components\Toast::class,
+			'dropdown-radio' => \Codeart\Joona\View\Components\DropdownRadio::class,
 		];
 
 		foreach ($components as $name => $class) {
