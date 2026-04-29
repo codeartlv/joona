@@ -40,5 +40,14 @@ export default class TextEditor {
 		});
 
 		editor.content.innerHTML = value;
+
+		editor.content.addEventListener('focus', function () {
+			document.execCommand('defaultParagraphSeparator', false, 'p');
+		});
+
+		if (!value.trim()) {
+			editor.content.innerHTML = '<p><br></p>';
+		}
 	}
 }
+
