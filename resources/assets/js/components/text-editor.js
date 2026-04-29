@@ -48,6 +48,12 @@ export default class TextEditor {
 		if (!value.trim()) {
 			editor.content.innerHTML = '<p><br></p>';
 		}
+
+		editor.content.addEventListener('paste', function (e) {
+			e.preventDefault();
+			const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+			document.execCommand('insertText', false, text);
+		});
 	}
 }
 
