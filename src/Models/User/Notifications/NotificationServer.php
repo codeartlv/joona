@@ -100,9 +100,11 @@ class NotificationServer
 		?AdminUser $user = null,
 		?string $group = null,
 		?string $groupId = null,
+		?string $type = null,
+		array $notifiable_id = [],
 		?int $maxDays = null,
 		bool $onlyUnread = false,
-		int $limit = 15,
+		?int $limit = 15,
 		?int $lastId = null
 	): NotificationCollection
 	{
@@ -130,6 +132,14 @@ class NotificationServer
 
 		if ($groupId) {
 			$query->where('group_id', $groupId);
+		}
+
+		if ($type) {
+			$query->where('type', $type);
+		}
+
+		if (!empty($notifiable_id)) {
+			$query->whereIn('notifiable_id', $notifiable_id);
 		}
 
 		if (!is_null($maxDays)) {
