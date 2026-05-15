@@ -12,6 +12,9 @@ class TextEditor extends Component
 		public ?string $label = '',
 		public bool $required = false,
 	) {
+		if (!$name) {
+			$name = 'content';
+		}
 	}
 
 	/**
