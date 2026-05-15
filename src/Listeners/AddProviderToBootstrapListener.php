@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
  * published, try to add service provider into app's bootstrap file. Works on
  * Laravel >= 11 *
  *
- * @package Codeart\Sonora\Listeners
+ * @package Codeart\Joona\Listeners
  * @author Deniss Kozlovs <deniss@codeart.lv>
  */
 class AddProviderToBootstrapListener

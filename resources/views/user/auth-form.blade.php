@@ -16,7 +16,7 @@
 
 				<div class="block">
 					<div class="form-group">
-						<x-input :label="__('joona::user.email')" icon="person" iconPrepend="mail" autocomplete="email" name="email" required="true" />
+						<x-input :label="__('joona::user.email')" iconPrepend="mail" autocomplete="email" name="email" required="true" />
 						<div data-field-message="email"></div>
 					</div>
 
@@ -39,5 +39,4 @@
 			</div>
 		</x-form>
 	</div>
-</div>
 @endsection

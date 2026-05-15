@@ -343,7 +343,6 @@ class Panel
 				'code' => $locale->code,
 				'url' => $locale->getSetupUrl(),
 				'title' => $locale->caption,
-				'image' => $locale->caption,
 				'active' => Lang::locale() == $locale->code,
 				'flag' => $locale->getFlagUrl(),
 			];

@@ -12,7 +12,6 @@ class Paginator extends Component
 	public function __construct(
 		public int $total = 0,
 		public int $size = 25,
-		public int $page = 25,
 		public int $range = 3,
 		public string $param = 'page',
 		public array $links = [],
@@ -62,7 +61,7 @@ class Paginator extends Component
 		}
 
 		if ($this->current_page > 1) {
-			$backLink = $parseUrl(0);
+			$backLink = $parseUrl($this->current_page - 1);
 		}
 
 		if ($this->current_page < $this->total_pages) {

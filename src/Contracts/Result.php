@@ -148,7 +148,7 @@ class Result implements Arrayable
 	 */
 	public function setSuccess(string $message): bool
 	{
-		$this->message[] = $message;
+		$this->message = $message;
 		$this->result = true;
 
 		return true;

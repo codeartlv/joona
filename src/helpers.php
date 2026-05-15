@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Parses pssword policy string
+ * Parses password policy string
  *
  * @param string $policy
  * @return array

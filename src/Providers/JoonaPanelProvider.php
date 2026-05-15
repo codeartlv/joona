@@ -247,7 +247,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 				->icon('person');
 
 		$default_menu[] =
-			Page::make('settings.users')
+			Page::make('settings.users-activities')
 				->route('joona.user.activities')
 				->caption('joona::common.menu.settings_users_activities')
 				->icon('ballot');
@@ -312,33 +312,6 @@ abstract class JoonaPanelProvider extends JoonaProvider
 				),
 			])
 		]);
-
-		$classes = $panel->getUserClasses();
-
-		if (!empty($classes)) {
-			Gate::define('userclass', function($user, ...$classes) {
-				dd($classes);
-			});
-
-		/*
-			foreach ($classes as $class) {
-				$className = $class instanceof \UnitEnum ? $class->value : $class;
-				$key = 'userclass:'.$className;
-
-				Gate::define($key, function($user, ...$args) use ($key) {
-					if (!$user instanceof AdminUser) {
-						return false;
-					}
-
-					dd($key);
-
-					list(, $class) = explode(':', $key);
-
-					//return $user->class 
-				});
-			}
-				*/
-		}
 
 		$this->app->singleton('joona.permission-loader', function () use ($panel) {
 

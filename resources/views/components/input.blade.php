@@ -15,7 +15,7 @@
 		@endif
 		<input class="form-control form-control-{{ $size }}" name="{{ $name }}" {{ $attributes }} value="{{ $value }}" />
 		@if ($iconAppend || $textAppend)
-			<span class="input-group-text {{ $iconPrepend ? 'as-icon':''}} ">
+			<span class="input-group-text {{ $iconAppend ? 'as-icon':''}} ">
 				@if ($iconAppend)
 					@icon($iconAppend)
 				@else

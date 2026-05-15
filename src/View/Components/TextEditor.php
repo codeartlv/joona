@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 class TextEditor extends Component
 {
 	public function __construct(
-		public ?string $name = '',
+		public ?string $name = 'content',
 		public ?string $value = '',
 		public ?string $label = '',
 		public bool $required = false,

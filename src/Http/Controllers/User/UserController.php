@@ -352,10 +352,6 @@ class UserController
 			'status' => $request->post('status'),
 		];
 
-		if (!$user_id) {
-			$fields['username'] = $request->post('username');
-		}
-
 		if ($password_setup == 'set-password') {
 			$fields['password'] = $request->post('password');
 		}

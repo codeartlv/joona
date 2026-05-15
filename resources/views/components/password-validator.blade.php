@@ -16,7 +16,7 @@
 
 		<input class="form-control" type="password" data-role="password-validator.password-input" name="{{$name}}" value="{{$value}}" autocomplete="new-password" />
 
-		<a href="javascript:;" data-role="password-validator.toggle-visbility" class="input-group-icon password-validator__toggle-visibility">
+		<a href="javascript:;" data-role="password-validator.toggle-visibility" class="input-group-icon password-validator__toggle-visibility">
 			@icon('visibility')
 			@icon('visibility_off')
 		</a>

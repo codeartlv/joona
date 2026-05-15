@@ -108,12 +108,12 @@ class PermissionLoader implements PermissionLoaderInterface
 			$keys = $permission->getAccessKeys();
 
 			foreach ($keys as $key) {
-				Gate::define($key, function($user, ...$args) use ($permission, $key) {
+				Gate::define($key, function ($user, ...$args) use ($permission, $key) {
 					if (!$user instanceof AdminUser) {
 						return false;
 					}
 
-					return $this->validate($permission, $key, $args);
+					return $this->validate($permission, $key, ...$args);
 				});
 			}
 		}

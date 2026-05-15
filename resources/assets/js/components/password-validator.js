@@ -13,8 +13,8 @@ export default class PasswordValidator {
 
 		this.passwordSteps = el.querySelectorAll('[data-step]');
 
-		this.visbilityToggle = el.querySelector(
-			'[data-role="password-validator.toggle-visbility"]'
+		this.visibilityToggle = el.querySelector(
+			'[data-role="password-validator.toggle-visibility"]',
 		);
 
 		this.eventListeners = new Map();
@@ -92,7 +92,7 @@ export default class PasswordValidator {
 	}
 
 	init() {
-		this.visbilityToggle.addEventListener('click', () => {
+		this.visibilityToggle.addEventListener('click', () => {
 			this.container.classList.toggle('revealed');
 			this.passwordInput.type = this.passwordInput.type === 'text' ? 'password' : 'text';
 		});

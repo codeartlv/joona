@@ -321,6 +321,7 @@ class AuthController
 		}
 
 		$url = redirect()->getIntendedUrl();
+		Session::forget('url.intended');
 
 		$form->setSuccess(__('joona::user.auth.success'));
 		$form->setAction('redirect', $url ?? route('joona.dashboard'));
