@@ -1,11 +1,13 @@
 import pell from 'pell';
 
 export default class TextEditor {
+	editor = null;
+
 	constructor(el, params) {
 		let textarea = el.querySelector('textarea');
 		let value = textarea.value;
 
-		const editor = pell.init({
+		this.editor = pell.init({
 			element: el.querySelector('[data-role="text-editor"]'),
 			styleWithCSS: false,
 			onChange: (html) => {
@@ -39,21 +41,25 @@ export default class TextEditor {
 			],
 		});
 
-		editor.content.innerHTML = value;
+		this.editor.content.innerHTML = value;
 
-		editor.content.addEventListener('focus', function () {
+		this.editor.content.addEventListener('focus', function () {
 			document.execCommand('defaultParagraphSeparator', false, 'p');
 		});
 
 		if (!value.trim()) {
-			editor.content.innerHTML = '<p><br></p>';
+			this.editor.content.innerHTML = '<p><br></p>';
 		}
 
-		editor.content.addEventListener('paste', function (e) {
+		this.editor.content.addEventListener('paste', function (e) {
 			e.preventDefault();
 			const text = (e.originalEvent || e).clipboardData.getData('text/plain');
 			document.execCommand('insertText', false, text);
 		});
+	}
+
+	setValue(content) {
+		this.editor.content.innerHTML = content;
 	}
 }
 
