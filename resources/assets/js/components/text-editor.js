@@ -59,7 +59,12 @@ export default class TextEditor {
 	}
 
 	setValue(content) {
-		this.editor.content.innerHTML = content;
+	    this.editor.content.innerHTML = content;
+    	const textarea = this.editor.element.closest('.text-editor')?.querySelector('textarea');
+    	
+	    if (textarea) {
+    	    textarea.value = content;
+    	}
 	}
 }
 
