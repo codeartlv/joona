@@ -2,16 +2,19 @@ import pell from 'pell';
 
 export default class TextEditor {
 	editor = null;
+	container = null;
+	textarea = null;
 
 	constructor(el, params) {
-		let textarea = el.querySelector('textarea');
-		let value = textarea.value;
+		this.textarea = el.querySelector('textarea');
+		let value = this.textarea.value;
+		this.container = el;
 
 		this.editor = pell.init({
 			element: el.querySelector('[data-role="text-editor"]'),
 			styleWithCSS: false,
 			onChange: (html) => {
-				textarea.value = html;
+				this.textarea.value = html;
 			},
 			actions: [
 				{
@@ -59,12 +62,8 @@ export default class TextEditor {
 	}
 
 	setValue(content) {
-	    this.editor.content.innerHTML = content;
-    	const textarea = this.editor.element.closest('.text-editor')?.querySelector('textarea');
-    	
-	    if (textarea) {
-    	    textarea.value = content;
-    	}
+		this.editor.content.innerHTML = content;
+		this.textarea.value = content;
 	}
 }
 
