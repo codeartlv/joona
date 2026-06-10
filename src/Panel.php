@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use InvalidArgumentException;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
@@ -588,7 +589,6 @@ class Panel
 					$item['children'] = $filter_forbidden($item['children']);
 				}
 
-
 				if (Permission::isDefined($page->route) && Gate::denies($page->route)) {
 					unset($items[$index]);
 					continue;
@@ -601,9 +601,18 @@ class Panel
 		};
 
 		$pages = $filter_forbidden($this->getPages());
-
-		// Detect active page and convert to array
-		$active_route = request()->route();
+		$urlToMatch = $customUrl ?? request()->query('current');
+		
+		if ($urlToMatch) {
+			try {
+				$mockRequest = Request::create($urlToMatch);
+				$active_route = app('router')->getRoutes()->match($mockRequest);
+			} catch (NotFoundHttpException $e) {
+				$active_route = null;
+			}
+		} else {
+			$active_route = request()->route();
+		}
 
 		$to_array = function ($items) use (&$to_array, $active_route) {
 			foreach ($items as $index => $item) {
@@ -620,11 +629,13 @@ class Panel
 					$has_active_child = count($active_children) > 0;
 				}
 
-				$test_routes = array_merge($page->activeRoutes, [
+				$test_routes = array_merge($page->activeRoutes ?? [], [
 					$page->route
 				]);
 
-				$is_active_route = is_object($active_route) && method_exists($active_route, 'getName') && in_array($active_route->getName(), $test_routes);
+				$is_active_route = is_object($active_route) 
+					&& method_exists($active_route, 'getName') 
+					&& in_array($active_route->getName(), $test_routes);
 
 				$badge = $page->badge;
 				$badge = is_callable($badge) ? $badge() : (int) $badge;

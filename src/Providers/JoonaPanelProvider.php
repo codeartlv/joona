@@ -10,11 +10,9 @@ use Codeart\Joona\Auth\Permissions\PermissionLoader;
 use Codeart\Joona\Contracts\PermissionLoaderInterface;
 use Codeart\Joona\Facades\Joona;
 use Codeart\Joona\MetaData\Page;
-use Codeart\Joona\Models\User\AdminUser;
 use Codeart\Joona\Panel;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as ValidatorObject;
@@ -108,6 +106,7 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::global',
 			'joona::default',
 			'joona::error',
+			'joona::menu',
 			'joona::user.auth-form',
 			'joona::user.invite-form',
 			'joona::user.recover-form',

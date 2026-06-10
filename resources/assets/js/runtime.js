@@ -2,6 +2,7 @@ import Components from './handlers/components.js';
 import Admin from './handlers/admin.js';
 import { parseJsonLd } from './helpers.js';
 import Lang from 'lang.js';
+import axios from 'axios';
 
 export default class Runtime {
 	handlers = {};
@@ -28,7 +29,7 @@ export default class Runtime {
 		this.locale = document.documentElement.getAttribute('lang');
 
 		let translationString = parseJsonLd(
-			document.querySelector('head script[data-role="js-translations"]')
+			document.querySelector('head script[data-role="js-translations"]'),
 		);
 
 		// Initialize translations
@@ -70,7 +71,7 @@ export default class Runtime {
 		window.addEventListener('resize', () => {
 			// Save window scrollbar width to be used in CSS.
 			var scrollWidth = Math.ceil(
-				(window.innerWidth - document.documentElement.clientWidth) / 2
+				(window.innerWidth - document.documentElement.clientWidth) / 2,
 			);
 			document.documentElement.style.setProperty('--body-scroll-width', `${scrollWidth}px`);
 		});
@@ -81,7 +82,7 @@ export default class Runtime {
 			// Save true window scroll position to be used in CSS.
 			document.documentElement.style.setProperty(
 				'--body-scroll-position',
-				`${window.scrollY}px`
+				`${window.scrollY}px`,
 			);
 		});
 		window.dispatchEvent(new Event('scroll'));
@@ -268,7 +269,7 @@ export default class Runtime {
 
 				if (result && typeof result.then === 'function') {
 					result.then(
-						(instance) => (this.instances[domElement.dataset._elementId] = instance)
+						(instance) => (this.instances[domElement.dataset._elementId] = instance),
 					);
 				} else if (result) {
 					this.instances[domElement.dataset._elementId] = result;
@@ -291,6 +292,23 @@ export default class Runtime {
 					component.instance.refresh();
 				});
 			});
+		});
+	}
+
+	updateMainMenu() {
+		let menuElement = document.getElementById('joona-main-menu');
+
+		if (!menuElement) {
+			return;
+		}
+
+		let url = route('joona.main-menu', {
+			current: window.location.href,
+		});
+
+		axios.get(url).then((response) => {
+			menuElement.innerHTML = response.data;
+			window.Joona.init(menuElement);
 		});
 	}
 }

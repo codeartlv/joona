@@ -41,6 +41,7 @@ Route::name('joona.')->group(function () {
 
 	// Dashboard
 	Route::get('/', [DashboardController::class, 'dashboardIndex'])->name('dashboard');
+	Route::get('/main-menu', [DashboardController::class, 'menuList'])->name('main-menu');
 
 	// Component routes
 	Route::get('/crop', [ComponentsController::class, 'crop'])->name('cropper');

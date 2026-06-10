@@ -11,7 +11,7 @@
 				</span>
 			</div>
 			<div class="main-menu__content">
-				<div class="main-menu__inner">
+				<div class="main-menu__inner" id="joona-main-menu">
 					@include('joona::menu')
 				</div>
 			</div>
