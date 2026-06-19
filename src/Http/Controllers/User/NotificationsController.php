@@ -16,10 +16,11 @@ class NotificationsController
 	public function list(): JsonResponse
 	{
 		$limit = 15;
+		$lastId = (int) request()->query('lastId');
 
 		$list = NotificationServer::getNotifications(
 			limit: $limit,
-			lastId: (int) request()->query('page')
+			lastId: $lastId
 		);
 
 		$html = view('joona::common.notifications', [
@@ -50,3 +51,4 @@ class NotificationsController
 		]);
 	}
 }
+
