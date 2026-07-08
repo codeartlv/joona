@@ -113,6 +113,10 @@ abstract class JoonaPanelProvider extends JoonaProvider
 			'joona::user.recover-password',
 		], \Codeart\Joona\View\Composers\GlobalViewComposer::class);
 
+		View::composer([
+			'joona::mail.user_password',
+		], \Codeart\Joona\View\Composers\MailComposer::class);
+
 		// Blade helpers
 		Blade::directive('icon', function ($name) {
 			return "<i data-role=\"icon\" class=\"material-symbols-outlined\"><?={$name};?></i>";

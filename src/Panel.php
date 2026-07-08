@@ -173,6 +173,23 @@ class Panel
 	}
 
 	/**
+	 * Return URL to admin panel
+	 * 
+	 * @return string 
+	 */
+	public function getUrl(): string
+	{
+		$basePath = $this->getBasePath();
+		$baseDomain = $this->getBaseDomain();
+
+		if ($baseDomain) {
+			return rtrim($baseDomain, '/') . $basePath;
+		}
+
+		return url($basePath);
+	}
+
+	/**
 	 * Add custom routes
 	 *
 	 * @param callable $routesCallback
