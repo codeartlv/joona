@@ -2,6 +2,17 @@
 	<label class="form-label {{$required ? 'required':''}}">{{$label}}</label>
 @endif
 <select class="form-select {{$size ? 'form-select-'.$size:''}}" {{ $attributes }}>
+	@php
+	$placeholder = null;
+	if ($attributes->has('placeholder')) {
+		$placeholder = $attributes->get('placeholder');
+	}	
+	@endphp
+
+	@if($placeholder)
+	<option value="" disabled selected hidden>{{$placeholder}}</option>
+	@endif
+	
 	@foreach ($options as $item)
 		@if (method_exists($item, 'options'))
 			<optgroup label="{{$item->label}}">

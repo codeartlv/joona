@@ -8,7 +8,7 @@
 	</x-slot>
 
 	<x-slot name="footer">
-		<x-button form="cropper-form" type="button" :caption="__('joona::common.save')" id="crop-save-btn" icon="check" />
+		<x-button form="cropper-form" type="submit" :caption="__('joona::common.save')" id="crop-save-btn" icon="check" />
 	</x-slot>	
 </x-offcanvas>
 

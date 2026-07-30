@@ -29,8 +29,8 @@ export default class AjaxForm {
 
 		let formId = formElement.getAttribute('id');
 
-		if (!button && formId) {
-			button = document.querySelector(`button[form=${formId}]`);
+		if (!button.length && formId) {
+			button = document.querySelectorAll(`button[form="${formId}"]`);
 		}
 
 		if (button) {

@@ -1,7 +1,7 @@
 // CropperWrapper.js
 import CropperJS from 'cropperjs';
 import Offcanvas from './offcanvas.js';
-import { parseRoute } from './../helpers';
+import { parseRoute, addSpinner } from './../helpers';
 
 export default class ImageCropper {
 	events = {
@@ -19,6 +19,7 @@ export default class ImageCropper {
 		}
 
 		this._presets = this._normalizePresets(presets);
+
 		this._saveUrl = saveUrl;
 		this._imageUrl = imageUrl;
 		this._imageId = imageId;
@@ -49,7 +50,7 @@ export default class ImageCropper {
 
 			this._mount = wnd.querySelector('[data-role="cropper.root"]');
 
-			this._opts['select-container'] = null; // dropdown removed
+			this._opts['select-container'] = null;
 			this._opts['save-button'] = wnd.querySelector(this._mount.dataset.saveButton);
 
 			this.ready();
@@ -109,6 +110,8 @@ export default class ImageCropper {
 	 * Only includes presets where the user actually started cropping and ended with a crop box.
 	 */
 	save() {
+		this._mount.classList.add('saving');
+
 		// consolidate latest data from active croppers
 		for (const [id, cropper] of this._cropperByPreset) {
 			if (!cropper) continue;
@@ -270,6 +273,20 @@ export default class ImageCropper {
 		return { x, y, width, height };
 	}
 
+	/** Prefer previous crop (`preset._init`); otherwise centered maximal fit for the preset ratio. */
+	_getInitialRect(preset, imgW, imgH) {
+		if (preset._init) {
+			return {
+				x: preset._init.x,
+				y: preset._init.y,
+				width: preset._init.width,
+				height: preset._init.height,
+			};
+		}
+
+		return this._computeCenteredFitRect(preset._ratio, imgW, imgH);
+	}
+
 	_initCropperForPreset(preset, imgEl) {
 		//return;
 
@@ -300,12 +317,12 @@ export default class ImageCropper {
 				container.classList.toggle('has-crop', hasCrop);
 			},
 			ready: () => {
-				// CHANGED: initialize a centered, maximal crop that fits the preset ratio
+				// Initialize from previous crop (`_init`) when present, else centered maximal fit
 				try {
 					const imgData = cropper.getImageData(); // natural image space
 					const { naturalWidth: iw, naturalHeight: ih } = imgData;
 
-					const rect = this._computeCenteredFitRect(preset._ratio, iw, ih);
+					const rect = this._getInitialRect(preset, iw, ih);
 
 					// Apply in natural pixel coordinates
 					cropper.setData({
@@ -320,6 +337,9 @@ export default class ImageCropper {
 
 					// Ensure the crop box is visible
 					cropper.crop();
+
+					// Seed stored data so UI reflects restored crop without requiring interaction
+					this._data.set(preset.id, cropper.getData());
 				} catch (_) {
 					// Fallback: ensure cropped state visible even if something above fails
 					try {
@@ -355,11 +375,11 @@ export default class ImageCropper {
 				});
 
 				reset.addEventListener('click', () => {
-					// Reset back to our initial centered-fit crop instead of clearing
+					// Reset back to the same initial rect used on open (_init or centered fit)
 					try {
 						const imgData = cropper.getImageData();
 						const { naturalWidth: iw, naturalHeight: ih } = imgData;
-						const rect = this._computeCenteredFitRect(preset._ratio, iw, ih);
+						const rect = this._getInitialRect(preset, iw, ih);
 						cropper.setData({
 							x: rect.x,
 							y: rect.y,
@@ -370,6 +390,7 @@ export default class ImageCropper {
 							scaleY: 1,
 						});
 						cropper.crop();
+						this._data.set(preset.id, cropper.getData());
 					} catch (_) {
 						// if anything goes wrong, keep previous behavior
 						cropper.clear();
@@ -433,12 +454,37 @@ export default class ImageCropper {
 				seen.set(id, 1);
 			}
 
+			let init = null;
+
+			if (p.init) {
+				init = {};
+
+				init.width = p.init.width ?? null;
+				init.height = p.init.height ?? null;
+				init.x = p.init.x ?? null;
+				init.y = p.init.y ?? null;
+
+				if (
+					!Number.isFinite(init.width) ||
+					!Number.isFinite(init.height) ||
+					!Number.isFinite(init.x) ||
+					!Number.isFinite(init.y) ||
+					init.width <= 0 ||
+					init.height <= 0 ||
+					init.x < 0 ||
+					init.y < 0
+				) {
+					init = null;
+				}
+			}
+
 			return {
 				id,
 				caption: String(p.caption ?? id),
 				width: w,
 				height: h,
 				_ratio: w / h,
+				_init: init,
 			};
 		});
 	}
