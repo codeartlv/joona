@@ -230,10 +230,32 @@ export default class Admin extends Handler {
 			this.container = el.querySelector('[data-role="notification-list.container"]');
 			this.trigger = el.querySelector('[data-bs-toggle="dropdown"]');
 
+			this.isNearBottom = () => {
+				const { scrollTop, clientHeight, scrollHeight } = this.container;
+
+				return scrollTop + clientHeight >= scrollHeight - 1;
+			};
+
+			this.loadMoreIfNeeded = () => {
+				if (this.loading || this.completed || !this.isNearBottom()) {
+					return;
+				}
+
+				const notifications = this.container.querySelectorAll(
+					'[data-role="notification"][data-id]',
+				);
+				const lastNotification = notifications[notifications.length - 1];
+				const lastId = lastNotification ? lastNotification.dataset.id : null;
+
+				this.load(lastId);
+			};
+
 			this.trigger.addEventListener('shown.bs.dropdown', () => {
 				this.container
 					.querySelectorAll('[data-role="notification"],.alert')
-					.forEach((el) => el.remove());
+					.forEach((item) => item.remove());
+				this.container.scrollTop = 0;
+				this.completed = false;
 				this.load();
 			});
 
@@ -263,7 +285,7 @@ export default class Admin extends Handler {
 				this.container.insertAdjacentHTML('beforeend', response.data.content);
 				this.updateBadge(response.data.badge);
 				window.Joona.init(this.container);
-				this.scrollbar.update();
+				this.loadMoreIfNeeded();
 			};
 
 			this.updateBadge = function (count) {
@@ -276,31 +298,14 @@ export default class Admin extends Handler {
 				this.updateBadge(parseInt(response.data.badge));
 			});
 
-			this.scrollbar = new PerfectScrollbar(this.container, {
-				wheelPropagation: false,
-				suppressScrollX: true,
-			});
-
 			this.container.addEventListener('click', (e) => {
 				if (e.target.closest('[data-role="notification"]')) {
 					e.stopPropagation();
 				}
 			});
 
-			this.container.addEventListener('ps-y-reach-end', (e) => {
-				if (this.loading || this.completed) {
-					return;
-				}
-
-				const notifications = this.container.querySelectorAll(
-					'[data-role="notification"][data-id]',
-				);
-
-				const lastNotification = notifications[notifications.length - 1];
-
-				let lastId = lastNotification ? lastNotification.dataset.id : null;
-
-				this.load(lastId);
+			this.container.addEventListener('scroll', () => {
+				this.loadMoreIfNeeded();
 			});
 		})(el, params);
 	}
