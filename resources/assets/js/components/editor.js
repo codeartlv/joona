@@ -97,7 +97,10 @@ export default class Editor {
 			inlineToolbar: true,
 		};
 		params.tools.quote = Quote;
-		params.tools.table = Table;
+		params.tools.table = {
+			class: Table,
+			inlineToolbar: ['bold', 'italic', 'link'],
+		};
 		params.tools.embed = {
 			class: Embed,
 			config: {
